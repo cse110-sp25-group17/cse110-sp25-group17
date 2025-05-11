@@ -1,0 +1,42 @@
+***Add information to Phase1.md file***
+
+
+## Unit tests via automation
+* Will implement jest unit tests
+  * Create js test files
+  * Run them on Jest
+
+## Why use Jest?
+* It runs all test cases for you
+* Compares expected vs actual results
+* Reports pass/fail status
+
+## Focus unit tests on key functions including:
+* Card selection logic 
+* Question generation and mapping to card
+* Answer validation logic
+* Add the card to the deck upon the correct answer
+
+### Example test for card selection:
+
+``` js
+describe('selectCard', () => {
+  const availableCards = [1, 2, 3, 4, 5];
+  const obtainedCards = [6, 7];
+
+  test('should return the card if it is in availableCards and not in obtainedCards', () => {
+    const card = selectCard(3, availableCards, obtainedCards);
+    expect(card).toBe(3); //if return the correspond card will Pass, otherwise will Fail
+  });
+
+  test('should return null if card is already in obtainedCards', () => {
+    const card = selectCard(6, availableCards, obtainedCards);
+    expect(card).toBeNull(); //return NULL will pass, otherwise will Fail
+  });
+
+  test('should return null if card is not in availableCards', () => {
+    const card = selectCard(9, availableCards, obtainedCards);
+    expect(card).toBeNull(); //return NULL will pass, otherwise will Fail
+  });
+});
+```
