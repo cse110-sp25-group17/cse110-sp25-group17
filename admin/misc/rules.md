@@ -1,4 +1,4 @@
-# Nul Terminators Rules
+# Null Terminators Rules
 
 ## Personal Goals
 ### Goals
