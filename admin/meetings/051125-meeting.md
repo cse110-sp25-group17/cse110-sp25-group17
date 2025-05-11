@@ -1,5 +1,5 @@
 # 5/7/25 Meeting
-Time: 3:00 PM - 
+Time: 3:00 PM - 4:55 PM 
 Location: Zoom
 ## Attendance:
 - Wilson Zhu
@@ -17,4 +17,5 @@ Location: Zoom
 - Started assigning tasks to divide up th ewokr to complete thsi weeks assignments
 - Worked on ADRs as a group
 - Split into groups to work on documentation, code quality and unit tests
-- 
+- Reminded everyone to complete the individual contract and daily checkins.
+  
