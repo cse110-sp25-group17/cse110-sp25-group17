@@ -1,0 +1,27 @@
+# The purpose of unit tests using Jest
+
+## Context
+We want a way to check that our code works as expected without having to test everything manually. Writing unit tests and running them automatically helps us catch bugs early and make sure changes don’t break things. It also saves time.
+
+## Decision
+We decided to use **Jest** to write and run our unit tests.
+
+Jest is a good choice because:
+- It runs all tests for us automatically.
+- It checks if the output matches what we expect.
+- It tells us clearly which tests passed or failed.
+- It’s easy to set up and works well with JavaScript.
+
+Here’s how we’ll use Jest:
+- We’ll create test files using `.test.js` at the end of the filename.
+- We’ll run tests using Jest.
+- We’ll focus on testing important parts of the code, such as:
+  - Choosing the right card
+  - Creating questions and linking them to cards
+  - Checking if answers are correct
+  - Adding cards to the deck when the answer is right
+
+## Consequences
+- We need to write and update test files when we add or change code.
+- We’ll set up Jest in the project so it’s ready to use.
+- Having tests will help us feel more confident when making changes.
