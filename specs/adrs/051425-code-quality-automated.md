@@ -10,7 +10,7 @@
 ## Considered Options
 
 * CodeClimate
-* Qlty
+- Qlty
 * Codacy
 
 ## Decision Outcome
