@@ -9,7 +9,7 @@
 
 ## Considered Options
 
-* CodeClimate
+- CodeClimate
 - Qlty
 * Codacy
 
