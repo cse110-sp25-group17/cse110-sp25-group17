@@ -1,0 +1,20 @@
+name: Codacy Static Analysis
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  codacy-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@97bf5df3c09e75f5bcd72695998f96ebd701846e
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
