@@ -1,0 +1,31 @@
+engines:
+  eslint:
+    enabled: true
+  stylelint:
+    enabled: true
+
+tools:
+  eslint:
+    config: eslint.config.mjs
+    patterns:
+      include_paths:
+        - source/
+        - specs/
+      exclude_paths:
+        - admin/
+
+  stylelint:
+    patterns:
+      include_paths:
+        - source/
+        - specs/
+      exclude_paths:
+        - admin/
+
+coverage:
+  enabled: false
+
+notifications:
+  github:
+    annotations: false
+  slack: false
