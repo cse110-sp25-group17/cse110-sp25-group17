@@ -1,0 +1,26 @@
+{
+  "name": "cse110-sp25-group17",
+  "version": "1.0.0",
+  "description": "[Team Page](https://cse110-sp25-group17.github.io/cse110-sp25-group17/admin/team.html)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cse110-sp25-group17/cse110-sp25-group17.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cse110-sp25-group17/cse110-sp25-group17/issues"
+  },
+  "homepage": "https://github.com/cse110-sp25-group17/cse110-sp25-group17#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "eslint": "^9.26.0",
+    "globals": "^16.1.0"
+  }
+}

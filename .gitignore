@@ -1,1 +1,10 @@
 .DS_Store
+
+# Node.js dependencies
+node_modules/
+
+# ESLint cache
+.eslintcache
+
+# macOS system files
+.DS_Store
