@@ -11,12 +11,29 @@ function showCard(index) {
   container.innerHTML = "";
 
   if (index < pokemons.length && index >= 0) {
-    const { name, img } = pokemons[index];
+    const pokemon = pokemons[index];
+    const name = typeof pokemon.name === "string" ? pokemon.name : "";
+    const img = typeof pokemon.img === "string" ? pokemon.img : "";
+
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `<img src="${img}" alt="${name}" /><h2>${name}</h2>`;
+    
+    const image = document.createElement("img");
+    image.src = img;
+    image.alt = name;
+    
+    const heading = document.createElement("h2");
+    heading.textContent = name;
+    
+    card.appendChild(image);
+    card.appendChild(heading);
+    container.appendChild(card);
+    
+    setupSwipe(card);
+    
     container.appendChild(card);
     setupSwipe(card);
+    
   } else {
     container.innerHTML = "<h2>No Pokémon Here</h2>";
   }
@@ -46,27 +63,6 @@ function addPokemon() {
   }
 }
 
-function setupSwipe(card) {
-  let startX;
-
-  card.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-  });
-
-  card.addEventListener("touchend", (e) => {
-    const endX = e.changedTouches[0].clientX;
-    handleSwipe(endX - startX);
-  });
-
-  card.addEventListener("mousedown", (e) => {
-    startX = e.clientX;
-  });
-
-  card.addEventListener("mouseup", (e) => {
-    const endX = e.clientX;
-    handleSwipe(endX - startX);
-  });
-}
 
 function handleSwipe(deltaX) {
   if (deltaX < -50) {
