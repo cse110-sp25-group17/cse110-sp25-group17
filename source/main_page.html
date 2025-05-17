@@ -1,0 +1,29 @@
+<!-- source/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pokémon Flashcards</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>Pokémon Flashcards</h1>
+    <div id="card-container">
+      <!-- Cards will be inserted here -->
+    </div>
+
+    <!-- Buttons -->
+    <div id="buttons">
+      <button id="prev-btn">⬅️ Previous</button>
+      <button id="next-btn">➡️ Next</button>
+      <button id="add-btn">➕ Add Pokémon</button>
+    </div>
+  </div>
+
+  <!-- Load Hammer.js before app.js if you're going to use it -->
+  <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>
