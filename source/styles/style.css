@@ -1,4 +1,4 @@
-  body {
+body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f0f8ff;
@@ -23,7 +23,7 @@
     height: 100%;
     background-color: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0 0 0 / 20%);
+    box-shadow: 0 4px 10px rgba(0 0 0 /20%);
     position: absolute;
     transition: transform 0.5s ease, opacity 0.5s ease;
     overflow: hidden;
