@@ -11,7 +11,7 @@ function showCard(index) {
   container.innerHTML = "";
 
   if (index < pokemons.length && index >= 0) {
-    const { name, img } = pokemons[index];
+    const pokemon = { name: "Pikachu", img: "/images/pikachu.png" }; //placeholder
     
     // Create card elements
     const card = document.createElement("div");
