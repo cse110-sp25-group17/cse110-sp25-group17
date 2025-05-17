@@ -11,10 +11,9 @@ function showCard(index) {
   container.innerHTML = "";
 
   if (index < pokemons.length && index >= 0) {
-    const pokemon = pokemons[index];
-    const name = typeof pokemon.name === "string" ? pokemon.name : "";
-    const img = typeof pokemon.img === "string" ? pokemon.img : "";
-
+    const { name, img } = pokemons[index];
+    
+    // Create card elements
     const card = document.createElement("div");
     card.className = "card";
     
