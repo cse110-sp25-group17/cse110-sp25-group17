@@ -10,20 +10,20 @@ const container = document.getElementById("card-container");
 function showCard(index) {
   container.innerHTML = "";
 
-  if (index < pokemons.length && index >= 0) {
-    const pokemon = { name: "Pikachu", img: "/images/pikachu.png" }; //placeholder
-    
+  if (index >= 0 && index < pokemons.length) {
+    const { name, img } = pokemons[index]; // correct and used
+
     // Create card elements
     const card = document.createElement("div");
     card.className = "card";
-    
+
     const image = document.createElement("img");
     image.src = img;
     image.alt = name;
-    
+
     const heading = document.createElement("h2");
     heading.textContent = name;
-    
+
     card.appendChild(image);
     card.appendChild(heading);
     container.appendChild(card);
@@ -32,6 +32,7 @@ function showCard(index) {
     container.innerHTML = "<h2>No Pokémon Here</h2>";
   }
 }
+
 
 function nextCard() {
   if (currentIndex < pokemons.length - 1) {
