@@ -10,7 +10,13 @@ const container = document.getElementById("card-container");
 function showCard(index) {
   container.innerHTML = "";
 
-  if (index >= 0 && index < pokemons.length) {
+  if (index >= 0 &&
+    index < pokemons.length &&
+    typeof pokemons[index] === "object" &&
+    pokemons[index] !== null &&
+    typeof pokemons[index].name === "string" &&
+    typeof pokemons[index].img === "string"
+  ) {
     const { name, img } = pokemons[index]; // correct and used
 
     // Create card elements
