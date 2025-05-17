@@ -28,12 +28,7 @@ function showCard(index) {
     card.appendChild(image);
     card.appendChild(heading);
     container.appendChild(card);
-    
-    setupSwipe(card);
-    
-    container.appendChild(card);
-    setupSwipe(card);
-    
+
   } else {
     container.innerHTML = "<h2>No Pokémon Here</h2>";
   }
@@ -64,13 +59,6 @@ function addPokemon() {
 }
 
 
-function handleSwipe(deltaX) {
-  if (deltaX < -50) {
-    nextCard();
-  } else if (deltaX > 50) {
-    prevCard();
-  }
-}
 
 // Attach button event listeners
 document.getElementById("next-btn").addEventListener("click", nextCard);
