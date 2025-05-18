@@ -64,12 +64,31 @@ function addPokemon() {
   }
 }
 
+function deletePokemon() {
+  if (pokemons.length > 0) {
+    pokemons.splice(currentIndex, 1);
+    currentIndex = Math.max(0, currentIndex - 1);
+    showCard(currentIndex);
+  }
+}
 
+function updatePokemon() {
+  if (pokemons[currentIndex]) {
+    const name = prompt("Edit Pokémon name:", pokemons[currentIndex].name);
+    const img = prompt("Edit image URL:", pokemons[currentIndex].img);
+    if (name && img) {
+      pokemons[currentIndex] = { name, img };
+      showCard(currentIndex);
+    }
+  }
+}
 
 // Attach button event listeners
 document.getElementById("next-btn").addEventListener("click", nextCard);
 document.getElementById("prev-btn").addEventListener("click", prevCard);
 document.getElementById("add-btn").addEventListener("click", addPokemon);
+document.getElementById("update-btn").addEventListener("click", updatePokemon); 
+document.getElementById("delete-btn").addEventListener("click", deletePokemon); 
 
 // Initial render
 showCard(currentIndex);
