@@ -10,8 +10,8 @@ const container = document.getElementById("card-container");
 function showCard(index) {
   container.innerHTML = "";
 
+  const pokemon = pokemons.at(index);
   if (index >= 0 && index < pokemons.length) {
-    const pokemon = pokemons[index];
     const name = pokemon.name;
     const img = pokemon.img;
 
