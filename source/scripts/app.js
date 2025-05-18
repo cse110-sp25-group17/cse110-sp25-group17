@@ -11,9 +11,11 @@ function showCard(index) {
   container.innerHTML = "";
 
   if (index >= 0 && index < pokemons.length) {
-    const { name, img } = pokemons[index]; // correct and used
+    const pokemon = pokemons[index];
+    const name = pokemon.name;
+    const img = pokemon.img;
 
-    // Create card elements
+    // Create Card Elem
     const card = document.createElement("div");
     card.className = "card";
 
@@ -32,6 +34,7 @@ function showCard(index) {
     container.innerHTML = "<h2>No Pokémon Here</h2>";
   }
 }
+
 
 
 function nextCard() {
