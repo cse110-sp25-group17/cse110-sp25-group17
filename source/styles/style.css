@@ -9,6 +9,13 @@ body {
   h1 {
     margin: 20px;
   }
+
+  .description {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: #444;
+  }
   
   #card-container {
     position: relative;
