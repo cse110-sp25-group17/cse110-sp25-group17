@@ -25,6 +25,9 @@ tools:
         - admin/
         - .github/
         - "**/*.md"
+    
+exclude_paths:
+  - admin/
 
 coverage:
   enabled: false
