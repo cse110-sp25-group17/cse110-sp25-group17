@@ -48,7 +48,7 @@ function prevCard() {
   }
 }
 
-// ✅ NEW FUNCTION to check if Pokémon name is legit
+// check if Pokémon name is legit
 async function isValidPokemon(name) {
   try {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
@@ -58,11 +58,17 @@ async function isValidPokemon(name) {
   }
 }
 
-// ✅ UPDATED addPokemon function with validation
-async function addPokemon() {
-  const name = prompt("Enter Pokémon name:");
-  if (!name) return;
+// helper to capitalize name when adding
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
 
+// updated addPokemon function with validation
+async function addPokemon() {
+  const nameInput = prompt("Enter Pokémon name:");
+  if (!nameInput) return;
+
+  const name = nameInput.toLowerCase();
   const isValid = await isValidPokemon(name);
   if (!isValid) {
     alert("Invalid Pokémon name. Please try again.");
@@ -71,15 +77,15 @@ async function addPokemon() {
 
   let img = prompt("Enter image URL (leave blank to use default):");
   if (!img) {
-    // Auto-fetch sprite from PokéAPI
-    const pokeData = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`).then(res => res.json());
+    const pokeData = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then(res => res.json());
     img = pokeData.sprites.front_default || "";
   }
 
-  pokemons.push({ name, img });
+  pokemons.push({ name: capitalize(name), img });
   currentIndex = pokemons.length - 1;
   showCard(currentIndex);
 }
+
 
 // Button event listeners
 document.getElementById("next-btn").addEventListener("click", nextCard);
