@@ -50,12 +50,14 @@ function prevCard() {
 
 // check if Pokémon name is legit
 async function isValidPokemon(name) {
-  try {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
-    return res.ok;
-  } catch {
-    return false;
-  }
+
+  // creates a recquest to the API to check if the name is valid
+  const url = `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`;
+  const res = await fetch(url).catch(() => null);
+
+  // if the name is valid, the API will return a 200 status code
+  // if the name is invalid, it will return a 404 status code
+  return res?.ok || false;
 }
 
 // helper to capitalize name when adding
@@ -75,12 +77,15 @@ async function addPokemon() {
     return;
   }
 
+  // when adding a pokemon, it lets you choose a custom image
+  // or a default one from the API
   let img = prompt("Enter image URL (leave blank to use default):");
   if (!img) {
     const pokeData = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then(res => res.json());
     img = pokeData.sprites.front_default || "";
   }
 
+  // pushes the pokemon onto the array
   pokemons.push({ name: capitalize(name), img });
   currentIndex = pokemons.length - 1;
   showCard(currentIndex);
