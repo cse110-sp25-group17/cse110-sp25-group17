@@ -77,8 +77,9 @@ function addPokemon() {
   }
 }
 
+// removes the current pokemon from the activeDeck
 function removePokemon() {
-  if (activeDeck.length == 0) {
+  if (activeDeck.length === 0) {
     return;
   }
   activeDeck.splice(currentIndex, 1);
