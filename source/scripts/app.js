@@ -77,8 +77,28 @@ function addPokemon() {
   }
 }
 
+// removes the current pokemon from the activeDeck
+function removePokemon() {
+  if (activeDeck.length === 0) {
+    return;
+  }
+  activeDeck.splice(currentIndex, 1);
+  
+  if(activeDeck.length === 0){
+    container.innerHTML = "<h2>No Pokémon Here</h2>";
+    return;
+  }if(currentIndex >= activeDeck.length){
+    currentIndex = activeDeck.length - 1;
+  }
+  else{
+    showCard(currentIndex);
+  }
+
+}
+
 
 // Attach button event listeners
+document.getElementById("delete-btn").addEventListener("click",removePokemon);
 document.getElementById("next-btn").addEventListener("click", nextCard);
 document.getElementById("prev-btn").addEventListener("click", prevCard);
 document.getElementById("add-btn").addEventListener("click", addPokemon);
