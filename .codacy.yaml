@@ -11,23 +11,17 @@ tools:
       include_paths:
         - source/
         - specs/
-      exclude_paths:
-        - admin/
-        - .github/
-        - "**/*.md"
 
   stylelint:
     patterns:
       include_paths:
         - source/
         - specs/
-      exclude_paths:
-        - admin/
-        - .github/
-        - "**/*.md"
     
 exclude_paths:
   - admin/
+  - .github/
+  - "**/*.md"
 
 coverage:
   enabled: false
