@@ -1,8 +1,7 @@
-let currentIndex = 0;
-const container = document.getElementById("card-container");
-let activeDeck = [];
+export let currentIndex = 0;
+export let activeDeck = [];
 
-async function loadAllPokemon() {
+export async function loadAllPokemon() {
   const limit = 151;
   for (let id = 1; id <= limit; id++) {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -19,7 +18,10 @@ async function loadAllPokemon() {
   showCard(0); //show the first card
 }
 
-function showCard(index) {
+export function showCard(index) {
+  const container = document.getElementById('card-container');
+  if (!container) return;  
+
   container.innerHTML = "";
 
   const pokemon = activeDeck.at(index);
@@ -48,21 +50,24 @@ function showCard(index) {
 
 
 
-function nextCard() {
+export function nextCard() {
+  // const container = document.getElementById("card-container");
   if (currentIndex < activeDeck.length - 1) {
     currentIndex++;
     showCard(currentIndex);
   }
 }
 
-function prevCard() {
+export function prevCard() {
+  // const container = document.getElementById("card-container");
   if (currentIndex > 0) {
     currentIndex--;
     showCard(currentIndex);
   }
 }
 
-function addPokemon() {
+export function addPokemon() {
+//  const container = document.getElementById("card-container");
   const name = prompt("Enter Pokémon name:");
   const img = prompt("Enter image URL:");
   if (name && img) {
@@ -78,7 +83,8 @@ function addPokemon() {
 }
 
 // removes the current pokemon from the activeDeck
-function removePokemon() {
+export function removePokemon() {
+//  const container = document.getElementById("card-container");
   if (activeDeck.length === 0) {
     return;
   }
@@ -90,18 +96,20 @@ function removePokemon() {
   }if(currentIndex >= activeDeck.length){
     currentIndex = activeDeck.length - 1;
   }
-  else{
     showCard(currentIndex);
-  }
+  
 
 }
-
-
+// setter function so test file can access non-exported currentIndex
+export function setCurrentIndex(index) {
+  currentIndex = index;
+}
 // Attach button event listeners
-document.getElementById("delete-btn").addEventListener("click",removePokemon);
-document.getElementById("next-btn").addEventListener("click", nextCard);
-document.getElementById("prev-btn").addEventListener("click", prevCard);
-document.getElementById("add-btn").addEventListener("click", addPokemon);
+document.getElementById("delete-btn")?.addEventListener("click",removePokemon);
+document.getElementById("next-btn")?.addEventListener("click", nextCard);
+document.getElementById("prev-btn")?.addEventListener("click", prevCard);
+document.getElementById("add-btn")?.addEventListener("click", addPokemon);
 
-// Initial render
-loadAllPokemon();
+window?.addEventListener("DOMContentLoaded", () => {
+  loadAllPokemon();
+});
