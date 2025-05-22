@@ -50,9 +50,10 @@ describe("removePokemon()", () => {
     expect(app.activeDeck[0].name).toBe("A");
     expect(app.currentIndex).toBe(0);
 
-   // check 
-    const html = document.getElementById("card-container").innerHTML;
-    expect(html).toContain("A");
-    expect(html).not.toContain("B");
+// check 
+    const heading = document.querySelector("#card-container h2");
+    expect(heading.textContent).toBe("A");
+    expect(heading.textContent).not.toBe("B");
+
   });
 });

@@ -20,7 +20,7 @@ export async function loadAllPokemon() {
 
 export function showCard(index) {
   const container = document.getElementById('card-container');
-  if (!container) return;            // graceful fail in tests
+  if (!container) return;  
 
   container.innerHTML = "";
 
@@ -51,7 +51,7 @@ export function showCard(index) {
 
 
 export function nextCard() {
-  const container = document.getElementById("card-container");
+  // const container = document.getElementById("card-container");
   if (currentIndex < activeDeck.length - 1) {
     currentIndex++;
     showCard(currentIndex);
@@ -100,6 +100,7 @@ export function removePokemon() {
   
 
 }
+// setter function so test file can access non-exported currentIndex
 export function setCurrentIndex(index) {
   currentIndex = index;
 }
