@@ -1,17 +1,31 @@
-const pokemons = [
-  { name: "Bulbasaur", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" },
-  { name: "Charmander", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" },
-  { name: "Squirtle", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" }
-];
+export let currentIndex = 0;
+export let activeDeck = [];
 
-let currentIndex = 0;
-const container = document.getElementById("card-container");
+export async function loadAllPokemon() {
+  const limit = 151;
+  for (let id = 1; id <= limit; id++) {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await res.json();
 
-function showCard(index) {
+    activeDeck.push({
+      id: data.id,
+      name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
+      img: data.sprites.front_default,
+      types: data.types.map(t => t.type.name)
+    });
+  }
+
+  showCard(0); //show the first card
+}
+
+export function showCard(index) {
+  const container = document.getElementById('card-container');
+  if (!container) return;  
+
   container.innerHTML = "";
 
-  const pokemon = pokemons.at(index);
-  if (index >= 0 && index < pokemons.length) {
+  const pokemon = activeDeck.at(index);
+  if (index >= 0 && index < activeDeck.length) {
     const name = pokemon.name;
     const img = pokemon.img;
 
@@ -28,20 +42,23 @@ function showCard(index) {
     card.appendChild(image);
     card.appendChild(heading);
     container.appendChild(card);
-
-  } else {
+  } 
+  else {
     container.innerHTML = "<h2>No Pokémon Here</h2>";
   }
 }
 
+
 function nextCard() {
-  if (currentIndex < pokemons.length - 1) {
+  // const container = document.getElementById("card-container");
+  if (currentIndex < activeDeck.length - 1) {
     currentIndex++;
     showCard(currentIndex);
   }
 }
 
-function prevCard() {
+export function prevCard() {
+  // const container = document.getElementById("card-container");
   if (currentIndex > 0) {
     currentIndex--;
     showCard(currentIndex);
@@ -86,16 +103,43 @@ async function addPokemon() {
   }
 
   // pushes the pokemon onto the array
-  pokemons.push({ name: capitalize(name), img });
-  currentIndex = pokemons.length - 1;
+  activeDeck.push({
+    id: activeDeck.length + 1,
+    name,
+    img,
+    types: []
+  });
+  currentIndex = activeDeck.length - 1;
   showCard(currentIndex);
 }
 
+// removes the current pokemon from the activeDeck
+export function removePokemon() {
+  const container = document.getElementById("card-container");
+  if (activeDeck.length === 0) {
+    return;
+  }
+  activeDeck.splice(currentIndex, 1);
+  
+  if(activeDeck.length === 0){
+    container.innerHTML = "<h2>No Pokémon Here</h2>";
+    return;
+  }if(currentIndex >= activeDeck.length){
+    currentIndex = activeDeck.length - 1;
+  }
+    showCard(currentIndex);
 
-// Button event listeners
-document.getElementById("next-btn").addEventListener("click", nextCard);
-document.getElementById("prev-btn").addEventListener("click", prevCard);
-document.getElementById("add-btn").addEventListener("click", addPokemon);
+}
+// setter function so test file can access non-exported currentIndex
+export function setCurrentIndex(index) {
+  currentIndex = index;
+}
+// Attach button event listeners
+document.getElementById("delete-btn")?.addEventListener("click",removePokemon);
+document.getElementById("next-btn")?.addEventListener("click", nextCard);
+document.getElementById("prev-btn")?.addEventListener("click", prevCard);
+document.getElementById("add-btn")?.addEventListener("click", addPokemon);
 
-// Initial render
-showCard(currentIndex);
+window?.addEventListener("DOMContentLoaded", () => {
+  loadAllPokemon();
+});
