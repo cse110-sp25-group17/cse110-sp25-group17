@@ -1,5 +1,6 @@
 export let currentIndex = 0;
 export let activeDeck = [];
+showCard(0); // show the first card on load
 
 export async function loadAllPokemon() {
   const limit = 151;
