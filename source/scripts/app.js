@@ -105,7 +105,7 @@ async function addPokemon() {
   // pushes the pokemon onto the array
   activeDeck.push({
     id: activeDeck.length + 1,
-    name,
+    name: capitalize(name),
     img,
     types: []
   });
