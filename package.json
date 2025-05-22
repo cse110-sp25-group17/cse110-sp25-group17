@@ -5,7 +5,7 @@
   "description": "[Team Page](https://cse110-sp25-group17.github.io/cse110-sp25-group17/admin/team.html)",
   "main": "index.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "lint": "eslint .",
     "lint:css": "stylelint '**/*.{css,scss}'"
   },
