@@ -114,3 +114,38 @@ document.getElementById("add-btn")?.addEventListener("click", addPokemon);
 window?.addEventListener("DOMContentLoaded", () => {
   loadAllPokemon();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const deckBtn = document.getElementById("deck-view-btn");
+  const gameBtn = document.getElementById("game-view-btn");
+  const addEditBtn = document.getElementById("add-edit-btn");
+  const modal = document.getElementById("popup-modal");
+  const editBtn = document.getElementById("edit-btn");
+  const deleteBtn = document.getElementById("delete-btn");
+  const closeBtn = document.getElementById("close-modal-btn");
+
+  if (deckBtn) deckBtn.addEventListener("click", () => {
+    window.location.href = "collection_2.html";
+  });
+
+  if (gameBtn) gameBtn.addEventListener("click", () => {
+    window.location.href = "game_page.html";
+  });
+
+  if (addEditBtn) addEditBtn.addEventListener("click", () => {
+    modal.style.display = "block";
+  });
+
+  if (closeBtn) closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  if (editBtn) editBtn.addEventListener("click", () => {
+    window.location.href = "edit_page.html";
+  });
+
+  if (deleteBtn) deleteBtn.addEventListener("click", () => {
+    alert("I havent done this yet");
+    modal.style.display = "none";
+  });
+});
