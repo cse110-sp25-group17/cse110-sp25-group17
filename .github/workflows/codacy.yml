@@ -18,21 +18,20 @@ jobs:
         uses: codacy/codacy-analysis-cli-action@97bf5df3c09e75f5bcd72695998f96ebd701846e
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-  
-  # ADD THIS BACK LATER WHEN WE HAVE UNIT TESTS
-  # upload-coverage:
-  #   runs-on: ubuntu-latest
-  #   needs: codacy-analysis
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+  test-and-coverage:
+    name: Run Tests & Upload Coverage to Codacy
+    runs-on: ubuntu-latest
+    needs: codacy-analysis
 
-  #     - name: Run Tests and Generate Coverage
-  #       run: npm run test
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Upload coverage to Codacy
-  #       uses: codacy/codacy-coverage-reporter-action@v1
-  #       with:
-  #         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-  #         coverage-reports: coverage/lcov.info
+      - name: Run tests (and generate coverage)
+        run: npm run test
+
+      - name: Upload coverage to Codacy
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage/lcov.info
