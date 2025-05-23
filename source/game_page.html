@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pokémon Quiz</title>
+  <link rel="stylesheet" href="styles/game.css" />
+</head>
+<body>
+  <div class="header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pokémon_logo.svg"
+         alt="Pokemon Logo" class="logo" />
+  </div>
+
+  <div class="game-layout">
+    <div class="left-panel">
+      <h2>Which type of Pokémon is this?</h2>
+      <div class="type-options" id="options">
+        <!-- Buttons inserted dynamically -->
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <img id="pokemon-img" src="" alt="Pokemon" class="pokemon-img" />
+      <button onclick="goToCollection()" class="collection-btn">Go to Collection</button>
+      <p id="result-msg"></p>
+    </div>
+  </div>
+
+  <script src="scripts/game.js"></script>
+</body>
+</html>
