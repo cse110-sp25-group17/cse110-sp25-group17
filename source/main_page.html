@@ -7,7 +7,12 @@
   <title>Pokémon Flashcards</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
-<body>
+<body class="flashcards-page">
+  <div class="header"> <!-- added header with Pokémon logo -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pokémon_logo.svg"
+         alt="Pokemon Logo" class="logo" />
+  </div>
+
   <div class="app">
     <h1>Pokémon Flashcards</h1>
     
@@ -27,6 +32,10 @@
       <button id ="delete-btn">Delete Pokemon</button>
     </div>
   </div>
+
+  <!-- buttons to pages -->
+  <div id="navigation-buttons">
+    <button onclick="location.href='game_page.html'">Go To Game Page</button>
 
   <!-- Load Hammer.js before app.js if you're going to use it -->
   <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
