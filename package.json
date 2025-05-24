@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
-    "lint": "eslint .",
+    "lint": "eslint . --config pipeline/eslint.config.mjs",
     "lint:css": "stylelint '**/*.{css,scss}'"
   },
   "repository": {
