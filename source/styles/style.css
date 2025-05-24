@@ -4,7 +4,22 @@ body {
   margin: 0;
   padding: 0;
 }
+/* Global types for html */
+h1 {
+  color: #333;
+  font-size: 36px;
+  margin: 0;
+  text-align: center;
+}
 
+h2 {
+  color: #333;
+  font-size: 28px;
+  margin: 0;
+  text-align: center; /* Centered headings for better alignment (can change if needed) */
+}
+
+/* Header styles */
 .header {
   background-color: #ffcc00;
   text-align: center;
@@ -12,10 +27,12 @@ body {
   border-bottom: 4px solid #0074d9;
 }
 
+
 .logo {
   width: 220px;
 }
 
+/* Main content styles */
 .game-layout {
   display: flex;
   justify-content: space-between;
@@ -49,7 +66,7 @@ body {
   cursor: pointer;
   color: white;
   width: 150px;
-  background-color: #d3d3d3; /* default fallback */
+  background-color: #d3d3d3; /* Default background color */
 }
 
 .type-btn:hover {
@@ -67,6 +84,7 @@ body {
   text-align: center;
 }
 
+/* Pokemon image and collection button styles */
 .pokemon-img {
   width: 300px;
   height: 300px;
@@ -107,6 +125,7 @@ body {
   justify-items: center;
 }
 
+/* Pokemon card styles */
 .pokemon-card {
   background: white;
   border: 2px solid #d5d5d5;
