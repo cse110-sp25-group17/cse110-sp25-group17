@@ -19,6 +19,24 @@ h2 {
   text-align: center; /* Centered headings for better alignment (can change if needed) */
 }
 
+/* Button Styles for Collection 1 page*/
+button {
+  background-color: #0074d9;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#buttons {
+  text-align: center;  /* flexbox (flexible box layout) creates responsive layouts and helps align things horizontally or vertically */
+  margin-top: 20px;
+}
+
+
 /* Header styles */
 .header {
   background-color: #ffcc00;
@@ -32,7 +50,7 @@ h2 {
   width: 220px;
 }
 
-/* Main content styles */
+/* game page content */
 .game-layout {
   display: flex;
   justify-content: space-between;
@@ -127,22 +145,64 @@ h2 {
 
 /* Pokemon card styles */
 .pokemon-card {
+  width: 200px;
+  height: 280px;
   background: white;
-  border: 2px solid #d5d5d5;
-  border-radius: 12px;
+  border: 3px solid #0074d9;
+  border-radius: 14px;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 150px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .pokemon-card img {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   object-fit: contain;
 }
 
 .pokemon-card h3 {
   margin-top: 10px;
   font-size: 20px;
+}
+
+
+/* flashcard style for collection 1 */
+.flashcards-page #card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 30px auto;
+  max-width: 900px;
+}
+
+
+/* edit mode styles */
+/* Green theme for edit page */
+.edit_mode {
+  background: linear-gradient(to bottom, #e0ffe0, #ffffff); /* soft green gradient */
+}
+
+/* Optional: adjust header or card colors */
+.edit_mode .header {
+  background-color: #88cc88; /* green header */
+  border-bottom: 4px solid #339933;
+}
+
+.edit_mode .pokemon-card {
+  border: 2px solid #66bb66;
+  box-shadow: 0 4px 10px rgba(0, 128, 0, 0.15);
+}
+
+.edit_mode h1 {
+  color: #2d6b2d;
+}
+
+.edit_mode button {
+  background-color: #4CAF50; /* green buttons */
+}
+
+.edit_mode button:hover {
+  background-color: #45a049;
 }
