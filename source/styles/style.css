@@ -1,91 +1,129 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f8ff;
-    margin: 0;
-    padding: 0;
-  }
-  
-  h1 {
-    margin: 20px;
-  }
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #e0f7ff, #ffffff);
+  margin: 0;
+  padding: 0;
+}
 
-  .description {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    color: #444;
-  }
-  
-  #card-container {
-    position: relative;
-    width: 300px;
-    height: 400px;
-    margin: 20px auto;
-    perspective: 1000px;
-  }
-  
-  .card {
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgb(0 0 0 /20%);
-    position: absolute;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-    overflow: hidden;
-  }
-  
-  .card img {
-    width: 100%;
-    height: 70%;
-    object-fit: contain;
-  }
-  
-  .card h2 {
-    margin: 10px 0;
-  }
+.header {
+  background-color: #ffcc00;
+  text-align: center;
+  padding: 20px;
+  border-bottom: 4px solid #0074d9;
+}
 
-  #buttons {
-    margin-top: 20px;
-  }
-  
-  button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
+.logo {
+  width: 220px;
+}
 
-  /* Override for collection grid cards */
-  .collection-grid .card {
-    position: static;
-    width: 150px;
-    height: auto;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
-  }
+.game-layout {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+}
 
-  .collection-grid .card img {
-    width: 96px;
-    height: 96px;
-    object-fit: contain;
-  }
+.left-panel {
+  width: 35%;
+  text-align: center;
+}
 
-  .collection-grid {
+.left-panel h2 {
+  color: #0074d9;
+  margin-bottom: 30px;
+}
+
+.type-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.type-btn {
+  padding: 12px 20px;
+  font-size: 18px;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: 0.2s ease;
+  cursor: pointer;
+  color: white;
+  width: 150px;
+  background-color: #d3d3d3; /* default fallback */
+}
+
+.type-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.selected {
+  border-color: yellow;
+  box-shadow: 0 0 12px yellow;
+}
+
+.right-panel {
+  width: 55%;
+  text-align: center;
+}
+
+.pokemon-img {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  border: 4px solid #ffcc00;
+  border-radius: 16px;
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.collection-btn {
+  background-color: #ffcc00;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.collection-btn:hover {
+  background-color: #ffdd33;
+}
+
+#result-msg {
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.collection-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  margin: 2rem 0;
-  }
+  gap: 20px;
+  padding: 30px;
+  justify-items: center;
+}
+
+.pokemon-card {
+  background: white;
+  border: 2px solid #d5d5d5;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 150px;
+}
+
+.pokemon-card img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.pokemon-card h3 {
+  margin-top: 10px;
+  font-size: 20px;
+}
