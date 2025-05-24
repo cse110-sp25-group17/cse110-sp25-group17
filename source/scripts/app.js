@@ -68,7 +68,7 @@ export function prevCard() {
 }
 
 export function addPokemon() {
-//  const container = document.getElementById("card-container");
+  //  const container = document.getElementById("card-container");
   const name = prompt("Enter Pokémon name:");
   const img = prompt("Enter image URL:");
   if (name && img) {
@@ -85,7 +85,7 @@ export function addPokemon() {
 
 // removes the current pokemon from the activeDeck
 export function removePokemon() {
-//  const container = document.getElementById("card-container");
+  const container = document.getElementById("card-container");
   if (activeDeck.length === 0) {
     return;
   }
