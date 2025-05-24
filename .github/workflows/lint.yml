@@ -33,3 +33,6 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
+
+      - name: Run StyleLint
+        run: npm run lint:css

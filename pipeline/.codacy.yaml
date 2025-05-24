@@ -6,7 +6,7 @@ engines:
 
 tools:
   eslint:
-    config: eslint.config.mjs
+    config: pipeline/eslint.config.mjs
     patterns:
       include_paths:
         - source/
