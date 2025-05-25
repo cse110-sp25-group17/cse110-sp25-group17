@@ -118,13 +118,17 @@ export async function addPokemon() {
   currentIndex = activeDeck.length - 1;
   showCard(currentIndex);
 }
+function sanitize(str) {
+  return str.replace(/[<>"'`;]/g, "");
+}
 
 export function setNickname(){
   if (activeDeck.length === 0){
     return;
   }const newNickName = prompt("Enter a new nickname for the Pokémon:");
   if( newNickName !== null ){
-    activeDeck[currentIndex].nickname = newNickName;
+    const sanitizedNickName = sanitize(newNickName);
+    activeDeck[currentIndex].nickname = sanitizedNickName;
     showCard(currentIndex);
   }
 }
