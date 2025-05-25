@@ -106,9 +106,9 @@ function generateOptions(correctType) {
   });
 }
 
-function goToCollection() {
-  window.location.href = "collection_1.html";
-}
+// function goToCollection() {
+//   window.location.href = "collection_1.html";
+// }
 
 // Init
 document.addEventListener("DOMContentLoaded", async () => {
