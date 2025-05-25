@@ -1,5 +1,6 @@
 export let currentIndex = 0;
 export let activeDeck = [];
+showCard(0); // show the first card on load
 
 export async function loadAllPokemon() {
   const limit = 151;
@@ -65,6 +66,7 @@ export function prevCard() {
   }
 }
 
+
 // check if Pokémon name is legit
 async function isValidPokemon(name) {
 
@@ -83,7 +85,7 @@ function capitalize(str) {
 }
 
 // updated addPokemon function with validation
-async function addPokemon() {
+export async function addPokemon() {
   const nameInput = prompt("Enter Pokémon name:");
   if (!nameInput) return;
 
@@ -93,7 +95,6 @@ async function addPokemon() {
     alert("Invalid Pokémon name. Please try again.");
     return;
   }
-
   // when adding a pokemon, it lets you choose a custom image
   // or a default one from the API
   let img = prompt("Enter image URL (leave blank to use default):");
