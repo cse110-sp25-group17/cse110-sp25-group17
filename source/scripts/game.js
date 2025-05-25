@@ -35,6 +35,7 @@ async function loadPokemon() {
 
 // Shuffle array
 function shuffleArray(arr) {
+  //ensure that arr is an array
   if (!Array.isArray(arr)) {
     throw new TypeError("Expected an array to shuffle.");
   }
@@ -67,6 +68,13 @@ function typeColor(type) {
     fairy: "#ffccff",
     fighting: "#cc3333"
   };
+
+  // Restricts type to one we have covered for
+  const validTypes = Object.keys(colors);
+  if (!validTypes.includes(type)) {
+    return "#d3d3d3"; // generic grey
+  }
+  
   return colors[type] || "#d3d3d3";
 }
 
