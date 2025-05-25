@@ -3,14 +3,31 @@ let selectedAnswer = null;
 let deck = [];
 let allTypes = [];
 
-// Load all Pokémon types
+// // Load all Pokémon types
+// async function fetchAllTypes() {
+//   const res = await fetch("https://pokeapi.co/api/v2/type");
+//   const data = await res.json();
+//   allTypes = data.results //needs improvement for security(line 10)
+  
+//     .map(t => t.name)
+//     .filter(name => !["shadow", "unknown"].includes(name));
+// }
+
 async function fetchAllTypes() {
-  const res = await fetch("https://pokeapi.co/api/v2/type");
-  const data = await res.json();
-  allTypes = data.results
-    .map(t => t.name)
-    .filter(name => !["shadow", "unknown"].includes(name));
+  try {
+    const response = await fetch("https://pokeapi.co/api/v2/type");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    allTypes = data.results;
+  } catch (error) {
+    console.error("Failed to load types:", error);
+    // Optionally show user feedback
+  }
 }
+
 
 // Load a Pokémon
 async function loadPokemon() {
@@ -106,9 +123,6 @@ function generateOptions(correctType) {
   });
 }
 
-// function goToCollection() {
-//   window.location.href = "collection_1.html";
-// }
 
 // Init
 document.addEventListener("DOMContentLoaded", async () => {
