@@ -29,7 +29,7 @@ export function showCard(index) {
   const pokemon = activeDeck.at(index);
   if (index >= 0 && index < activeDeck.length) {
     const name = pokemon.name;
-    const pokemonNickName = pokemon.pokemonNickName || "";
+    const pokemonNickName = pokemon.nickname || "";
     const img = pokemon.img;
 
     const card = document.createElement("div");
@@ -94,7 +94,7 @@ export function setNickname(){
     return;
   }const newNickName = prompt("Enter a new nickname for the Pokémon:");
   if( newNickName !== null ){
-    activeDeck[currentIndex].pokemonNickName = newNickName;
+    activeDeck[currentIndex].nickname = newNickName;
     showCard(currentIndex);
   }
 }
