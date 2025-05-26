@@ -206,3 +206,12 @@ button {
 .edit-mode button:hover {
   background-color: #45a049;
 }
+
+.description {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
