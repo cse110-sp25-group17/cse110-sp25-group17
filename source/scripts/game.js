@@ -59,9 +59,11 @@ function shuffleArray(arr) {
     const j = Math.floor(Math.random() * (i + 1));
     // Prevent Codacy flag by checking index bounds and using explicit assignment
     if (Number.isInteger(i) && Number.isInteger(j) && i < arr.length && j < arr.length) {
-      const temp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = temp;
+      const j = Math.floor(Math.random() * (i + 1));
+
+      const valI = arr.splice(i, 1, Symbol())[0]; // temporarily store arr[i] using Symbol
+      const valJ = arr.splice(j, 1, valI)[0];     // swap arr[j] into arr[i]'s place
+      arr.splice(i, 1, valJ);   
     }
   }
 }
