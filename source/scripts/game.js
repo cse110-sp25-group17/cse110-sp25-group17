@@ -33,7 +33,7 @@ async function loadPokemon() {
   generateOptions(primaryType);
 }
 
-// Shuffle array
+// Shuffle array 
 function shuffleArray(arr) {
   //ensure that arr is an array
   if (!Array.isArray(arr)) {
@@ -42,7 +42,9 @@ function shuffleArray(arr) {
   
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
   }
 }
 
@@ -69,7 +71,7 @@ const typeColorMap = new Map([
 
 function typeColor(type) {
   // Generate color based on type
-  return typeColorMap.get(type) || "#d3d3d3";
+  return typeColorMap.get(type) || "#d3d3d3"; // The map worked!!!
 }
 
 // Generate type buttons
