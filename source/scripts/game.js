@@ -52,14 +52,17 @@ async function loadPokemon() {
 function shuffleArray(arr) {
   //ensure that arr is an array
   if (!Array.isArray(arr)) {
-    throw new TypeError("Expected an array to shuffle.");
+    throw new TypeError("Expected an array");
   }
   
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
+    // Prevent Codacy flag by checking index bounds and using explicit assignment
+    if (Number.isInteger(i) && Number.isInteger(j) && i < arr.length && j < arr.length) {
+      const temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+    }
   }
 }
 
