@@ -5,27 +5,22 @@ let allTypes = [];
 
 // Load all Pokémon types
 async function fetchAllTypes() {
-  try {
-    const res = await fetch("https://pokeapi.co/api/v2/type");
+  const res = await fetch("https://pokeapi.co/api/v2/type");
 
-    if (!res.ok) {
-      throw new Error(`Network response was not ok (status ${res.status})`);
-    }
-
-    const data = await res.json();
-
-    if (!data.results || !Array.isArray(data.results)) {
-      throw new Error("Invalid data format from API");
-    }
-    
-    allTypes = data.results //needs improvement for security(line 10)
-    
-      .map(t => t.name)
-      .filter(name => !["shadow", "unknown"].includes(name));
-  } catch (error) {
-    console.error("Failed to fetch Pokémon types:", error);
-    allTypes = []; // fallback to empty array or safe default
+  if (!res.ok) {
+    throw new Error(`Network response was not ok (status ${res.status})`);
   }
+
+  const data = await res.json();
+
+  if (!data.results || !Array.isArray(data.results)) {
+    throw new Error("Invalid data format from API");
+  }
+  
+  allTypes = data.results //needs improvement for security(line 10)
+  
+    .map(t => t.name)
+    .filter(name => !["shadow", "unknown"].includes(name));
 }
 
 
