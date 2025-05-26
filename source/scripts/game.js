@@ -46,29 +46,30 @@ function shuffleArray(arr) {
   }
 }
 
-// Generate color based on type
+const typeColorMap = new Map([
+  ["fire", "#ff6633"],
+  ["water", "#3399ff"],
+  ["grass", "#33cc33"],
+  ["electric", "#f9cc00"],
+  ["poison", "#aa00ff"],
+  ["normal", "#999999"],
+  ["flying", "#77ccff"],
+  ["bug", "#99cc33"],
+  ["steel", "#888888"],
+  ["psychic", "#ff3399"],
+  ["ground", "#cc9966"],
+  ["rock", "#aa9966"],
+  ["ice", "#66ccff"],
+  ["dragon", "#9966cc"],
+  ["ghost", "#6666cc"],
+  ["dark", "#444444"],
+  ["fairy", "#ffccff"],
+  ["fighting", "#cc3333"]
+]);
+
 function typeColor(type) {
-  switch (type) {
-    case "fire": return "#ff6633";
-    case "water": return "#3399ff";
-    case "grass": return "#33cc33";
-    case "electric": return "#f9cc00";
-    case "poison": return "#aa00ff";
-    case "normal": return "#999999";
-    case "flying": return "#77ccff";
-    case "bug": return "#99cc33";
-    case "steel": return "#888888";
-    case "psychic": return "#ff3399";
-    case "ground": return "#cc9966";
-    case "rock": return "#aa9966";
-    case "ice": return "#66ccff";
-    case "dragon": return "#9966cc";
-    case "ghost": return "#6666cc";
-    case "dark": return "#444444";
-    case "fairy": return "#ffccff";
-    case "fighting": return "#cc3333";
-    default: return "#d3d3d3";
-  }
+  // Generate color based on type
+  return typeColorMap.get(type) || "#d3d3d3";
 }
 
 // Generate type buttons
