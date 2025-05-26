@@ -5,7 +5,7 @@ let allTypes = [];
 
 // Load all Pokémon types
 async function fetchAllTypes() {
-  try {
+  await (async () => {
     const res = await fetch("https://pokeapi.co/api/v2/type");
 
     if (!res.ok) {
@@ -17,15 +17,14 @@ async function fetchAllTypes() {
     if (!data.results || !Array.isArray(data.results)) {
       throw new Error("Invalid data format from API");
     }
-    
-    allTypes = data.results //needs improvement for security(line 10)
-    
+
+    allTypes = data.results
       .map(t => t.name)
       .filter(name => !["shadow", "unknown"].includes(name));
-  } catch (error) {
+  })().catch(error => {
     console.error("Failed to fetch Pokémon types:", error);
-    allTypes = []; // fallback to empty array or safe default
-  }
+    allTypes = []; // fallback
+  });
 }
 
 
