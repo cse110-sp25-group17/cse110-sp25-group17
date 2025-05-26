@@ -5,7 +5,7 @@ let allTypes = [];
 
 // Load all Pokémon types
 async function fetchAllTypes() {
-  try{
+  try {
     const res = await fetch("https://pokeapi.co/api/v2/type");
 
     if (!res.ok) {
