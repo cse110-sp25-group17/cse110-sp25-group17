@@ -31,7 +31,7 @@ export function showCard(index) {
     const img = pokemon.img;
 
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "pokemon-card";
 
     const image = document.createElement("img");
     image.src = img;

@@ -1,97 +1,217 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f8ff;
-    margin: 0;
-    padding: 0;
-  }
-  
-  h1 {
-    margin: 20px;
-  }
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #e0f7ff, #fff);
+  margin: 0;
+  padding: 0;
+}
 
-  .description {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    color: #444;
-  }
-  
-  #card-container {
-    position: relative;
-    width: 300px;
-    height: 400px;
-    margin: 20px auto;
-    perspective: 1000px;
-  }
-  
-  .card {
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgb(0 0 0 /20%);
-    position: absolute;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-    overflow: hidden;
-  }
-  
-  .card img {
-    width: 100%;
-    height: 70%;
-    object-fit: contain;
-  }
-  
-  .card h2 {
-    margin: 10px 0;
-  }
+/* Global types for html */
+h1 {
+  color: #333;
+  font-size: 36px;
+  margin: 0;
+  text-align: center;
+}
 
-  #buttons {
-    margin-top: 20px;
-  }
-  
-  button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
+h2 {
+  color: #333;
+  font-size: 28px;
+  margin: 0;
+  text-align: center; /* Centered headings for better alignment (can change if needed) */
+}
 
-  /* Override for collection grid cards */
-  .collection-grid .card {
-    position: static;
-    width: 150px;
-    height: auto;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
-    transition: transform 0.3s ease;
-  }
+/* Button Styles for Collection 1 page */
+button {
+  background-color: #0074d9;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
-  .collection-grid .card img {
-    width: 96px;
-    height: 96px;
-    object-fit: contain;
-  }
+#buttons {
+  text-align: center;  /* flexbox (flexible box layout) creates responsive layouts and helps align things horizontally or vertically */
+  margin-top: 20px;
+}
 
-  .collection-grid {
+
+/* Header styles */
+.header {
+  background-color: #fc0;
+  text-align: center;
+  padding: 20px;
+  border-bottom: 4px solid #0074d9;
+}
+
+
+.logo {
+  width: 220px;
+}
+
+/* game page content */
+.game-layout {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+.left-panel {
+  width: 35%;
+  text-align: center;
+}
+
+.left-panel h2 {
+  color: #0074d9;
+  margin-bottom: 30px;
+}
+
+.type-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.type-btn {
+  padding: 12px 20px;
+  font-size: 18px;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: 0.2s ease;
+  cursor: pointer;
+  color: white;
+  width: 150px;
+  background-color: #d3d3d3; /* Default background color */
+}
+
+.type-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.selected {
+  border-color: yellow;
+  box-shadow: 0 0 12px yellow;
+}
+
+.right-panel {
+  width: 55%;
+  text-align: center;
+}
+
+/* Pokemon image and collection button styles */
+.pokemon-img {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  border: 4px solid #fc0;
+  border-radius: 16px;
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.collection-btn {
+  background-color: #fc0;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.collection-btn:hover {
+  background-color: #fd3;
+}
+
+#result-msg {
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.collection-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  margin: 2rem 0;
-  }
-  
-  .collection-grid .card:hover {
-    transform: scale(1.1);
-    z-index: 1;
-  }
+  gap: 20px;
+  padding: 30px;
+  justify-items: center;
+}
+
+/* Pokemon card styles */
+.pokemon-card {
+  width: 200px;
+  height: 280px;
+  background: white;
+  border: 3px solid #0074d9;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 6px 12px rgb(0 0 0 /10%);
+}
+
+.pokemon-card img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.pokemon-card h3 {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+
+/* flashcard style for collection 1 */
+.flashcards-page #card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 30px auto;
+  max-width: 900px;
+}
+
+
+/* Green theme for edit page */
+.edit-mode {
+  background: linear-gradient(to bottom, #e0ffe0, #fff); /* soft green gradient */
+}
+
+/* Optional: adjust header or card colors */
+.edit-mode .header {
+  background-color: #8c8; /* green header */
+  border-bottom: 4px solid #393;
+}
+
+.edit-mode .pokemon-card {
+  border: 2px solid #6b6;
+  box-shadow: 0 4px 10px rgb(0 128 0 /15%);
+}
+
+.edit-mode h1 {
+  color: #2d6b2d;
+}
+
+.edit-mode button {
+  background-color: #4CAF50; /* green buttons */
+}
+
+.edit-mode button:hover {
+  background-color: #45a049;
+}
+
+.description {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

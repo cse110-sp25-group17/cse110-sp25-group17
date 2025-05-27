@@ -1,4 +1,4 @@
-<!-- edit page -->
+<!-- collection.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,17 +6,23 @@
   <title>Pokémon Collection</title>
   <link rel="stylesheet" href="styles/style.css">
 </head>
-<body class="edit-mode">
+<body>
   <div class="header"> <!-- Added header with Pokémon logo -->
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pokémon_logo.svg"
          alt="Pokemon Logo" class="logo" />
   </div>
-  <h1>Edit My Pokémon Collection</h1>
+  <h1>My Pokémon Collection</h1>
   <div id="collection-container" class="collection-grid">
     <!-- Collection cards will be inserted here (this is done in the collection.js file) -->
     
   </div>
-
+  
+  <!-- buttons done -->
+  <div id="collection-buttons">
+    <button onclick="location.href='edit_page.html'">Edit Mode</button>
+    <button onclick="location.href='main_page.html'">Back to Main Page</button>
+  </div>
+  
   <script src="scripts/collection.js"></script>
 </body>
 </html>
