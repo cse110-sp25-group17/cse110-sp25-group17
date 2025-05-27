@@ -1,15 +1,12 @@
-name: Codacy Static Analysis
-
+name: Run Tests
 on:
+  push:
+    branches: [ main ]
   pull_request:
-
-permissions:
-  contents: read
-  actions: read
-  checks: write
+    branches: [ main ]
 
 jobs:
-  codacy-analysis:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,17 +15,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          
+
       - name: Cache npm modules
         uses: actions/cache@v3
         with:
             path: ~/.npm
             key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-            
+
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@97bf5df3c09e75f5bcd72695998f96ebd701846e
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Run tests
+        run: npm run test
+
+      - name: Run Stylelint
+        run: npm run lint:css
