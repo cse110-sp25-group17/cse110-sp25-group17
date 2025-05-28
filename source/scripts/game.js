@@ -1,72 +1,24 @@
+// game.js
+/*
+- Loads a random Pokemon and sets its image in the UI (loadPokemon)
+- Shuffles and displays four type buttons, one correct and three wrongs (generateOptions + shuffleArray)
+- Handles the users answer, checks it against the current Pokémon’s  type, and shows a green “Correct!” or red “Oops” message.
+- On a correct guess, calls collection.add() to persist the catch and then renderCollection() to update the caught-Pokémon display.
+- After a short delay, clears the message and button state, then picks a new random Pokémon to continue the quiz.
+*/
+import { collection, renderCollection } from './collection.js';
+
+
 let currentPokemon = null;
 let selectedAnswer = null;
-let deck = [];
-let allTypes = [];
+// Gen I types (only these appear among Pokémon 1–151)
+const allTypes = [
+   "bug", "dragon", "electric", "fighting", "fire", 
+   "flying", "ghost", "grass", "ground", "ice",
+   "normal", "poison", "psychic", "rock", "water"
+];
 
-// Load all Pokémon types
-async function fetchAllTypes() {
-  await (async () => {
-    const res = await fetch("https://pokeapi.co/api/v2/type");
-
-    if (!res.ok) {
-      throw new Error(`Network response was not ok (status ${res.status})`);
-    }
-
-    const data = await res.json();
-
-    if (!data.results || !Array.isArray(data.results)) {
-      throw new Error("Invalid data format from API");
-    }
-
-    allTypes = data.results
-      .map(t => t.name)
-      .filter(name => !["shadow", "unknown"].includes(name));
-  })().catch(error => {
-    console.error("Failed to fetch Pokémon types:", error);
-    allTypes = []; // fallback
-  });
-}
-
-
-
-// Load a Pokémon
-async function loadPokemon() {
-  const id = Math.floor(Math.random() * 150) + 1;
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-  const data = await response.json();
-
-  const primaryType = data.types[0].type.name;
-
-  currentPokemon = {
-    name: data.name,
-    image: data.sprites.front_default,
-    type: primaryType
-  };
-
-  document.getElementById("pokemon-img").src = currentPokemon.image;
-  generateOptions(primaryType);
-}
-
-// Shuffle array 
-function shuffleArray(arr) {
-  //ensure that arr is an array
-  if (!Array.isArray(arr)) {
-    throw new TypeError("Expected an array");
-  }
-  
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    // Prevent Codacy flag by checking index bounds and using explicit assignment
-    if (Number.isInteger(i) && Number.isInteger(j) && i < arr.length && j < arr.length) {
-      const j = Math.floor(Math.random() * (i + 1));
-
-      const valI = arr.splice(i, 1, Symbol())[0]; // temporarily store arr[i] using Symbol
-      const valJ = arr.splice(j, 1, valI)[0];     // swap arr[j] into arr[i]'s place
-      arr.splice(i, 1, valJ);   
-    }
-  }
-}
-
+// Map the colors for each type
 const typeColorMap = new Map([
   ["fire", "#ff6633"],
   ["water", "#3399ff"],
@@ -88,6 +40,52 @@ const typeColorMap = new Map([
   ["fighting", "#cc3333"]
 ]);
 
+
+// Load a Pokémon
+async function loadPokemon() {
+  console.log('Loading new Pokemon...');
+  const id = Math.floor(Math.random() * 150) + 1;
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  const data = await response.json();
+
+  const primaryType = data.types[0].type.name;
+  console.log('Loaded Pokemon:', data.name, 'with type:', primaryType);
+
+  currentPokemon = {
+    id:    data.id,
+    name:  data.name,
+    image: data.sprites.front_default,
+    type:  primaryType
+  };
+
+  document.getElementById("pokemon-img").src = currentPokemon.image;
+  generateOptions(primaryType);
+}
+
+// Shuffle array 
+function shuffleArray(arr) {
+  //ensure that arr is an array
+  if (!Array.isArray(arr)) {
+    throw new TypeError("Expected an array");
+  }
+  
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    // // Prevent Codacy flag by checking index bounds and using explicit assignment
+    // if (Number.isInteger(i) && Number.isInteger(j) && i < arr.length && j < arr.length) {
+    //   const j = Math.floor(Math.random() * (i + 1));
+
+    //   const valI = arr.splice(i, 1, Symbol())[0]; // temporarily store arr[i] using Symbol
+    //   const valJ = arr.splice(j, 1, valI)[0];     // swap arr[j] into arr[i]'s place
+    //   arr.splice(i, 1, valJ);  
+    // }
+  }
+  return arr;
+
+}
+
+
 function typeColor(type) {
   // Generate color based on type
   return typeColorMap.get(type) || "#d3d3d3"; // The map worked!!!
@@ -95,30 +93,61 @@ function typeColor(type) {
 
 // Generate type buttons
 function generateOptions(correctType) {
-  let incorrect = allTypes.filter(t => t !== correctType);
-  shuffleArray(incorrect);
-  const choices = [correctType, ...incorrect.slice(0, 3)];
-  shuffleArray(choices);
+  console.log('Generating options for type:', correctType);
+  
+  if (!correctType || !allTypes.includes(correctType)) {
+    console.error('Invalid type received:', correctType);
+    return;
+  }
 
+  // 1) Get all wrong types
+  const wrongTypes = allTypes.filter(type => type !== correctType);
+  console.log('Available wrong types:', wrongTypes);
+  
+  // 2) Select exactly 3 wrong types
+  const threeWrongTypes = shuffleArray([...wrongTypes]).slice(0, 3);
+  console.log('Selected wrong types:', threeWrongTypes);
+  
+  // 3) Create array with correct type and 3 wrong types, then shuffle
+  const allChoices = shuffleArray([correctType, ...threeWrongTypes]);
+  console.log('Final shuffled choices:', allChoices);
+
+  // 4) Clear and rebuild the options container
   const container = document.getElementById("options");
   container.innerHTML = "";
-
-  choices.forEach(type => {
+  allChoices.forEach((type, index) => {
+    if (typeof type !== 'string') {
+      console.error('Invalid type value:', type);
+      return;
+    }
+    console.log(`Creating button ${index + 1}/4 for type: ${type}`);
     const btn = document.createElement("button");
     btn.className = "type-btn";
     btn.textContent = type.toUpperCase();
     btn.style.backgroundColor = typeColor(type);
 
     btn.onclick = () => {
+      console.log(`Button clicked: ${type}, Correct type: ${currentPokemon.type}`);
       selectedAnswer = type;
       document.querySelectorAll(".type-btn").forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
 
       const result = document.getElementById("result-msg");
       if (selectedAnswer === currentPokemon.type) {
-        result.textContent = `Correct! ${currentPokemon.name} added to your deck.`;
+        result.textContent = `Correct! ${currentPokemon.name} added to your collection.`;
         result.style.color = "green";
-        deck.push(currentPokemon);
+
+        // Add persist to localStorage
+        const caught = collection.add({
+          id:       currentPokemon.id,
+          name:     currentPokemon.name,
+          img:      currentPokemon.image,
+          nickname: currentPokemon.nickname || ""
+        });
+
+        // re-render your UI if it was actually new
+        if (caught) renderCollection();
+
       } else {
         result.textContent = "Oops, next time :(";
         result.style.color = "red";
@@ -139,6 +168,5 @@ function generateOptions(correctType) {
 
 // Init
 document.addEventListener("DOMContentLoaded", async () => {
-  await fetchAllTypes();
   loadPokemon();
 });

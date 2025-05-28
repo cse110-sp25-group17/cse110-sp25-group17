@@ -1,3 +1,6 @@
+import './game.js';
+import { collection, renderCollection } from "./collection.js";
+
 export let currentIndex = 0;
 export let activeDeck = [];
 showCard(0); // show the first card on load
@@ -143,4 +146,6 @@ document.getElementById("add-btn")?.addEventListener("click", addPokemon);
 
 window?.addEventListener("DOMContentLoaded", () => {
   loadAllPokemon();
+  renderCollection();
 });
+
