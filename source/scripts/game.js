@@ -6,8 +6,8 @@
 - On a correct guess, calls collection.add() to persist the catch and then renderCollection() to update the caught-Pokémon display.
 - After a short delay, clears the message and button state, then picks a new random Pokémon to continue the quiz.
 */
-import { collection, renderCollection } from './collection.js';
 
+import { collection, renderCollection } from './collection.js';
 
 let currentPokemon = null;
 let selectedAnswer = null;
@@ -170,3 +170,5 @@ function generateOptions(correctType) {
 document.addEventListener("DOMContentLoaded", async () => {
   loadPokemon();
 });
+
+export { loadPokemon, generateOptions };
