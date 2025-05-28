@@ -94,7 +94,7 @@ export function setNickname(){
     return;
   }const newNickName = prompt("Enter a new nickname for the Pokémon:");
   if( newNickName !== null ){
-    activeDeck[currentIndex].nickname = newNickName;
+    activeDeck[parseInt(currentIndex)].nickname = newNickName;
     showCard(currentIndex);
   }
 }
