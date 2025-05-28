@@ -69,20 +69,7 @@ function shuffleArray(arr) {
     throw new TypeError("Expected an array");
   }
   
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const n = arr.length;
-    
-    /* eslint-disable-next-line security/detect-object-injection */
-    const tmp   = arr[i];
-    /* eslint-disable-next-line security/detect-object-injection */
-    arr[i]      = arr[j];
-    /* eslint-disable-next-line security/detect-object-injection */
-    arr[j]      = tmp;
-
-  }
-  return arr;
-
+  return [...arr].sort(() => Math.random() - 0.5);
 }
 
 
