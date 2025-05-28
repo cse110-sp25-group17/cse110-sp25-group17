@@ -131,3 +131,4 @@ document.getElementById("nickname-btn")?.addEventListener("click", setNickname);
 window?.addEventListener("DOMContentLoaded", () => {
   loadAllPokemon();
 });
+
