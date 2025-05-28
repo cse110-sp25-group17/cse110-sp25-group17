@@ -52,7 +52,7 @@ test("can set distinct nicknames on each card", () => {
       jest.spyOn(global, "prompt").mockReturnValue(nicknames[i]);
       app.setCurrentIndex(i);
       app.setNickname();
-      expect(app.activeDeck[parseInt(i)].nickname).toBe(nicknames[parseInt(i)]);
+      expect(app.activeDeck[Number(i)].nickname).toBe(nicknames[Number(i)]);
       global.prompt.mockRestore();
     }
   });
