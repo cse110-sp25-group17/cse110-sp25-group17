@@ -71,10 +71,23 @@ function shuffleArray(arr) {
   
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    // manual swap instead of [arr[i], arr[j]] = [..]
-    const tmp     = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
+    const n = arr.length;
+
+    // ensure i and j are safe integers
+    if (!Number.isSafeInteger(i) || !Number.isSafeInteger(j)) {
+      continue;
+    }
+
+    // ensure they’re in bounds
+    if (i < 0 || j < 0 || i >= n || j >= n) {
+      continue;
+    }
+
+    // Swap without any destructuring
+    const tmp   = arr[i];
+    arr[i]      = arr[j];
+    arr[j]      = tmp;
+
   }
   return arr;
 
