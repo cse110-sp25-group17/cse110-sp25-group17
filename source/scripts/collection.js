@@ -65,13 +65,7 @@ export class Collection {
   }
 
   _save() {
-    try {
       localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
-      return true;
-    } catch (e) {
-      console.error("Failed to save collection:", e);
-      return false;
-    }
   }
 
   clear() {

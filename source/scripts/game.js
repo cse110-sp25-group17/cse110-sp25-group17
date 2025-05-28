@@ -71,15 +71,10 @@ function shuffleArray(arr) {
   
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-    // // Prevent Codacy flag by checking index bounds and using explicit assignment
-    // if (Number.isInteger(i) && Number.isInteger(j) && i < arr.length && j < arr.length) {
-    //   const j = Math.floor(Math.random() * (i + 1));
-
-    //   const valI = arr.splice(i, 1, Symbol())[0]; // temporarily store arr[i] using Symbol
-    //   const valJ = arr.splice(j, 1, valI)[0];     // swap arr[j] into arr[i]'s place
-    //   arr.splice(i, 1, valJ);  
-    // }
+    // manual swap instead of [arr[i], arr[j]] = [..]
+    const tmp     = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
   }
   return arr;
 
