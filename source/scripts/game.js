@@ -5,15 +5,21 @@ let allTypes = [];
 
 // Load all Pokémon types
 async function fetchAllTypes() {
-  const res = await fetch("https://pokeapi.co/api/v2/type");
-  const data = await res.json();
-  allTypes = data.results
-    .map(t => t.name)
-    .filter(name => !["shadow", "unknown"].includes(name));
+  try {
+    const res = await fetch("https://pokeapi.co/api/v2/type");
+    const data = await res.json();
+    allTypes = data.results
+      .map(t => t.name)
+      .filter(name => !["shadow", "unknown"].includes(name));
+  } catch (error) {
+    console.error("Failed to fetch Pokémon types:", error);
+    allTypes = [];
+  }
 }
 
 // Load a Pokémon
 async function loadPokemon() {
+  try{
   const id = Math.floor(Math.random() * 150) + 1;
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
   const data = await response.json();
@@ -28,14 +34,16 @@ async function loadPokemon() {
 
   document.getElementById("pokemon-img").src = currentPokemon.image;
   generateOptions(primaryType);
+  } catch (error) {
+    console.error("Failed to load Pokemon:", error);
+  }
 }
 
 // Shuffle array
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[parseInt(i)], arr[parseInt(j)]] = [arr[parseInt(j)], arr[parseInt(i)]]; //needs to be fixed here (security alert)
-    //instead of doing arr[i] do arr[parseInt(i)]
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
 }
 
