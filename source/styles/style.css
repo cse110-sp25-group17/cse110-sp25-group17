@@ -215,3 +215,12 @@ button {
   justify-content: center;
   align-items: center;
 }
+
+/* Specific rule for images on index.html */
+#index-page .pokemon-card img {
+  height: 150px !important;
+  width: auto !important;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
