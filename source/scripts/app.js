@@ -127,8 +127,49 @@ document.getElementById("delete-btn")?.addEventListener("click",removePokemon);
 document.getElementById("next-btn")?.addEventListener("click", nextCard);
 document.getElementById("prev-btn")?.addEventListener("click", prevCard);
 document.getElementById("add-btn")?.addEventListener("click", addPokemon);
-document.getElementById("nickname-btn")?.addEventListener("click", setNickname);
 window?.addEventListener("DOMContentLoaded", () => {
   loadAllPokemon();
 });
+
+// Get references to all modal-related DOM elements
+const nicknameBtn = document.getElementById("nickname-btn");        // "Edit Nickname" button
+const modal = document.getElementById("nickname-modal");            // Modal container
+const closeBtn = document.getElementById("close-modal");            // "X" close button in modal
+const saveBtn = document.getElementById("save-nickname");           // "Save" button in modal
+const nicknameInput = document.getElementById("nickname-input");    // Input field for entering nickname
+
+// Show the modal when the "Edit Nickname" button is clicked
+nicknameBtn.addEventListener("click", () => {
+  modal.style.display = "flex";
+});
+
+// Close the modal and clear the input field when the close button is clicked
+closeBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+  nicknameInput.value = "";
+});
+
+// Close the modal and clear the input if the user clicks outside the modal content
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+    nicknameInput.value = "";
+  }
+});
+
+// Handle saving the nickname when the "Save" button is clicked
+saveBtn.addEventListener("click", () => {
+  const nickname = nicknameInput.value.trim(); // Get and trim the input value
+
+  // Save nickname to the currently shown Pokémon, if valid
+  if (nickname && activeDeck.length > 0) {
+    activeDeck[currentIndex].nickname = nickname; // Update nickname in the deck
+    showCard(currentIndex);                       // Refresh card display with new nickname
+  }
+
+  // Close the modal and clear the input field after saving
+  modal.style.display = "none";
+  nicknameInput.value = "";
+});
+
 
