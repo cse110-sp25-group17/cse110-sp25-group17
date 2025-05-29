@@ -43,7 +43,14 @@ async function loadPokemon() {
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    if (
+      Number.isInteger(i) &&
+      Number.isInteger(j) &&
+      i >= 0 && j >= 0 &&
+      i < arr.length && j < arr.length
+    ) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
   }
 }
 
