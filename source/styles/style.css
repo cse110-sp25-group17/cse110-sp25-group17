@@ -205,11 +205,6 @@ button { /* General button styles for navigation through pages */
   border-bottom: 4px solid #393;
 }
 
-.edit-mode .pokemon-card {
-  border: 2px solid #6b6;
-  box-shadow: 0 4px 10px rgb(0 128 0 /15%);
-}
-
 .edit-mode h1 {
   color: #2d6b2d;
 }
@@ -231,15 +226,6 @@ button { /* General button styles for navigation through pages */
   align-items: center;
 }
 
-/* Specific rule for images on index.html */
-#index-page .pokemon-card img {
-  height: 150px !important;
-  width: auto !important;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
-}
-
 /* Center the single Pokémon card on the edit page */
 .edit-mode .pokemon-card {
   width: 300px; /* enlarged width */
@@ -249,7 +235,7 @@ button { /* General button styles for navigation through pages */
   background: white;
   border: 3px solid #6b6;
   border-radius: 14px;
-  box-shadow: 0 6px 12px rgba(0, 128, 0, 0.15);
+  box-shadow: 0 6px 12px rgb(0 128 0 / 15%);
   text-align: center;
 }
 
@@ -257,6 +243,15 @@ button { /* General button styles for navigation through pages */
   width: 250px; /* enlarged image */
   height: 250px;
   object-fit: contain;
+}
+
+/* Specific rule for images on index.html */
+#index-page .pokemon-card img {
+  height: 150px !important;
+  width: auto !important;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
 .edit-mode .pokemon-card h3 {
