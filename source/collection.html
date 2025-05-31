@@ -16,13 +16,16 @@
     <!-- Collection cards will be inserted here (this is done in the collection.js file) -->
     
   </div>
-  
+
+
   <!-- buttons done -->
-  <div id="collection-buttons">
-    <button onclick="location.href='edit_page.html'">Edit Mode</button>
-    <button onclick="location.href='main_page.html'">Back to Main Page</button>
-    <button onclick="location.href='home_page.html'">Back to Home Page</button>
+  <div id="button-container">
+    <div>
+      <button onclick="location.href='home_page.html'">Back to Home Page</button>
+    </div>
+    <button id="add-pokemon-btn">➕ Add Pokémon</button> <!-- separated due to conflict with clicking button functionality-->
   </div>
+
   
   <script type="module">
     import { renderCollection } from './scripts/collection.js';
