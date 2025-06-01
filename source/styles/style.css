@@ -20,8 +20,8 @@ h2 {
   text-align: center; /* Centered headings for better alignment (can change if needed) */
 }
 
-/* Button Styles for Collection 1 page */
-button {
+/* Button Styles for pokemon cards page and generic button positioning */
+button { /* General button styles for navigation through pages */
   background-color: #0074d9;
   color: white;
   border: none;
@@ -36,6 +36,21 @@ button {
   text-align: center;  /* flexbox (flexible box layout) creates responsive layouts and helps align things horizontally or vertically */
   margin-top: 20px;
 }
+
+/* navigation button locations */
+#button-container {
+  display: flex;
+  justify-content: space-between; /* Push left buttons to left, Add Pokémon to right */
+  align-items: center;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+#button-container > div {
+  display: flex;
+  gap: 10px; /* Space between left-side buttons */
+}
+
 
 
 /* Header styles */
@@ -177,7 +192,7 @@ button {
 }
 
 
-/* flashcard style for collection 1 */
+/* flashcard style for collection page */
 .flashcards-page #card-container {
   display: flex;
   justify-content: center;
@@ -188,7 +203,7 @@ button {
 }
 
 
-/* Green theme for edit page */
+/* Edit page style */
 .edit-mode {
   background: linear-gradient(to bottom, #e0ffe0, #fff); /* soft green gradient */
 }
@@ -197,11 +212,6 @@ button {
 .edit-mode .header {
   background-color: #8c8; /* green header */
   border-bottom: 4px solid #393;
-}
-
-.edit-mode .pokemon-card {
-  border: 2px solid #6b6;
-  box-shadow: 0 4px 10px rgb(0 128 0 /15%);
 }
 
 .edit-mode h1 {
@@ -225,6 +235,25 @@ button {
   align-items: center;
 }
 
+/* Center the single Pokémon card on the edit page */
+.edit-mode .pokemon-card {
+  width: 300px; /* enlarged width */
+  height: auto;
+  margin: 30px auto; /* center horizontally and give some top margin */
+  padding: 20px;
+  background: white;
+  border: 3px solid #6b6;
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgb(0 128 0 / 15%);
+  text-align: center;
+}
+
+.edit-mode .pokemon-card img {
+  width: 250px; /* enlarged image */
+  height: 250px;
+  object-fit: contain;
+}
+
 /* Specific rule for images on index.html */
 #index-page .pokemon-card img {
   height: 150px !important;
@@ -233,3 +262,9 @@ button {
   display: block;
   margin: 0 auto;
 }
+
+.edit-mode .pokemon-card h3 {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
