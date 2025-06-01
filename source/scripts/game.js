@@ -10,7 +10,6 @@
 import { collection, renderCollection } from "./collection.js";
 
 let currentPokemon = null;
-let selectedAnswer = null;
 let currentStage = "type";
 
 const allTypes = [
