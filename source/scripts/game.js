@@ -121,7 +121,9 @@ function generateOptions(correctType) {
 
       const result = document.getElementById("result-msg");
       if (selectedAnswer === currentPokemon.type) {
-        result.textContent = `Correct! ${currentPokemon.name} added to your collection.`;
+        // Ensures that the name of the Pokemon is capitalized
+        const capitalizedName = currentPokemon.name.charAt(0).toUpperCase() + currentPokemon.name.slice(1);
+        result.textContent = `Correct! ${capitalizedName} added to your collection.`;
         result.style.color = "green";
 
         // Add persist to localStorage
