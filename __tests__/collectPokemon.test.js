@@ -13,14 +13,11 @@ beforeEach(() => {
 });
 
 describe('Pokémon Collection', () => {
-  test('seeds with 3 starters on first run', () => {
-    // initially we should have Bulbasaur, Charmander, Squirtle
-    expect(collection.count).toBe(3);
+  test('starts with an empty collection on first run', () => {
+    expect(collection.count).toBe(0);
 
     const stored = JSON.parse(localStorage.getItem('pokemonCollection'));
-    expect(stored).toHaveLength(3);
-    const names = stored.map(p => p.name);
-    expect(names).toEqual(expect.arrayContaining(['Bulbasaur','Charmander','Squirtle']));
+    expect(stored).toHaveLength(0);
   });
 
   test('correct catch adds a new Pokémon to localStorage and to the DOM', () => {
@@ -33,13 +30,13 @@ describe('Pokémon Collection', () => {
 
     // before adding
     expect(collection.has(25)).toBe(false);
-    expect(collection.count).toBe(3);
+    expect(collection.count).toBe(0);
 
     // simulate a correct catch
     const wasAdded = collection.add(newPokemon);
     expect(wasAdded).toBe(true);
     expect(collection.has(25)).toBe(true);
-    expect(collection.count).toBe(4);
+    expect(collection.count).toBe(1);
 
     // check localStorage
     const stored = JSON.parse(localStorage.getItem('pokemonCollection'));
@@ -48,32 +45,35 @@ describe('Pokémon Collection', () => {
     // render and verify DOM
     renderCollection();
     const cards = document.querySelectorAll('.pokemon-card');
-    expect(cards).toHaveLength(4);
+    expect(cards).toHaveLength(1);
     expect(document.body.textContent).toMatch(/Pikachu/);
   });
 
   test('duplicate catch does not add again', () => {
     const starter = { id: 1, name: 'Bulbasaur', img: '', nickname: '' };
+
+    // Add once, add successfully
+    const firstAdd = collection.add(starter);
+    expect(firstAdd).toBe(true);
     expect(collection.has(1)).toBe(true);
+    expect(collection.count).toBe(1);
 
-    // Attempt to add the same ID again
-    const wasAdded = collection.add(starter);
-    expect(wasAdded).toBe(false);
-
-    // Count stays the same
-    expect(collection.count).toBe(3);
+    // Add again, fail to add
+    const secondAdd = collection.add(starter);
+    expect(secondAdd).toBe(false);
+    expect(collection.count).toBe(1);
 
     renderCollection();
     const cards = document.querySelectorAll('.pokemon-card');
-    expect(cards).toHaveLength(3);
+    expect(cards).toHaveLength(1);
   });
 
   test('wrong answer does not change the collection', () => {
     // Simulate a wrong answer by not calling collection.add()
-    expect(collection.count).toBe(3);
+    expect(collection.count).toBe(0);
     renderCollection();
 
     const cards = document.querySelectorAll('.pokemon-card');
-    expect(cards).toHaveLength(3);
+    expect(cards).toHaveLength(0);
   });
 });

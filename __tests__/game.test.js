@@ -83,6 +83,7 @@ test('game loop loads new Pokémon after clicking a button', async () => {
   await loadPokemon();
   const buttons = Array.from(document.querySelectorAll('#options button'));
 
+
   // click the first button
   buttons[0].click();
 
