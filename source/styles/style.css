@@ -144,6 +144,15 @@ button {
   justify-items: center;
 }
 
+.collection-button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+
 /* Pokemon card styles */
 .pokemon-card {
   width: 200px;
