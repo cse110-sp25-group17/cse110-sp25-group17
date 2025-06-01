@@ -68,9 +68,18 @@ export class Collection {
       localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
   }
 
+  // Reset the list to just be the starter Pokemons
   clear() {
     this._list = [...starterPokemons];
     this._save();
+  }
+  // Remove a pokemon by its id and return true if succesfull removed, return false if not found
+  removeById(id) {
+    const idx = this._list.findIndex(p => p.id === id);
+    if (idx === -1) return false;
+    this._list.splice(idx, 1);
+    this._save();
+    return true;
   }
 }
 
@@ -105,3 +114,4 @@ export function renderCollection() {
     container.appendChild(link);
   });
 }
+

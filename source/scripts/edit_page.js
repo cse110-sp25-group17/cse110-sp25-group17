@@ -1,4 +1,3 @@
-// scripts/edit.js
 import { collection, renderCollection } from './collection.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,11 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // If Pokémon not found in our collection, show an error & still show Back button
   if (!pok) {
-    // Hide only Delete & Nickname; keep Back visible
+    // Hide only Delete & Nickname
     deleteBtn.style.display   = 'none';
     nicknameBtn.style.display = 'none';
-    backBtn.style.display     = 'block';
-    buttonsDiv.style.display  = 'flex'; // ensure the container itself is visible
 
     container.innerHTML = `
       <h2>Pokémon not found in Collection</h2>
@@ -43,12 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     <h3>${pok.nickname || pok.name}</h3>
   `;
   container.appendChild(card);
-
-  // Show Delete & Nickname & Back buttons, all stacked in #buttons
-  deleteBtn.style.display   = 'block';
-  nicknameBtn.style.display = 'block';
-  backBtn.style.display     = 'block';
-  buttonsDiv.style.display  = 'flex';
 
   // Wire up Delete button
   deleteBtn.addEventListener('click', () => {
