@@ -157,14 +157,6 @@ button {
   justify-items: center;
 }
 
-.collection-button-group {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
 /* Pokemon card styles */
 .pokemon-card {
   width: 200px;
@@ -253,14 +245,6 @@ button {
   object-fit: contain;
 }
 
-/* Specific rule for images on index.html */
-#index-page .pokemon-card img {
-  height: 150px !important;
-  width: auto !important;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
-}
 
 .edit-mode .pokemon-card h3 {
   font-size: 24px;
