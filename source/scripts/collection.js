@@ -6,26 +6,7 @@
 - Exports a renderCollection() function that wipes and redraws the <div id="collection-container"> based on whatever’s currently in your stored collection
 */
 
-const starterPokemons = [
-  {
-    id: 1,
-    name: "Bulbasaur",
-    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    nickname: "",
-  },
-  {
-    id: 4,
-    name: "Charmander",
-    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    nickname: "",
-  },
-  {
-    id: 7,
-    name: "Squirtle",
-    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
-    nickname: "",
-  },
-];
+const starterPokemons = [];
 
 export class Collection {
   constructor() {
@@ -78,6 +59,13 @@ export const collection = new Collection();
 export function renderCollection() {
   const container = document.getElementById("collection-container");
   if (!container) return;
+
+  if (collection.all.length === 0) {
+    container.innerHTML = `
+      <p>You don't have any Pokémon yet. <a href="game_page.html">Play the game</a> to catch some!</p>
+    `;
+    return;
+  }
 
   container.innerHTML = "";
   collection.all.forEach((p) => {
