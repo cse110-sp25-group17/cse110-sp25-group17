@@ -14,7 +14,6 @@ function renderSingleCard() {
     return;
   }
 
-  // Clamp index
   if (currentIndex < 0) currentIndex = 0;
   if (currentIndex >= all.length) currentIndex = all.length - 1;
 
