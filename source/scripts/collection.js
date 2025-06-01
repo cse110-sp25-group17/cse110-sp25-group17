@@ -83,10 +83,12 @@ export function renderCollection() {
 
   container.innerHTML = "";
   collection.all.forEach(p => {
+    // Create the links for each pokemon
     const link = document.createElement('a');
     link.href = `edit_page.html?id=${p.id}`; 
     link.className = 'pokemon-card-link';
 
+    // Create the card, and add the image and the name to it
     const card = document.createElement('div');
     card.className = 'pokemon-card';
 
@@ -97,6 +99,7 @@ export function renderCollection() {
     const heading = document.createElement("h3");
     heading.textContent = p.nickname || p.name;
     
+    // Append the image and heading to the card, append that card to the link, and then append that to the container
     card.append(image, heading);
     link.appendChild(card);
     container.appendChild(link);
