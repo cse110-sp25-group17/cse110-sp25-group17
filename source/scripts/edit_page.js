@@ -17,10 +17,7 @@ function renderSingleCard() {
   if (currentIndex < 0) currentIndex = 0;
   if (currentIndex >= all.length) currentIndex = all.length - 1;
 
-  const index = Number(currentIndex);
-  if (!Number.isInteger(index) || index < 0 || index >= all.length) return;
-
-  const p = all[index];
+  const p = all[currentIndex];
 
   const card = document.createElement('div');
   card.className = 'pokemon-card';
@@ -39,18 +36,11 @@ function renderSingleCard() {
 function deleteCurrentCard() {
   if (collection.count === 0) return;
 
-  if (currentIndex < 0) currentIndex = 0;
-  if (currentIndex >= collection.count) currentIndex = collection.count - 1;
-
-  const index = Number(currentIndex);
-  if (!Number.isInteger(index) || index < 0 || index >= collection.count) return;
-
-  const deleted = collection.all[index];
-
+  const deleted = collection.all[currentIndex];
   if (!confirm(`Are you sure you want to delete ${deleted.name}?`)) return;
 
   // Remove the current Pokémon from the collection
-  collection._list.splice(index, 1);
+  collection._list.splice(currentIndex, 1);
   collection._save();
 
   // Adjust index if needed
