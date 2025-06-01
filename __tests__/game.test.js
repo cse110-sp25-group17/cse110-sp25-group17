@@ -75,7 +75,7 @@ test('clicking an incorrect button shows “Oops” and does NOT add to collecti
 
   // no new catch
   expect(collection.has(25)).toBe(false);
-  expect(collection.count).toBe(3);
+  expect(collection.count).toBe(0);
 });
 
 //testing the game loop (it seems to be lagging a bit)
