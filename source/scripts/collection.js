@@ -6,34 +6,13 @@
 - Exports a renderCollection() function that wipes and redraws the <div id="collection-container"> based on whatever’s currently in your stored collection
 */
 
-const starterPokemons = [
-  {
-    id:       1,
-    name:     "Bulbasaur",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    nickname: ""
-  },
-  {
-    id:       4,
-    name:     "Charmander",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    nickname: ""
-  },
-  {
-    id:       7,
-    name:     "Squirtle",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
-    nickname: ""
-  }
-];
+const starterPokemons = [];
 
 export class Collection {
   constructor() {
     const raw = localStorage.getItem("pokemonCollection");
     // If nothing in storage, use starterPokemons
-    this._list = raw
-      ? JSON.parse(raw)
-      : [...starterPokemons];
+    this._list = raw ? JSON.parse(raw) : [...starterPokemons];
     this._save(); // make sure the seed is persisted
   }
 
@@ -46,26 +25,26 @@ export class Collection {
   }
 
   has(id) {
-    return this._list.some(p => p.id === id);
+    return this._list.some((p) => p.id === id);
   }
 
   add(pokemon) {
     if (this.has(pokemon.id)) return false;
-    
+
     const formattedPokemon = {
       id: pokemon.id,
       name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
       img: pokemon.img,
-      nickname: pokemon.nickname || ""
+      nickname: pokemon.nickname || "",
     };
-    
+
     this._list.push(formattedPokemon);
     this._save();
     return true;
   }
 
   _save() {
-      localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
+    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
   }
 
   // Reset the list to just be the starter Pokemons
@@ -89,6 +68,13 @@ export const collection = new Collection();
 export function renderCollection() {
   const container = document.getElementById("collection-container");
   if (!container) return;
+
+  if (collection.all.length === 0) {
+    container.innerHTML = `
+      <p>You don't have any Pokémon yet. <a href="game_page.html">Play the game</a> to catch some!</p>
+    `;
+    return;
+  }
 
   container.innerHTML = "";
   collection.all.forEach(p => {

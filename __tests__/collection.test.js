@@ -14,20 +14,13 @@ beforeEach(() => {
 });
 
 describe('collection rendering', () => {
-  test('renders seeded starters on first load', () => {
-    
-    expect(collection.count).toBe(3);
+
+  test('shows empty message if no Pokémon in collection', () => {
+    expect(collection.count).toBe(0);
     renderCollection();
-
-    const cards = document.querySelectorAll('.pokemon-card');
-    expect(cards).toHaveLength(3);
-
-    const names = Array.from(cards).map(card =>
-      card.querySelector('h3').textContent
-    );
-    expect(names).toEqual(
-      expect.arrayContaining(['Bulbasaur', 'Charmander', 'Squirtle'])
-    );
+  
+    const container = document.getElementById('collection-container');
+    expect(container.textContent).toContain("You don't have any Pokémon yet");
   });
 
   test('renders every Pokémon currently in localStorage, using nicknames when set', () => {
@@ -46,12 +39,12 @@ describe('collection rendering', () => {
     });
 
     // Now there should be 5 total
-    expect(collection.count).toBe(5);
+    expect(collection.count).toBe(2);
 
     renderCollection();
 
     const cards = document.querySelectorAll('.pokemon-card');
-    expect(cards).toHaveLength(5);
+    expect(cards).toHaveLength(2);
 
     const displayedNames = Array.from(cards).map(card =>
       card.querySelector('h3').textContent
@@ -62,7 +55,7 @@ describe('collection rendering', () => {
     );
   });
 
-  test('clear() resets collection back to the 3 starters', () => {
+  test('clear() resets collection back to empty deck', () => {
     // Add and then clear
     collection.add({
       id:       25,
@@ -70,13 +63,13 @@ describe('collection rendering', () => {
       img:      'pikachu.png',
       nickname: ''
     });
-    expect(collection.count).toBe(4);
+    expect(collection.count).toBe(1);
 
     collection.clear();
-    expect(collection.count).toBe(3);
+    expect(collection.count).toBe(0);
 
     renderCollection();
     const cards = document.querySelectorAll('.pokemon-card');
-    expect(cards).toHaveLength(3);
+    expect(cards).toHaveLength(0);
   });
 });

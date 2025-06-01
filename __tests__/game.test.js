@@ -59,7 +59,7 @@ test('clicking the correct button shows “Correct!” and adds to collection', 
 
   // if you renderCollection, you should see a card
   renderCollection();
-  expect(document.querySelectorAll('.pokemon-card')).toHaveLength(4); 
+  expect(document.querySelectorAll('.pokemon-card')).toHaveLength(1); 
 });
 
 test('clicking an incorrect button shows “Oops” and does NOT add to collection', async () => {
@@ -75,5 +75,5 @@ test('clicking an incorrect button shows “Oops” and does NOT add to collecti
 
   // no new catch
   expect(collection.has(25)).toBe(false);
-  expect(collection.count).toBe(3);
+  expect(collection.count).toBe(0);
 });
