@@ -1,45 +1,51 @@
 <!-- source/index.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pokémon Flashcards</title>
-  <link rel="stylesheet" href="styles/style.css" />
-</head>
-<body class="flashcards-page">
-  <div class="header"> <!-- added header with Pokémon logo -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pokémon_logo.svg"
-         alt="Pokemon Logo" class="logo" />
-  </div>
-
-  <div class="app">
-    <h1>Pokémon Flashcards</h1>
-    
-    <p class="description">
-    Welcome to Pokémon Flashcards! Use this tool to learn and test your knowledge of Pokémon. Click through cards or add your own!
-    </p>
-    
-    <div id="card-container">
-      <!-- Cards will be inserted here -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Flashcards</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body class="flashcards-page">
+    <div class="header">
+      <!-- added header with Pokémon logo -->
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pokémon_logo.svg"
+        alt="Pokemon Logo"
+        class="logo"
+      />
     </div>
 
-    <!-- Buttons -->
-    <div id="buttons">
-      <button id="prev-btn">⬅️ Previous</button>
-      <button id="next-btn">➡️ Next</button>
-      <button id="add-btn">➕ Add Pokémon</button>
+    <div class="app">
+      <h1>Pokémon Flashcards</h1>
+
+      <p class="description">
+        Welcome to Pokémon Flashcards! Use this tool to learn and test your
+        knowledge of Pokémon. Click through cards or add your own!
+      </p>
+
+      <div id="card-container">
+        <!-- Cards will be inserted here -->
+      </div>
+
+      <!-- Buttons -->
+      <div id="buttons">
+        <button id="prev-btn">⬅️ Previous</button>
+        <button id="next-btn">➡️ Next</button>
+        <button id="add-btn">➕ Add Pokémon</button>
+      </div>
     </div>
 
-  </div>
+    <!-- buttons to pages -->
+    <div id="navigation-buttons">
+      <button onclick="location.href='home_page.html'">
+        Back to Home Page
+      </button>
+    </div>
 
-  <!-- buttons to pages -->
-  <div id="navigation-buttons">
-    <button onclick="location.href='home_page.html'">Back to Home Page</button>
-  </div>
-
-  <!-- Load Hammer.js before app.js if you're going to use it -->
-  <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
-  <script type="module" src="scripts/app.js"></script>
-</body>
+    <!-- Load Hammer.js before app.js if you're going to use it -->
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+    <script type="module" src="scripts/app.js"></script>
+  </body>
 </html>

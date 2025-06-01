@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Pokémon Quiz</title>
-  <link rel="stylesheet" href="styles/style.css" />
-</head>
-<body>
-  <div class="header">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pokémon_logo.svg"
-         alt="Pokemon Logo" class="logo" />
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pokémon Quiz</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <div class="header">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pokémon_logo.svg"
+        alt="Pokemon Logo"
+        class="logo"
+      />
+    </div>
 
-  <div class="game-layout">
-    <div class="left-panel">
-      <h2>Which type of Pokémon is this?</h2>
-      <div class="type-options" id="options">
-        <!-- Buttons inserted dynamically -->
+    <div class="game-layout">
+      <div class="left-panel">
+        <h2>Which type of Pokémon is this?</h2>
+        <div class="type-options" id="options">
+          <!-- Buttons inserted dynamically -->
+        </div>
+      </div>
+
+      <div class="right-panel">
+        <img id="pokemon-img" src="" alt="Pokemon" class="pokemon-img" />
+        <div class="button-group">
+          <button
+            onclick="location.href='home_page.html'"
+            class="collection-btn"
+          >
+            Go To Home Page
+          </button>
+        </div>
+        <p id="result-msg"></p>
       </div>
     </div>
 
-    <div class="right-panel">
-      <img id="pokemon-img" src="" alt="Pokemon" class="pokemon-img" />
-      <div class="button-group">
-        <button onclick="location.href='home_page.html'" class="collection-btn">Go To Home Page</button>
-      </div>      
-      <p id="result-msg"></p>
-    </div>
-  </div>
-
-  <script type="module" src="scripts/game.js"></script>
-</body>
+    <script type="module" src="scripts/game.js"></script>
+  </body>
 </html>
