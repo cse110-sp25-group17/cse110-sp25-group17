@@ -47,9 +47,18 @@ export class Collection {
     localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
   }
 
+  // Reset the list to just be the starter Pokemons
   clear() {
     this._list = [...starterPokemons];
     this._save();
+  }
+  // Remove a pokemon by its id and return true if succesfull removed, return false if not found
+  removeById(id) {
+    const idx = this._list.findIndex(p => p.id === id);
+    if (idx === -1) return false;
+    this._list.splice(idx, 1);
+    this._save();
+    return true;
   }
 }
 
@@ -68,9 +77,15 @@ export function renderCollection() {
   }
 
   container.innerHTML = "";
-  collection.all.forEach((p) => {
-    const card = document.createElement("div");
-    card.className = "pokemon-card";
+  collection.all.forEach(p => {
+    // Create the links for each pokemon
+    const link = document.createElement('a');
+    link.href = `edit_page.html?id=${p.id}`; 
+    link.className = 'pokemon-card-link';
+
+    // Create the card, and add the image and the name to it
+    const card = document.createElement('div');
+    card.className = 'pokemon-card';
 
     const image = document.createElement("img");
     image.src = p.img;
@@ -78,8 +93,11 @@ export function renderCollection() {
 
     const heading = document.createElement("h3");
     heading.textContent = p.nickname || p.name;
-
+    
+    // Append the image and heading to the card, append that card to the link, and then append that to the container
     card.append(image, heading);
-    container.append(card);
+    link.appendChild(card);
+    container.appendChild(link);
   });
 }
+
