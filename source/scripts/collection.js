@@ -83,8 +83,12 @@ export function renderCollection() {
 
   container.innerHTML = "";
   collection.all.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "pokemon-card";
+    const link = document.createElement('a');
+    link.href = `edit_page.html?id=${p.id}`; 
+    link.className = 'pokemon-card-link';
+
+    const card = document.createElement('div');
+    card.className = 'pokemon-card';
 
     const image = document.createElement("img");
     image.src = p.img;
@@ -92,8 +96,9 @@ export function renderCollection() {
 
     const heading = document.createElement("h3");
     heading.textContent = p.nickname || p.name;
-
+    
     card.append(image, heading);
-    container.append(card);
+    link.appendChild(card);
+    container.appendChild(link);
   });
 }
