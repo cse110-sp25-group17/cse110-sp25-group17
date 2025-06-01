@@ -208,6 +208,18 @@ button { /* General button styles for navigation through pages */
   background: linear-gradient(to bottom, #e0ffe0, #fff); /* soft green gradient */
 }
 
+/* Collection button for edit page */
+.collection-btn-white {
+  background-color: #fc0;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
 /* Optional: adjust header or card colors */
 .edit-mode .header {
   background-color: #8c8; /* green header */
