@@ -20,6 +20,10 @@
     "url": "https://github.com/cse110-sp25-group17/cse110-sp25-group17/issues"
   },
   "homepage": "https://github.com/cse110-sp25-group17/cse110-sp25-group17#readme",
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {}
+  },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
     "eslint": "^9.26.0",
