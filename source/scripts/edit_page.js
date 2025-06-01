@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   container.innerHTML = '';
 
   // Grab references to the buttons container and its buttons
-  const buttonsDiv  = document.getElementById('buttons');
   const deleteBtn   = document.getElementById('delete-btn');
   const nicknameBtn = document.getElementById('nickname-btn');
   const backBtn     = document.getElementById('back-btn');
@@ -22,12 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteBtn.style.display   = 'none';
     nicknameBtn.style.display = 'none';
 
-    container.innerHTML = `
-      <h2>Pokémon not found in Collection</h2>
-    `;
+    const heading = document.createElement('h2');
+    heading.textContent = 'Pokémon not found in Collection';
+    container.appendChild(heading);
     // Back button is already in the DOM, just wire it up:
     backBtn.addEventListener('click', () => {
-      window.location.href = 'collection.html';
+      window.location.assign('collection.html');
     });
     return;
   }
@@ -35,12 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // If found, render the selected card
   const card = document.createElement('div');
   card.className = 'pokemon-card';
-  card.innerHTML = `
-    <img src="${pok.img}" alt="${pok.name}" />
-    <h3>${pok.nickname || pok.name}</h3>
-  `;
-  container.appendChild(card);
+  
+  const imgEl = document.createElement('img');
+  imgEl.src = pok.img;
+  imgEl.alt = pok.name;
 
+  const nameEl = document.createElement('h3');
+  nameEl.textContent = pok.nickname || pok.name;
+
+  card.appendChild(imgEl);
+  card.appendChild(nameEl);
+  container.appendChild(card);
   // Wire up Delete button
   deleteBtn.addEventListener('click', () => {
     const removed = collection.removeById(id);
@@ -49,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     renderCollection();
-    window.location.href = 'collection.html';
+    window.location.assign('collection.html');
   });
 
   // Wire up Edit Nickname button
@@ -61,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     pok.nickname = newNick.trim();
     collection._save();
-    window.location.href = 'collection.html';
+    window.location.assign('collection.html');
   });
 
   // Wire up Back button
   backBtn.addEventListener('click', () => {
-    window.location.href = 'collection.html';
+    window.location.assign('collection.html');
   });
 });
