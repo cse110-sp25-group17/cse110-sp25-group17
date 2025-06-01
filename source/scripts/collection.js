@@ -11,19 +11,22 @@ const starterPokemons = [
     id:       1,
     name:     "Bulbasaur",
     img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    nickname: ""
+    nickname: "",
+    userAdded: false
   },
   {
     id:       4,
     name:     "Charmander",
     img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    nickname: ""
+    nickname: "",
+    userAdded: false
   },
   {
     id:       7,
     name:     "Squirtle",
     img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
-    nickname: ""
+    nickname: "",
+    userAdded: false
   }
 ];
 
@@ -56,7 +59,8 @@ export class Collection {
       id: pokemon.id,
       name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
       img: pokemon.img,
-      nickname: pokemon.nickname || ""
+      nickname: pokemon.nickname || "",
+      userAdded: pokemon.userAdded|| false
     };
     
     this._list.push(formattedPokemon);
@@ -82,18 +86,78 @@ export function renderCollection() {
   if (!container) return;
 
   container.innerHTML = "";
+
   collection.all.forEach(p => {
     const card = document.createElement("div");
     card.className = "pokemon-card";
 
+    // If the user added this pokemon, append a small badge
+    if (p.userAdded) {
+      const badge = document.createElement("span");
+      badge.className = "badge";
+      badge.textContent = "★"; // you could use text or an icon here
+      card.append(badge);
+    }
+
     const image = document.createElement("img");
     image.src = p.img;
     image.alt = p.name;
+    card.append(image);
 
     const heading = document.createElement("h3");
     heading.textContent = p.nickname || p.name;
+    card.append(heading);
 
-    card.append(image, heading);
     container.append(card);
   });
 }
+async function addPokemonToCollection() {
+  const name = prompt("Enter Pokémon name:");
+  if (!name) return;
+
+  // 1) Attempt to fetch from PokéAPI
+  let img = "";
+  let pokeId = null;
+  let pokeName = "";
+  try {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
+    if (res.ok) {
+      const data = await res.json();
+      img = data.sprites.front_default || "";
+      pokeId = data.id;
+      pokeName = data.name;
+    }
+  } catch (_) {
+    // silently fall back to manual URL prompt
+  }
+ if(pokeId < 1 || pokeId > 151){
+  alert("Pokemon not found.")
+  return;
+ }
+  // 2) If no image yet, ask for one
+  if (!img) {
+    img = prompt("PokéAPI lookup failed or no sprite found. Enter a valid image URL:") || "";
+  }
+
+  // 3) Insert into collection with userAdded = true
+  const wasAdded = collection.add({
+    id:        pokeId,  // unique timestamp ID
+    name:      pokeName,
+    img:       img,
+    nickname:  "",
+    userAdded: true
+  });
+
+  if (wasAdded) {
+    renderCollection();
+  } else {
+    alert("That Pokémon is already in your collection.");
+  }
+}
+// Immediately render on script‐load (if DOM is already there)
+window.addEventListener("DOMContentLoaded", () => {
+  renderCollection();
+  document.getElementById("add_to_collection_btn").addEventListener("click", addPokemonToCollection);
+
+});// Initial render
+
