@@ -1,3 +1,4 @@
+
 export let currentIndex = 0;
 export let activeDeck = [];
 showCard(0); // show the first card on load
@@ -127,3 +128,4 @@ document.getElementById("nickname-btn")?.addEventListener("click", setNickname);
 window?.addEventListener("DOMContentLoaded", () => {
   loadAllPokemon();
 });
+

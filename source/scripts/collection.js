@@ -1,30 +1,30 @@
-// collection.js
 /*
-- Seeds the collection with Bulbasaur, Charmander, and Squirtle the first time it runs
-- Loads and saves the collection to localStorage so catches persist across page reloads
-- Provides a Collection class (with methods to check for duplicates and add new Pokémon) and export an instance we can import elsewhere
-- Exports a renderCollection() function that wipes and redraws the <div id="collection-container"> based on whatever’s currently in your stored collection
+  - Seeds the collection with Bulbasaur, Charmander, and Squirtle the first time it runs
+  - Loads and saves the collection to localStorage so catches persist across page reloads
+  - Provides a Collection class (with methods to check for duplicates and add new Pokémon)
+  - Exports renderCollection() to redraw the #collection-container
+  - addPokemonToCollection() → prompts for a name, fetches from PokéAPI, and adds if valid Gen I
 */
 
 const starterPokemons = [
   {
-    id:       1,
-    name:     "Bulbasaur",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    id: 1,
+    name: "Bulbasaur",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
     nickname: "",
     userAdded: false
   },
   {
-    id:       4,
-    name:     "Charmander",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    id: 4,
+    name: "Charmander",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
     nickname: "",
     userAdded: false
   },
   {
-    id:       7,
-    name:     "Squirtle",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+    id: 7,
+    name: "Squirtle",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     nickname: "",
     userAdded: false
   }
@@ -33,15 +33,13 @@ const starterPokemons = [
 export class Collection {
   constructor() {
     const raw = localStorage.getItem("pokemonCollection");
-    // If nothing in storage, use starterPokemons
     this._list = raw ? JSON.parse(raw) : [...starterPokemons];
-    this._save(); // make sure the seed is persisted
+    this._save();
   }
 
   get all() {
     return this._list;
   }
-
   get count() {
     return this._list.length;
   }
@@ -54,11 +52,11 @@ export class Collection {
     if (this.has(pokemon.id)) return false;
 
     const formattedPokemon = {
-      id: pokemon.id,
-      name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-      img: pokemon.img,
-      nickname: pokemon.nickname || "",
-      userAdded: pokemon.userAdded|| false
+      id:        pokemon.id,
+      name:      pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+      img:       pokemon.img,
+      nickname:  pokemon.nickname || "",
+      userAdded: Boolean(pokemon.userAdded)
     };
 
     this._list.push(formattedPokemon);
@@ -66,34 +64,33 @@ export class Collection {
     return true;
   }
 
-  _save() {
-    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
-  }
-
   clear() {
     this._list = [...starterPokemons];
     this._save();
+  }
+
+  _save() {
+    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
   }
 }
 
 export const collection = new Collection();
 
-// Render helper
 export function renderCollection() {
   const container = document.getElementById("collection-container");
   if (!container) return;
 
   container.innerHTML = "";
 
-  collection.all.forEach(p => {
+  collection.all.forEach((p) => {
     const card = document.createElement("div");
     card.className = "pokemon-card";
 
-    // If the user added this pokemon, append a small badge
+    // Add a star badge if added by the User
     if (p.userAdded) {
       const badge = document.createElement("span");
       badge.className = "badge";
-      badge.textContent = "★"; // you could use text or an icon here
+      badge.textContent = "★";
       card.append(badge);
     }
 
@@ -109,53 +106,53 @@ export function renderCollection() {
     container.append(card);
   });
 }
+
 async function addPokemonToCollection() {
-  const name = prompt("Enter Pokémon name:");
+  const name = prompt("Enter Pokémon name (Gen I only):");
   if (!name) return;
 
-  // 1) Attempt to fetch from PokéAPI
-  let img = "";
-  let pokeId = null;
-  let pokeName = "";
+  let pokeData;
   try {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
-    if (res.ok) {
-      const data = await res.json();
-      img = data.sprites.front_default || "";
-      pokeId = data.id;
-      pokeName = data.name;
+    const res = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${name.trim().toLowerCase()}`
+    );
+    if (!res.ok) {
+      alert("Pokémon not found. Please use a Gen I name.");
+      return;
     }
-  } catch (_) {
-    // silently fall back to manual URL prompt
-  }
- if(pokeId < 1 || pokeId > 151){
-  alert("Pokemon not found.")
-  return;
- }
-  // 2) If no image yet, ask for one
-  if (!img) {
-    img = prompt("PokéAPI lookup failed or no sprite found. Enter a valid image URL:") || "";
+    pokeData = await res.json();
+  } catch {
+    alert("Network error when looking up PokéAPI.");
+    return;
   }
 
-  // 3) Insert into collection with userAdded = true
-  const wasAdded = collection.add({
-    id:        pokeId,  // unique timestamp ID
-    name:      pokeName,
-    img:       img,
-    nickname:  "",
+  const pokeId = pokeData.id;
+  if (pokeId < 1 || pokeId > 151) {
+    alert("Please enter a Gen I Pokémon (ID 1–151).");
+    return;
+  }
+
+  const newPokemon = {
+    id: pokeData.id,
+    name: pokeData.name,
+    img: pokeData.sprites.front_default || "",
+    nickname: "",
     userAdded: true
-  });
+  };
 
-  if (wasAdded) {
-    renderCollection();
-  } else {
+  const wasAdded = collection.add(newPokemon);
+  if (!wasAdded) {
     alert("That Pokémon is already in your collection.");
+    return;
   }
+
+  renderCollection();
 }
-// Immediately render on script‐load (if DOM is already there)
+
 window.addEventListener("DOMContentLoaded", () => {
   renderCollection();
-  document.getElementById("add_to_collection_btn").addEventListener("click", addPokemonToCollection);
-
-});// Initial render
-
+  const btn = document.getElementById("add_to_collection_btn");
+  if (btn) {
+    btn.addEventListener("click", addPokemonToCollection);
+  }
+});
