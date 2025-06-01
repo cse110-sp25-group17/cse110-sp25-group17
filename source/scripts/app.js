@@ -12,8 +12,8 @@ export async function loadAllPokemon() {
       id: data.id,
       name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
       img: data.sprites.front_default,
-      types: data.types.map(t => t.type.name),
-      nickname: ""
+      types: data.types.map((t) => t.type.name),
+      nickname: "",
     });
   }
 
@@ -21,8 +21,8 @@ export async function loadAllPokemon() {
 }
 
 export function showCard(index) {
-  const container = document.getElementById('card-container');
-  if (!container) return;  
+  const container = document.getElementById("card-container");
+  if (!container) return;
 
   container.innerHTML = "";
 
@@ -39,7 +39,9 @@ export function showCard(index) {
     image.src = img;
     image.alt = name;
     const nick = document.createElement("p");
-    nick.textContent = pokemonNickName? `Nickname: ${pokemonNickName}` : "No Nickname";
+    nick.textContent = pokemonNickName
+      ? `Nickname: ${pokemonNickName}`
+      : "No Nickname";
 
     const heading = document.createElement("h2");
     heading.textContent = name;
@@ -48,13 +50,10 @@ export function showCard(index) {
     card.appendChild(image);
     card.appendChild(heading);
     container.appendChild(card);
-  } 
-  else {
+  } else {
     container.innerHTML = "<h2>No Pokémon Here</h2>";
   }
 }
-
-
 
 export function nextCard() {
   // const container = document.getElementById("card-container");
@@ -82,18 +81,19 @@ export function addPokemon() {
       name,
       img,
       types: [],
-      nickname: ""
+      nickname: "",
     });
     currentIndex = activeDeck.length - 1;
     showCard(currentIndex);
   }
 }
 
-export function setNickname(){
-  if (activeDeck.length === 0){
+export function setNickname() {
+  if (activeDeck.length === 0) {
     return;
-  }const newNickName = prompt("Enter a new nickname for the Pokémon:");
-  if( newNickName !== null ){
+  }
+  const newNickName = prompt("Enter a new nickname for the Pokémon:");
+  if (newNickName !== null) {
     activeDeck[Number(currentIndex)].nickname = newNickName;
     showCard(currentIndex);
   }
@@ -105,29 +105,25 @@ export function removePokemon() {
     return;
   }
   activeDeck.splice(currentIndex, 1);
-  
-  if(activeDeck.length === 0){
+
+  if (activeDeck.length === 0) {
     container.innerHTML = "<h2>No Pokémon Here</h2>";
     return;
-  }if(currentIndex >= activeDeck.length){
+  }
+  if (currentIndex >= activeDeck.length) {
     currentIndex = activeDeck.length - 1;
   }
-    showCard(currentIndex);
-  
-
+  showCard(currentIndex);
 }
 // setter function so test file can access non-exported currentIndex
 export function setCurrentIndex(index) {
-  
   currentIndex = index;
-  
 }
 // Attach button event listeners
-document.getElementById("delete-btn")?.addEventListener("click",removePokemon);
+document.getElementById("delete-btn")?.addEventListener("click", removePokemon);
 document.getElementById("next-btn")?.addEventListener("click", nextCard);
 document.getElementById("prev-btn")?.addEventListener("click", prevCard);
 document.getElementById("nickname-btn")?.addEventListener("click", setNickname);
 window?.addEventListener("DOMContentLoaded", () => {
   loadAllPokemon();
 });
-

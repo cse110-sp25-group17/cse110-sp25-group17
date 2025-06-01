@@ -34,9 +34,7 @@ export class Collection {
   constructor() {
     const raw = localStorage.getItem("pokemonCollection");
     // If nothing in storage, use starterPokemons
-    this._list = raw
-      ? JSON.parse(raw)
-      : [...starterPokemons];
+    this._list = raw ? JSON.parse(raw) : [...starterPokemons];
     this._save(); // make sure the seed is persisted
   }
 
@@ -49,12 +47,12 @@ export class Collection {
   }
 
   has(id) {
-    return this._list.some(p => p.id === id);
+    return this._list.some((p) => p.id === id);
   }
 
   add(pokemon) {
     if (this.has(pokemon.id)) return false;
-    
+
     const formattedPokemon = {
       id: pokemon.id,
       name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
@@ -62,14 +60,14 @@ export class Collection {
       nickname: pokemon.nickname || "",
       userAdded: pokemon.userAdded|| false
     };
-    
+
     this._list.push(formattedPokemon);
     this._save();
     return true;
   }
 
   _save() {
-      localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
+    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
   }
 
   clear() {
