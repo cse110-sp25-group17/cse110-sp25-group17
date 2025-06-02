@@ -14,8 +14,9 @@ beforeEach(() => {
 });
 
 describe('collection rendering', () => {
+
   test('renders seeded starters on first load', () => {
-    
+
     expect(collection.count).toBe(3);
     renderCollection();
 
@@ -62,7 +63,7 @@ describe('collection rendering', () => {
     );
   });
 
-  test('clear() resets collection back to the 3 starters', () => {
+  test('clear() resets collection back to 3 cards', () => {
     // Add and then clear
     collection.add({
       id:       25,
