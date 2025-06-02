@@ -70,6 +70,7 @@ test('shows message to guess name after correct type', async () => {
   await new Promise((r) => setTimeout(r, 1600));
 
   const msg = document.getElementById('result-msg');
+  //check go to the name state
   expect(msg.textContent.toLowerCase()).toMatch(/what's the name/i);
 });
 
@@ -85,8 +86,9 @@ test('adds Pokémon to collection after correct name guess', async () => {
   const correctNameBtn = nameBtns.find(b => b.textContent.toLowerCase() === 'pikachu');
   correctNameBtn.click();
 
-  await new Promise((r) => setTimeout(r, 2000)); // wait for collection update
-
+  // wait for collection update
+  await new Promise((r) => setTimeout(r, 2000));
+  //add card to collection
   expect(collection.has(25)).toBe(true);
 
   //should have 4 cards
