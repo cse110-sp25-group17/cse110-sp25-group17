@@ -104,7 +104,6 @@ export function setCurrentIndex(index) {
 document.getElementById("delete-btn")?.addEventListener("click", removePokemon);
 document.getElementById("next-btn")?.addEventListener("click", nextCard);
 document.getElementById("prev-btn")?.addEventListener("click", prevCard);
-document.getElementById("nickname-btn")?.addEventListener("click", setNickname);
 window?.addEventListener("DOMContentLoaded", () => {
   loadAllPokemon();
 });
