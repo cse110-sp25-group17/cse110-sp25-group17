@@ -1,3 +1,6 @@
+/* --------------------------------------------------
+   Base Styles
+-------------------------------------------------- */
 body {
   font-family: "Segoe UI", sans-serif;
   background: linear-gradient(to bottom, #e0f7ff, #fff);
@@ -5,7 +8,7 @@ body {
   padding: 0;
 }
 
-/* Global types for html */
+/* Headings */
 h1 {
   color: #333;
   font-size: 36px;
@@ -17,12 +20,13 @@ h2 {
   color: #333;
   font-size: 28px;
   margin: 0;
-  text-align: center; /* Centered headings for better alignment (can change if needed) */
+  text-align: center;
 }
 
-/* Button Styles for pokemon cards page and generic button positioning */
+/* --------------------------------------------------
+   Buttons
+-------------------------------------------------- */
 button {
-  /* General button styles for navigation through pages */
   background-color: #0074d9;
   color: white;
   border: none;
@@ -33,15 +37,15 @@ button {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Navigation Buttons */
 #buttons {
-  text-align: center; /* flexbox (flexible box layout) creates responsive layouts and helps align things horizontally or vertically */
+  text-align: center;
   margin-top: 20px;
 }
 
-/* navigation button locations */
 #button-container {
   display: flex;
-  justify-content: space-between; /* Push left buttons to left, Add Pokémon to right */
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   margin-top: 20px;
@@ -49,10 +53,53 @@ button {
 
 #button-container > div {
   display: flex;
-  gap: 10px; /* Space between left-side buttons */
+  gap: 10px;
 }
 
-/* Header styles */
+/* Collection Button */
+.collection-btn {
+  background-color: #fc0;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.collection-btn:hover {
+  background-color: #fd3;
+}
+
+/* Type Buttons (used in game) */
+.type-btn {
+  padding: 12px 20px;
+  font-size: 18px;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: 0.2s ease;
+  cursor: pointer;
+  color: white;
+  width: 150px;
+  background-color: #d3d3d3;
+}
+
+.type-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Highlight for selected answer */
+.selected {
+  border-color: yellow;
+  box-shadow: 0 0 12px yellow;
+}
+
+/* --------------------------------------------------
+   Header
+-------------------------------------------------- */
 .header {
   background-color: #fc0;
   text-align: center;
@@ -64,13 +111,16 @@ button {
   width: 220px;
 }
 
-/* game page content */
+/* --------------------------------------------------
+   Game Layout
+-------------------------------------------------- */
 .game-layout {
   display: flex;
   justify-content: space-between;
   padding: 40px;
 }
 
+/* Left Panel */
 .left-panel {
   width: 35%;
   text-align: center;
@@ -88,35 +138,15 @@ button {
   align-items: center;
 }
 
-.type-btn {
-  padding: 12px 20px;
-  font-size: 18px;
-  border: 3px solid transparent;
-  border-radius: 12px;
-  font-weight: bold;
-  transition: 0.2s ease;
-  cursor: pointer;
-  color: white;
-  width: 150px;
-  background-color: #d3d3d3; /* Default background color */
-}
-
-.type-btn:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-.selected {
-  border-color: yellow;
-  box-shadow: 0 0 12px yellow;
-}
-
+/* Right Panel */
 .right-panel {
   width: 55%;
   text-align: center;
 }
 
-/* Pokemon image and collection button styles */
+/* --------------------------------------------------
+   Pokémon Image
+-------------------------------------------------- */
 .pokemon-img {
   width: 300px;
   height: 300px;
@@ -128,27 +158,27 @@ button {
   margin-bottom: 20px;
 }
 
-.collection-btn {
-  background-color: #fc0;
-  border: none;
-  color: #333;
-  font-size: 16px;
-  padding: 10px 25px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.collection-btn:hover {
-  background-color: #fd3;
-}
-
+/* --------------------------------------------------
+   Result Message
+-------------------------------------------------- */
 #result-msg {
   margin-top: 15px;
   font-weight: bold;
   font-size: 16px;
 }
 
+/* Success and error colors for result messages */
+#result-msg.success {
+  color: green;
+}
+
+#result-msg.error {
+  color: red;
+}
+
+/* --------------------------------------------------
+   Collection Grid & Cards
+-------------------------------------------------- */
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -157,7 +187,14 @@ button {
   justify-items: center;
 }
 
-/* Pokemon card styles */
+.collection-button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
 .pokemon-card {
   width: 200px;
   height: 280px;
@@ -180,7 +217,9 @@ button {
   font-size: 20px;
 }
 
-/* flashcard style for collection page */
+/* --------------------------------------------------
+   Flashcards layout (check this later forgot what this is referring to)
+-------------------------------------------------- */
 .flashcards-page #card-container {
   display: flex;
   justify-content: center;
@@ -190,18 +229,15 @@ button {
   max-width: 900px;
 }
 
-/* Edit page style */
+/* --------------------------------------------------
+   Edit Page
+-------------------------------------------------- */
 .edit-mode {
-  background: linear-gradient(
-    to bottom,
-    #e0ffe0,
-    #fff
-  ); /* soft green gradient */
+  background: linear-gradient(to bottom, #e0ffe0, #fff);
 }
 
-/* Optional: adjust header or card colors */
 .edit-mode .header {
-  background-color: #8c8; /* green header */
+  background-color: #8c8;
   border-bottom: 4px solid #393;
 }
 
@@ -210,7 +246,7 @@ button {
 }
 
 .edit-mode button {
-  background-color: #4caf50; /* green buttons */
+  background-color: #4caf50;
 }
 
 .edit-mode button:hover {
@@ -226,11 +262,10 @@ button {
   align-items: center;
 }
 
-/* Center the single Pokémon card on the edit page */
 .edit-mode .pokemon-card {
-  width: 300px; /* enlarged width */
+  width: 300px;
   height: auto;
-  margin: 30px auto; /* center horizontally and give some top margin */
+  margin: 30px auto;
   padding: 20px;
   background: white;
   border: 3px solid #6b6;
@@ -240,11 +275,10 @@ button {
 }
 
 .edit-mode .pokemon-card img {
-  width: 250px; /* enlarged image */
+  width: 250px;
   height: 250px;
   object-fit: contain;
 }
-
 
 .edit-mode .pokemon-card h3 {
   font-size: 24px;
