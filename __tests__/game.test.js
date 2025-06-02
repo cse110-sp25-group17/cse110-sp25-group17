@@ -64,26 +64,20 @@ test('each question renders exactly 4 buttons: 1 correct + 3 wrong', async () =>
 test('clicking the correct button shows correct messages and adds to collection', async () => {
   await loadPokemon();
   const buttons = Array.from(document.querySelectorAll('#options button'));
-
   //correct type
   const correctTypeBtn = buttons.find(b => b.textContent.toLowerCase() === 'electric');
   correctTypeBtn.click();
-
   await new Promise((r) => setTimeout(r, 1600));
   //into the name state
   const msg = document.getElementById('result-msg');
   expect(msg.textContent.toLowerCase()).toMatch(/what's the name/i);
-
   // correct name
   const nameButtons = Array.from(document.querySelectorAll('#options button'));
   const correctNameBtn = nameButtons.find(b => b.textContent.toLowerCase() === 'pikachu');
   correctNameBtn.click();
-
   await new Promise((r) => setTimeout(r, 2100));
-
   //add to collection
   expect(collection.has(25)).toBe(true);
-
   //should have 4 cards
   renderCollection();
   expect(document.querySelectorAll('.pokemon-card')).toHaveLength(4);
