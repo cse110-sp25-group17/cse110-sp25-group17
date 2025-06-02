@@ -3,7 +3,7 @@
  */
 
 import { loadPokemon } from '../source/scripts/game.js';
-import { collection, renderCollection } from '../source/scripts/collection.js';
+import { collection} from '../source/scripts/collection.js';
 import { jest } from '@jest/globals';
 
 beforeEach(() => {
