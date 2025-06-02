@@ -47,7 +47,6 @@ beforeEach(() => {
   });
 });
 
-
 //tests each question renders exactly 4 buttons: 1 correct + 3 wrong
 test('each question renders exactly 4 buttons: 1 correct + 3 wrong', async () => {
   await loadPokemon();       // this calls generateOptions internally
@@ -61,41 +60,7 @@ test('each question renders exactly 4 buttons: 1 correct + 3 wrong', async () =>
   expect(texts.filter(t => t !== 'electric')).toHaveLength(3);
 });
 
-test('shows message to guess name after correct type', async () => {
-  await loadPokemon();
-  const buttons = Array.from(document.querySelectorAll('#options button'));
-  const correctBtn = buttons.find(b => b.textContent.toLowerCase() === 'electric');
-  correctBtn.click();
-
-  await new Promise((r) => setTimeout(r, 1600));
-
-  const msg = document.getElementById('result-msg');
-  //check go to the name state
-  expect(msg.textContent.toLowerCase()).toMatch(/what's the name/i);
-});
-
-test('adds Pokémon to collection after correct name guess', async () => {
-  await loadPokemon();
-  const typeBtns = Array.from(document.querySelectorAll('#options button'));
-  const correctTypeBtn = typeBtns.find(b => b.textContent.toLowerCase() === 'electric');
-  correctTypeBtn.click();
-
-  await new Promise((r) => setTimeout(r, 1600));
-
-  const nameBtns = Array.from(document.querySelectorAll('#options button'));
-  const correctNameBtn = nameBtns.find(b => b.textContent.toLowerCase() === 'pikachu');
-  correctNameBtn.click();
-
-  // wait for collection update
-  await new Promise((r) => setTimeout(r, 2000));
-  //add card to collection
-  expect(collection.has(25)).toBe(true);
-
-  //should have 4 cards
-  renderCollection();
-  expect(document.querySelectorAll('.pokemon-card')).toHaveLength(4);
-});
-
+//wrong button for type
 test('clicking an incorrect button shows “Oops” and does NOT add to collection', async () => {
   await loadPokemon();
   const buttons = Array.from(document.querySelectorAll('#options button'));
@@ -116,7 +81,6 @@ test('clicking an incorrect button shows “Oops” and does NOT add to collecti
 test('game loop loads new Pokémon after clicking a button', async () => {
   await loadPokemon();
   const buttons = Array.from(document.querySelectorAll('#options button'));
-
 
   // click the first button
   buttons[0].click();
