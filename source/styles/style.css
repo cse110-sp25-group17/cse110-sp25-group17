@@ -6,6 +6,8 @@ body {
   background: linear-gradient(to bottom, #e0f7ff, #fff);
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  box-sizing: border-box;
 }
 
 /* Headings */
@@ -179,13 +181,6 @@ button {
 /* --------------------------------------------------
    Collection Grid & Cards
 -------------------------------------------------- */
-.collection-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
-  padding: 30px;
-  justify-items: center;
-}
 
 .collection-button-group {
   display: flex;
@@ -195,23 +190,15 @@ button {
   flex-wrap: wrap;
 }
 
-/* Adds select feature when hovering over pokemon cards */
 .pokemon-card {
-  width: 100%;             /* Fill available column width */
-  max-width: 180px;        /* Match min-width in grid */
+  width: 200px;
+  height: 280px;
   background: white;
   border: 3px solid #0074d9;
   border-radius: 14px;
-  padding: 16px;
+  padding: 20px;
   text-align: center;
   box-shadow: 0 6px 12px rgb(0 0 0 /10%);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Applies hover feature only to collections page */
-body:not(.edit-mode) .pokemon-card:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
 }
 
 .pokemon-card img {
@@ -282,15 +269,10 @@ body:not(.edit-mode) .pokemon-card:hover {
   text-align: center;
 }
 
-/* Responsively centers pokemon image in card */
 .edit-mode .pokemon-card img {
-  width: 100%;
-  max-width: 250px;
-  height: auto;
-  aspect-ratio: 1 / 1;
+  width: 250px;
+  height: 250px;
   object-fit: contain;
-  display: block;
-  margin: 0 auto;
 }
 
 .edit-mode .pokemon-card h3 {
@@ -302,11 +284,7 @@ body:not(.edit-mode) .pokemon-card:hover {
    Displays a Max of 5 Cards Per Row
    Responsive Units
 -------------------------------------------------- */
-body {
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  box-sizing: border-box;
-}
-  
+
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -315,26 +293,14 @@ body {
   margin: 0 auto;
   max-width: 1100px;
   width: 100%;
+  justify-content: center;
+  justify-items: center;
   box-sizing: border-box;
 }
 
 .nickname {
   font-size: 0.85rem;
   color: black;
-  font-style: italic;
   margin-top: 4px;
-  min-height: 1em; /* reserves space even if empty */
+  font-style: italic;
 }
-
-.pokemon-card-link {
-  text-decoration: none;       /* Remove underline */
-  color: inherit;              /* Inherit text color (usually black) */
-}
-
-.pokemon-card-link:visited,
-.pokemon-card-link:active,
-.pokemon-card-link:hover {
-  color: inherit;              /* Prevent color changes */
-  text-decoration: none;
-}
-
