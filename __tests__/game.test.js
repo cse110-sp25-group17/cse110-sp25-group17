@@ -3,7 +3,7 @@
  */
 
 import { loadPokemon } from '../source/scripts/game.js';
-import { collection } from '../source/scripts/collection.js';
+import { collection, renderCollection } from '../source/scripts/collection.js';
 import { jest } from '@jest/globals';
 
 beforeEach(() => {
@@ -61,24 +61,32 @@ test('each question renders exactly 4 buttons: 1 correct + 3 wrong', async () =>
   expect(texts.filter(t => t !== 'electric')).toHaveLength(3);
 });
 
-test('clicking the correct button shows “Correct!” and adds to collection', async () => {
+test('clicking the correct button shows correct messages and adds to collection', async () => {
   await loadPokemon();
   const buttons = Array.from(document.querySelectorAll('#options button'));
 
-  // find and click the correct one
-  const correctBtn = buttons.find(b => b.textContent.toLowerCase() === 'electric');
-  correctBtn.click();
+  //correct type
+  const correctTypeBtn = buttons.find(b => b.textContent.toLowerCase() === 'electric');
+  correctTypeBtn.click();
 
-  // immediate feedback
+  await new Promise((r) => setTimeout(r, 1600));
+  //into the name state
   const msg = document.getElementById('result-msg');
-  expect(msg.textContent).toMatch(/correct!/i);
+  expect(msg.textContent.toLowerCase()).toMatch(/what's the name/i);
 
-  // and it should be in the collection
+  // correct name
+  const nameButtons = Array.from(document.querySelectorAll('#options button'));
+  const correctNameBtn = nameButtons.find(b => b.textContent.toLowerCase() === 'pikachu');
+  correctNameBtn.click();
+
+  await new Promise((r) => setTimeout(r, 2100));
+
+  //add to collection
   expect(collection.has(25)).toBe(true);
 
-  // if you renderCollection, you should see a card
+  //should have 4 cards
   renderCollection();
-  expect(document.querySelectorAll('.pokemon-card')).toHaveLength(1); 
+  expect(document.querySelectorAll('.pokemon-card')).toHaveLength(4);
 });
 
 test('clicking an incorrect button shows “Oops” and does NOT add to collection', async () => {
