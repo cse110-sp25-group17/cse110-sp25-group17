@@ -8,7 +8,6 @@ Ensuring code quality is criticial to a maintaibable codebase. As a team, we wan
 - Developers aware of ongoining changes to the code base, promoting collaboration and knowledge sharing
 - Feedback cycles are fast, actionable and automated when possible.
 
-
 We evaluated tools to support automated code quality and collaboration during PRs, while supporting manual review efforts. 
 
 ## Considered Options
