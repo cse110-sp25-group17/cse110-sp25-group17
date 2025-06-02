@@ -1,7 +1,15 @@
 # The purpose of unit tests using Jest
 
-## Context
-We want a way to check that our code works as expected without having to test everything manually. Writing unit tests and running them automatically helps us catch bugs early and make sure changes don’t break things. It also saves time.
+## Context and Problem Statement
+
+We want a way to check that our code works as expected without having to test everything manually. With unit tests we can:
+- Catch bugs early in the development cycle
+- Prevent regressions when making changes
+- Enable safe and faster refactoring
+- Document intended behavior for developers
+- Support Agile practices.
+
+We wanted a testing framework that integrates well with out JavaScript based stack, fast, easy to use adn has a strong community backing. 
 
 ## Decision
 We decided to use **Jest** to write and run our unit tests.
@@ -11,6 +19,7 @@ Jest is a good choice because:
 - It checks if the output matches what we expect.
 - It tells us clearly which tests passed or failed.
 - It’s easy to set up and works well with JavaScript.
+- All developers on the team have exposure to using Jest in class. This familiarity avoids any uncessary ramp-up time and ensures consistent practices across the codebase.
 
 Here’s how we’ll use Jest:
 - We’ll create test files using `.test.js` at the end of the filename.
@@ -21,7 +30,13 @@ Here’s how we’ll use Jest:
   - Checking if answers are correct
   - Adding cards to the deck when the answer is right
 
+## Considered Alternatives
+
+While other tools like Mocha or AVA offter certain advantages over Jest, they do require piecing together multiple libraries, adding onto the uncessary complexity for our current use case. 
+
 ## Consequences
+
+- Provides more reliable code through automated test coverage.
 - We need to write and update test files when we add or change code.
 - We’ll set up Jest in the project so it’s ready to use.
 - Having tests will help us feel more confident when making changes.
