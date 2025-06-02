@@ -61,23 +61,34 @@ test('each question renders exactly 4 buttons: 1 correct + 3 wrong', async () =>
   expect(texts.filter(t => t !== 'electric')).toHaveLength(3);
 });
 
-test('clicking the correct button shows correct messages and adds to collection', async () => {
+test('shows message to guess name after correct type', async () => {
   await loadPokemon();
   const buttons = Array.from(document.querySelectorAll('#options button'));
-  //correct type
-  const correctTypeBtn = buttons.find(b => b.textContent.toLowerCase() === 'electric');
-  correctTypeBtn.click();
+  const correctBtn = buttons.find(b => b.textContent.toLowerCase() === 'electric');
+  correctBtn.click();
+
   await new Promise((r) => setTimeout(r, 1600));
-  //into the name state
+
   const msg = document.getElementById('result-msg');
   expect(msg.textContent.toLowerCase()).toMatch(/what's the name/i);
-  // correct name
-  const nameButtons = Array.from(document.querySelectorAll('#options button'));
-  const correctNameBtn = nameButtons.find(b => b.textContent.toLowerCase() === 'pikachu');
+});
+
+test('adds Pokémon to collection after correct name guess', async () => {
+  await loadPokemon();
+  const typeBtns = Array.from(document.querySelectorAll('#options button'));
+  const correctTypeBtn = typeBtns.find(b => b.textContent.toLowerCase() === 'electric');
+  correctTypeBtn.click();
+
+  await new Promise((r) => setTimeout(r, 1600));
+
+  const nameBtns = Array.from(document.querySelectorAll('#options button'));
+  const correctNameBtn = nameBtns.find(b => b.textContent.toLowerCase() === 'pikachu');
   correctNameBtn.click();
-  await new Promise((r) => setTimeout(r, 2100));
-  //add to collection
+
+  await new Promise((r) => setTimeout(r, 2000)); // wait for collection update
+
   expect(collection.has(25)).toBe(true);
+
   //should have 4 cards
   renderCollection();
   expect(document.querySelectorAll('.pokemon-card')).toHaveLength(4);
