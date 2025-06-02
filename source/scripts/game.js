@@ -10,58 +10,36 @@
 import { collection, renderCollection } from "./collection.js";
 
 let currentPokemon = null;
-let selectedAnswer = null;
-// Gen I types (only these appear among Pokémon 1–151)
+let currentStage = "type";
+
 const allTypes = [
-  "bug",
-  "dragon",
-  "electric",
-  "fighting",
-  "fire",
-  "flying",
-  "ghost",
-  "grass",
-  "ground",
-  "ice",
-  "normal",
-  "poison",
-  "psychic",
-  "rock",
-  "water",
+  "bug", "dragon", "electric", "fighting", "fire", "flying",
+  "ghost", "grass", "ground", "ice", "normal", "poison",
+  "psychic", "rock", "water"
 ];
 
-// Map the colors for each type
+const nameColors = ["#3399ff", "#33cc33", "#ff6633", "#cc3333"]; // blue, green, orange, red
+
 const typeColorMap = new Map([
-  ["fire", "#ff6633"],
-  ["water", "#3399ff"],
-  ["grass", "#33cc33"],
-  ["electric", "#f9cc00"],
-  ["poison", "#aa00ff"],
-  ["normal", "#999999"],
-  ["flying", "#77ccff"],
-  ["bug", "#99cc33"],
-  ["steel", "#888888"],
-  ["psychic", "#ff3399"],
-  ["ground", "#cc9966"],
-  ["rock", "#aa9966"],
-  ["ice", "#66ccff"],
-  ["dragon", "#9966cc"],
-  ["ghost", "#6666cc"],
-  ["dark", "#444444"],
-  ["fairy", "#ffccff"],
-  ["fighting", "#cc3333"],
+  ["fire", "#ff6633"], ["water", "#3399ff"], ["grass", "#33cc33"],
+  ["electric", "#f9cc00"], ["poison", "#aa00ff"], ["normal", "#999999"],
+  ["flying", "#77ccff"], ["bug", "#99cc33"], ["steel", "#888888"],
+  ["psychic", "#ff3399"], ["ground", "#cc9966"], ["rock", "#aa9966"],
+  ["ice", "#66ccff"], ["dragon", "#9966cc"], ["ghost", "#6666cc"],
+  ["dark", "#444444"], ["fairy", "#ffccff"], ["fighting", "#cc3333"],
 ]);
 
-// Load a Pokémon
 async function loadPokemon() {
-  console.log("Loading new Pokemon...");
+  // Reset result message
+  const result = document.getElementById("result-msg");
+  result.textContent = "";
+  result.classList.remove("success", "error");
+
   const id = Math.floor(Math.random() * 150) + 1;
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
   const data = await response.json();
 
   const primaryType = data.types[0].type.name;
-  console.log("Loaded Pokemon:", data.name, "with type:", primaryType);
-
   currentPokemon = {
     id: data.id,
     name: data.name,
@@ -70,110 +48,124 @@ async function loadPokemon() {
   };
 
   document.getElementById("pokemon-img").src = currentPokemon.image;
-  generateOptions(primaryType);
+  currentStage = "type";
+  generateTypeOptions();
 }
 
-// Shuffle array
 function shuffleArray(arr) {
-  //ensure that arr is an array
-  if (!Array.isArray(arr)) {
-    throw new TypeError("Expected an array");
-  }
-
+    //ensure that arr is an array
+    if (!Array.isArray(arr)) {
+      throw new TypeError("Expected an array");
+    }  
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-function typeColor(type) {
-  // Generate color based on type
-  return typeColorMap.get(type) || "#d3d3d3"; // The map worked!!!
+function createOptionButton(label, color, onClick, isNameStage = false) {
+  const btn = document.createElement("button");
+  btn.className = "type-btn";
+  btn.textContent = label.toUpperCase();
+  if (isNameStage) {
+    btn.classList.add("name-stage");
+  } else {
+    btn.style.backgroundColor = color;
+  }
+  btn.onclick = onClick;
+  return btn;
 }
 
-// Generate type buttons
-function generateOptions(correctType) {
-  console.log("Generating options for type:", correctType);
+function disableAllButtons() {
+  document.querySelectorAll(".type-btn").forEach((b) => b.disabled = true);
+}
 
-  if (!correctType || !allTypes.includes(correctType)) {
-    console.error("Invalid type received:", correctType);
-    return;
-  }
+function enableAllButtons() {
+  document.querySelectorAll(".type-btn").forEach((b) => {
+    b.disabled = false;
+    b.classList.remove("selected");
+  });
+}
 
-  // 1) Get all wrong types
-  const wrongTypes = allTypes.filter((type) => type !== correctType);
-  console.log("Available wrong types:", wrongTypes);
+function clearOptions() {
+  document.getElementById("options").innerHTML = "";
+}
 
-  // 2) Select exactly 3 wrong types
-  const threeWrongTypes = shuffleArray([...wrongTypes]).slice(0, 3);
-  console.log("Selected wrong types:", threeWrongTypes);
+function updateResultMessage(message, status) {
+  const result = document.getElementById("result-msg");
+  result.textContent = message;
+  result.classList.remove("success", "error");
+  if (status) result.classList.add(status); // add 'success' or 'error'
+}
 
-  // 3) Create array with correct type and 3 wrong types, then shuffle
-  const allChoices = shuffleArray([correctType, ...threeWrongTypes]);
-  console.log("Final shuffled choices:", allChoices);
+function generateTypeOptions() {
+  const wrongTypes = allTypes.filter((type) => type !== currentPokemon.type);
+  const threeWrongTypes = shuffleArray(wrongTypes).slice(0, 3);
+  const allChoices = shuffleArray([currentPokemon.type, ...threeWrongTypes]);
 
-  // 4) Clear and rebuild the options container
+  clearOptions();
   const container = document.getElementById("options");
-  container.innerHTML = "";
-  allChoices.forEach((type, index) => {
-    if (typeof type !== "string") {
-      console.error("Invalid type value:", type);
-      return;
-    }
-    console.log(`Creating button ${index + 1}/4 for type: ${type}`);
-    const btn = document.createElement("button");
-    btn.className = "type-btn";
-    btn.textContent = type.toUpperCase();
-    btn.style.backgroundColor = typeColor(type);
-
-    btn.onclick = () => {
-      console.log(
-        `Button clicked: ${type}, Correct type: ${currentPokemon.type}`
-      );
-      selectedAnswer = type;
-      document
-        .querySelectorAll(".type-btn")
-        .forEach((b) => b.classList.remove("selected"));
-      btn.classList.add("selected");
-
-      const result = document.getElementById("result-msg");
-      if (selectedAnswer === currentPokemon.type) {
-        // Ensures that the name of the Pokemon is capitalized
-        const capitalizedName =
-          currentPokemon.name.charAt(0).toUpperCase() +
-          currentPokemon.name.slice(1);
-        result.textContent = `Correct! ${capitalizedName} added to your collection.`;
-        result.style.color = "green";
-
-        // Add persist to localStorage
-        const caught = collection.add({
-          id: currentPokemon.id,
-          name: currentPokemon.name,
-          img: currentPokemon.image,
-          nickname: currentPokemon.nickname || "",
-        });
-
-        // re-render your UI if it was actually new
-        if (caught) renderCollection();
-      } else {
-        result.textContent = "Oops, next time :(";
-        result.style.color = "red";
-      }
-
-      setTimeout(() => {
-        selectedAnswer = null;
-        result.textContent = "";
-        document
-          .querySelectorAll(".type-btn")
-          .forEach((b) => b.classList.remove("selected"));
-        loadPokemon();
-      }, 2000);
-    };
-
+  allChoices.forEach((type) => {
+    const btn = createOptionButton(type, typeColorMap.get(type) || "#d3d3d3", () => handleAnswer(type));
     container.appendChild(btn);
   });
 }
 
-// Init
-document.addEventListener("DOMContentLoaded", async () => {
-  loadPokemon();
-});
+async function generateNameOptions() {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`);
+  const data = await response.json();
+  const allNames = data.results.map((p) => p.name).filter((n) => n !== currentPokemon.name);
+  const threeWrongNames = shuffleArray(allNames).slice(0, 3);
+  const allChoices = shuffleArray([currentPokemon.name, ...threeWrongNames]);
 
-export { loadPokemon, generateOptions };
+  clearOptions();
+  const container = document.getElementById("options");
+  allChoices.forEach((name, index) => {
+    const color = nameColors[index % nameColors.length]; // cycle through the palette
+    const btn = createOptionButton(name, color, () => handleAnswer(name));
+    container.appendChild(btn);
+  });
+}
+
+async function handleAnswer(choice) {
+  disableAllButtons();
+
+  if (currentStage === "type") {
+    if (choice === currentPokemon.type) {
+      updateResultMessage("Correct type! Now guess the name.", "success");
+      setTimeout(async () => {
+        updateResultMessage("What's the name of this Pokémon?", "success");
+        currentStage = "name";
+        await generateNameOptions();
+      }, 1500);
+    } else {
+      updateResultMessage("Oops, wrong type!", "error");
+      setTimeout(() => {
+        enableAllButtons();
+        loadPokemon();
+      }, 2000);
+    }
+  } else if (currentStage === "name") {
+    if (choice === currentPokemon.name) {
+      const capitalizedName = currentPokemon.name.charAt(0).toUpperCase() + currentPokemon.name.slice(1);
+      updateResultMessage(`Correct! ${capitalizedName} added to your collection.`, "success");
+      const caught = collection.add({
+        id: currentPokemon.id,
+        name: currentPokemon.name,
+        img: currentPokemon.image,
+        nickname: currentPokemon.nickname || "",
+      });
+      if (caught) renderCollection();
+      else {
+        updateResultMessage("You already caught this Pokemon!", "error");
+      }
+    } else {
+      updateResultMessage("Oops, wrong name!", "error");
+    }
+    setTimeout(() => {
+      enableAllButtons();
+      loadPokemon();
+    }, 2000);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadPokemon);
+
+export { loadPokemon, generateTypeOptions as generateOptions };
