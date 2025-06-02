@@ -92,10 +92,21 @@ export function renderCollection() {
     image.alt = p.name;
 
     const heading = document.createElement("h3");
-    heading.textContent = p.nickname || p.name;
+    heading.textContent = p.name;
+
+    // --- Display Pokémon name and nickname ---
+    // Set the heading to always display the official Pokémon name (capitalized when stored)
+    // Below the name, create a <p> element for the nickname, only if it exists
+    // The nickname is wrapped in parentheses and styled with the "nickname" class for smaller italic text
+    // This ensures both name and nickname are clearly visible on the card
+    const nickname = document.createElement("p");
+    nickname.textContent = p.nickname ? `(${p.nickname})` : "";
+    nickname.classList.add("nickname");
+
+    card.append(image, heading, nickname);
+
     
     // Append the image and heading to the card, append that card to the link, and then append that to the container
-    card.append(image, heading);
     link.appendChild(card);
     container.appendChild(link);
   });

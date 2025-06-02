@@ -39,11 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
   imgEl.src = pok.img;
   imgEl.alt = pok.name;
 
-  const nameEl = document.createElement('h3');
-  nameEl.textContent = pok.nickname || pok.name;
+  const properName = pok.name.charAt(0).toUpperCase() + pok.name.slice(1);
 
-  card.appendChild(imgEl);
-  card.appendChild(nameEl);
+  // Always show proper name on top
+  const nameEl = document.createElement('h3');
+  nameEl.textContent = properName;
+
+  // Always show nickname below, even if empty, to reserve space
+  const nicknameEl = document.createElement('p');
+  nicknameEl.textContent = pok.nickname ? `(${pok.nickname})` : "";
+  nicknameEl.classList.add('nickname');
+
+  card.append(imgEl, nameEl, nicknameEl);
+
   container.appendChild(card);
   // Wire up Delete button
   deleteBtn.addEventListener('click', () => {
@@ -60,10 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
   nicknameBtn.addEventListener('click', () => {
     const newNick = prompt('Enter new nickname:');
     if (!newNick || newNick.trim() === '') {
-      alert('No nickname entered; edit canceled.');
       return;
     }
-    pok.nickname = newNick.trim();
+  
+    // Prevents setting nickname as original name
+    const trimmed = newNick.trim();
+    if (trimmed.toLowerCase() === pok.name.toLowerCase()) {
+      return;
+    }
+  
+    pok.nickname = trimmed;
     collection._save();
     window.location.assign('collection.html');
   });
