@@ -6,6 +6,8 @@ body {
   background: linear-gradient(to bottom, #e0f7ff, #fff);
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  box-sizing: border-box;
 }
 
 /* Headings */
@@ -179,13 +181,6 @@ button {
 /* --------------------------------------------------
    Collection Grid & Cards
 -------------------------------------------------- */
-.collection-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
-  padding: 30px;
-  justify-items: center;
-}
 
 .collection-button-group {
   display: flex;
@@ -283,4 +278,29 @@ button {
 .edit-mode .pokemon-card h3 {
   font-size: 24px;
   margin-top: 10px;
+}
+
+/* --------------------------------------------------
+   Displays a Max of 5 Cards Per Row
+   Responsive Units
+-------------------------------------------------- */
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 30px 16px;
+  margin: 0 auto;
+  max-width: 1100px;
+  width: 100%;
+  justify-content: center;
+  justify-items: center;
+  box-sizing: border-box;
+}
+
+.nickname {
+  font-size: 0.85rem;
+  color: black;
+  margin-top: 4px;
+  font-style: italic;
 }
