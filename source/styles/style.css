@@ -217,6 +217,20 @@ button {
   font-size: 20px;
 }
 
+/* Remove underline from pokemon name links */
+.pokemon-card-link {
+  text-decoration: none !important;
+}
+
+.pokemon-card-link h3 {
+  text-decoration: none !important;
+  color: #0033cc; /* or your preferred color */
+}
+
+.pokemon-card-link:visited h3 {
+  color: #0033cc;
+}
+
 /* --------------------------------------------------
    Flashcards layout (check this later forgot what this is referring to)
 -------------------------------------------------- */

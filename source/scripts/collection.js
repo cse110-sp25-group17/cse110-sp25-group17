@@ -6,7 +6,7 @@
   - addPokemonToCollection() → prompts for a name or ID, fetches from PokéAPI, and adds if valid
 */
 
-// ───–── Seeded “starter” Pokémon –───–──
+// ───–── Seeded "starter" Pokémon –───–──
 // A brand-new Collection() (when localStorage has no key) must start with exactly these three,
 // so that tests expecting `collection.count === 3` on first run will succeed.
 const starterPokemons = [
@@ -127,9 +127,16 @@ export function renderCollection() {
     image.alt = p.name;
     card.append(image);
 
-    const heading = document.createElement("h3");
-    heading.textContent = p.nickname || p.name;
-    card.append(heading);
+    const nameElem = document.createElement("h3");
+    nameElem.textContent = p.name;
+    card.append(nameElem);
+    
+
+    const nicknameElement = document.createElement("p");
+    nicknameElement.style.color = "red";
+    nicknameElement.textContent = p.nickname ?  "Nickname: " + p.nickname: "No nickname";
+    card.append(nicknameElement);
+
 
     link.appendChild(card);
     container.appendChild(link);
@@ -137,14 +144,20 @@ export function renderCollection() {
 }
 
 async function addPokemonToCollection() {
-  const nameOrId = prompt("Enter Pokémon name or ID:");
-  if (!nameOrId) return;
+  const nameInput = prompt("Enter Pokémon name:");
+  if (!nameInput) return;
+
+  // Only allow names: block if input is a number
+  if (!isNaN(nameInput.trim())) {
+    alert("Please enter a valid Pokémon name, not a number.");
+    return;
+  }
 
   let pokeData;
   try {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameOrId.trim().toLowerCase()}`);
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameInput.trim().toLowerCase()}`);
     if (!res.ok) {
-      alert("Pokémon not found. Please enter a valid name or ID.");
+      alert("Pokémon not found. Please enter a valid name.");
       return;
     }
     pokeData = await res.json();
@@ -152,7 +165,10 @@ async function addPokemonToCollection() {
     alert("Network error when looking up PokéAPI.");
     return;
   }
-
+  if (pokeData.id <= 151) {
+    alert("You must catch this pokemon via the game page 😊.");
+    return;
+  }
   const newPokemon = {
     id:        pokeData.id,
     name:      pokeData.name,
