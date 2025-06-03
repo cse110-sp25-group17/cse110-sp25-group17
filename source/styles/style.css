@@ -179,8 +179,8 @@ button {
   padding: 30px;
   justify-items: center;
 }
+
 #button-container {
-  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -192,6 +192,7 @@ button {
   margin-right: auto;
   box-sizing: border-box;
 }
+
 .collection-button-group {
   display: flex;
   justify-content: center;
