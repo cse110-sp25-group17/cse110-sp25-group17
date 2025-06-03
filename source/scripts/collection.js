@@ -111,10 +111,13 @@ export function renderCollection() {
     image.alt = p.name;
 
     const heading = document.createElement("h3");
-    heading.textContent = p.nickname || p.name;
-    
-    // Append the image and heading to the card, append that card to the link, and then append that to the container
-    card.append(image, heading);
+    heading.textContent = p.name;
+
+    const nickname = document.createElement("p");
+    nickname.textContent = p.nickname ? `(${p.nickname})` : "";
+    nickname.classList.add("nickname");
+
+    card.append(image, heading, nickname);
     link.appendChild(card);
     container.appendChild(link);
   });

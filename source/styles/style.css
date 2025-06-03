@@ -199,6 +199,12 @@ button {
   padding: 20px;
   text-align: center;
   box-shadow: 0 6px 12px rgb(0 0 0 /10%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
 }
 
 .pokemon-card img {
@@ -287,20 +293,37 @@ button {
 
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 30px 16px;
+  grid-template-columns: repeat(5, 1fr); /* Ensure min width fits your card */
+  gap: 10px;               /* More spacing between cards */
+  padding: 40px 20px;      /* More outer padding */
   margin: 0 auto;
-  max-width: 1100px;
+  max-width: 1200px;       /* Wider max width */
   width: 100%;
+  box-sizing: border-box;
   justify-content: center;
   justify-items: center;
-  box-sizing: border-box;
+}
+
+.collection-grid a {
+  color: black;
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .collection-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .nickname {
   font-size: 0.85rem;
   color: black;
-  margin-top: 4px;
+  margin-top: 1px; /* Reduced from 4px to 2px */
   font-style: italic;
 }
