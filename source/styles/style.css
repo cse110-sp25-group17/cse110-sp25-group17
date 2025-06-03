@@ -211,7 +211,7 @@ button {
 /* Applies hover feature only to collections page */
 body:not(.edit-mode) .pokemon-card:hover {
   transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 20px rgb(0 0 0 / 20%);
 }
 
 .pokemon-card img {
