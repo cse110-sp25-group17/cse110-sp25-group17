@@ -32,3 +32,4 @@ Sprint 4 - 6/2/25 - 2:05 PM -
 ## 5. Notes / Action Items
 - Fix any bugs first
 - New features can be addded should we have time but not the highest priority
+- Assigning others to task as well as QA 
