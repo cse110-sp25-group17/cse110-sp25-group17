@@ -190,6 +190,7 @@ button {
   flex-wrap: wrap;
 }
 
+/* Added select feature when hovering over card */
 .pokemon-card {
   width: 200px;
   height: 280px;
@@ -309,6 +310,7 @@ button {
   text-decoration: none;
 }
 
+/* Collection grid works on mobile devices */
 @media (max-width: 1024px) {
   .collection-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -321,9 +323,11 @@ button {
   }
 }
 
+/* Nickname appears below actual pokemons name */
 .nickname {
   font-size: 0.85rem;
   color: black;
   margin-top: 1px; /* Reduced from 4px to 2px */
   font-style: italic;
 }
+
