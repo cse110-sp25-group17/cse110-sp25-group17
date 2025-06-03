@@ -110,6 +110,7 @@ export function renderCollection() {
     image.src = p.img;
     image.alt = p.name;
 
+    // adds nickname to collection page card
     const heading = document.createElement("h3");
     heading.textContent = p.name;
 
@@ -122,4 +123,5 @@ export function renderCollection() {
     container.appendChild(link);
   });
 }
+
 
