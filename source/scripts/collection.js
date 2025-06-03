@@ -6,7 +6,26 @@
 - Exports a renderCollection() function that wipes and redraws the <div id="collection-container"> based on whatever’s currently in your stored collection
 */
 
-const starterPokemons = [];
+const starterPokemons = [
+  {
+    id:       1,
+    name:     "Bulbasaur",
+    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    nickname: ""
+  },
+  {
+    id:       4,
+    name:     "Charmander",
+    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    nickname: ""
+  },
+  {
+    id:       7,
+    name:     "Squirtle",
+    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+    nickname: ""
+  }
+];
 
 export class Collection {
   constructor() {
@@ -75,7 +94,7 @@ export function renderCollection() {
     `;
     return;
   }
-
+  
   container.innerHTML = "";
   collection.all.forEach(p => {
     // Create the links for each pokemon

@@ -3,7 +3,7 @@
  */
 
 import { loadPokemon } from '../source/scripts/game.js';
-import { collection } from '../source/scripts/collection.js';
+import { collection} from '../source/scripts/collection.js';
 import { jest } from '@jest/globals';
 
 beforeEach(() => {
@@ -47,7 +47,6 @@ beforeEach(() => {
   });
 });
 
-
 //tests each question renders exactly 4 buttons: 1 correct + 3 wrong
 test('each question renders exactly 4 buttons: 1 correct + 3 wrong', async () => {
   await loadPokemon();       // this calls generateOptions internally
@@ -61,7 +60,7 @@ test('each question renders exactly 4 buttons: 1 correct + 3 wrong', async () =>
   expect(texts.filter(t => t !== 'electric')).toHaveLength(3);
 });
 
-//testing incorrect answer choice
+//wrong button for type
 test('clicking an incorrect button shows “Oops” and does NOT add to collection', async () => {
   await loadPokemon();
   const buttons = Array.from(document.querySelectorAll('#options button'));
@@ -75,14 +74,13 @@ test('clicking an incorrect button shows “Oops” and does NOT add to collecti
 
   // no new catch
   expect(collection.has(25)).toBe(false);
-  expect(collection.count).toBe(0);
+  expect(collection.count).toBe(3);
 });
 
 //testing the game loop (it seems to be lagging a bit)
 test('game loop loads new Pokémon after clicking a button', async () => {
   await loadPokemon();
   const buttons = Array.from(document.querySelectorAll('#options button'));
-
 
   // click the first button
   buttons[0].click();
