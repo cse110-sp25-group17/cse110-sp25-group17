@@ -181,6 +181,13 @@ button {
 /* --------------------------------------------------
    Collection Grid & Cards
 -------------------------------------------------- */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  justify-items: center;
+}
 
 .collection-button-group {
   display: flex;
@@ -201,12 +208,6 @@ button {
   text-align: center;
   box-shadow: 0 6px 12px rgb(0 0 0 /10%);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Applies hover feature only to collections page */
-body:not(.edit-mode) .pokemon-card:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 12px 20px rgb(0 0 0 / 20%);
 }
 
 .pokemon-card img {
@@ -293,16 +294,16 @@ body:not(.edit-mode) .pokemon-card:hover {
   margin-top: 10px;
 }
 
+/* Applies hover feature only to collections page */
+body:not(.edit-mode) .pokemon-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 12px 20px rgb(0 0 0 / 20%);
+}
+
 /* --------------------------------------------------
    Displays a Max of 5 Cards Per Row
    Responsive Units
--------------------------------------------------- */
-
-body {
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  box-sizing: border-box;
-}
-
+-------------------------------------------------- */ 
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -311,8 +312,6 @@ body {
   margin: 0 auto;
   max-width: 1100px;
   width: 100%;
-  justify-content: center;
-  justify-items: center;
   box-sizing: border-box;
 }
 
