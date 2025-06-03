@@ -143,7 +143,7 @@ export function renderCollection() {
   });
 }
 
-async function addPokemonToCollection() {
+export async function addPokemonToCollection() {
   const nameInput = prompt("Enter Pokémon name:");
   if (!nameInput) return;
 
@@ -185,10 +185,10 @@ async function addPokemonToCollection() {
 
   renderCollection();
 }
-export { addPokemonToCollection };
+
 window.addEventListener("DOMContentLoaded", () => {
   renderCollection();
-  const btn = document.getElementById("add_to_collection_btn");
+  const btn = document.getElementById("add-pokemon-btn");
   if (btn) {
     btn.addEventListener("click", addPokemonToCollection);
   }

@@ -186,7 +186,18 @@ button {
   padding: 30px;
   justify-items: center;
 }
-
+#button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin-top: 20px;
+  max-width: 1100px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
 .collection-button-group {
   display: flex;
   justify-content: center;
@@ -224,11 +235,11 @@ button {
 
 .pokemon-card-link h3 {
   text-decoration: none !important;
-  color: #0033cc; /* or your preferred color */
+  color: #03cc; /* or your preferred color */
 }
 
 .pokemon-card-link:visited h3 {
-  color: #0033cc;
+  color: #03cc;
 }
 
 /* --------------------------------------------------
