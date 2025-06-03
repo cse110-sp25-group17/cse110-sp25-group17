@@ -86,12 +86,12 @@ describe("Add Pokémon to Collection (any valid Pokédex ID)", () => {
     expect(cards).toHaveLength(4);
     */
 
-    // One of the <h3> texts should be “Pikachu”
-    const names = Array.from(cards).map((c) =>
+    // READ THIS NOTE!!! : commented these tests out because they were testing old addPokemonToCollection logic
+    /*const names = Array.from(cards).map((c) =>
       c.querySelector("h3").textContent
     );
-    // READ THIS NOTE!!! : commented these tests out because they were testing old addPokemonToCollection logic
-    /*
+    
+    
     expect(names).toContain("Pikachu");
     */
   });
