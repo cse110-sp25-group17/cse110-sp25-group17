@@ -1,7 +1,7 @@
 # Sprint Planning – Monday
 
 **Sprint Name/Week:**  
-Sprint 4 - 6/2/25 - 2:05 PM - 
+Sprint 4 - 6/2/25 - 2:05 PM - 2:48
 
 ## 1. Team Attendance
 - Melissa De La Cruz
