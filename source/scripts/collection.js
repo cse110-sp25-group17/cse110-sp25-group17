@@ -6,29 +6,32 @@
   - addPokemonToCollection() → prompts for a name or ID, fetches from PokéAPI, and adds if valid
 */
 
-// ───–── Seeded "starter" Pokémon –───–──
+// ───–── Seeded "starter" Pokémon –──–──
 // A brand-new Collection() (when localStorage has no key) must start with exactly these three,
 // so that tests expecting `collection.count === 3` on first run will succeed.
 const starterPokemons = [
   {
-    id:        1,
-    name:      "Bulbasaur",
-    img:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    nickname:  "",
+    id: 1,
+    name: "Bulbasaur",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    nickname: "",
+    type: "grass",
     userAdded: false
   },
   {
-    id:        4,
-    name:      "Charmander",
-    img:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    nickname:  "",
+    id: 4,
+    name: "Charmander",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    nickname: "",
+    type: "fire",
     userAdded: false
   },
   {
-    id:        7,
-    name:      "Squirtle",
-    img:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
-    nickname:  "",
+    id: 7,
+    name: "Squirtle",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+    nickname: "",
+    type: "water",
     userAdded: false
   }
 ];
@@ -59,18 +62,27 @@ export class Collection {
     // refuse duplicates by ID
     if (this.has(pokemon.id)) return false;
 
-    // Normalize and push
     const formatted = {
-      id:        pokemon.id,
-      name:      pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-      img:       pokemon.img,
-      nickname:  pokemon.nickname || "",
+      id: pokemon.id,
+      name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+      img: pokemon.img,
+      nickname: pokemon.nickname || "",
+      type: pokemon.type || "unknown",
       userAdded: Boolean(pokemon.userAdded)
     };
 
     this._list.push(formatted);
     this._save();
     return true;
+  }
+
+  _save() {
+    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
+  }
+
+  clear() {
+    this._list = [...starterPokemons];
+    this._save();
   }
 
   removeById(id) {
@@ -80,41 +92,64 @@ export class Collection {
     this._save();
     return true;
   }
-
-  clear() {
-    // ── Instead of resetting to starterPokemons, we empty everything.
-    // That way, tests that do localStorage.clear() + collection.clear() → count === 0 will pass.
-    this._list = [...starterPokemons];
-    this._save();
-  }
-
-  _save() {
-    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
-  }
 }
 
 export const collection = new Collection();
 
+// Helper: Get all unique types in the collection
+function getAllTypes() {
+  const typeSet = new Set();
+  collection.all.forEach(p => {
+    if (typeof p.type === "string") {
+      typeSet.add(p.type);
+    }
+  });
+  return Array.from(typeSet).sort();
+}
+
+// Render the type filter dropdown
+export function renderTypeFilter() {
+  const select = document.getElementById("type-filter");
+  if (!select) return;
+  select.querySelectorAll("option:not([value='all'])").forEach(opt => opt.remove());
+  getAllTypes().forEach(type => {
+    const opt = document.createElement("option");
+    opt.value = type;
+    opt.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+    select.appendChild(opt);
+  });
+}
+
+// In renderCollection, filter by p.type
 export function renderCollection() {
   const container = document.getElementById("collection-container");
   if (!container) return;
 
-  if (collection.all.length === 0) {
+  const select = document.getElementById("type-filter");
+  const selectedType = select?.value || "all";
+
+  let filtered = collection.all;
+  if (selectedType !== "all") {
+    filtered = filtered.filter(p => p.type === selectedType);
+  }
+
+  if (filtered.length === 0) {
     container.innerHTML = `
-      <p>You don't have any Pokémon yet. <a href="game_page.html">Play the game</a> to catch some!</p>
+      <p>You don't have any Pokémon of this type yet. <a href="game_page.html">Play the game</a> to catch some!</p>
     `;
     return;
   }
 
   container.innerHTML = "";
-  collection.all.forEach(p => {
-    const link = document.createElement("a");
-    link.href = `edit_page.html?id=${p.id}`;
+  filtered.forEach(p => {
+    const link = document.createElement('a');
+    link.href = `edit_page.html?id=${p.id}`; 
     link.className = 'pokemon-card-link';
 
-    const card = document.createElement("div");
-    card.className = "pokemon-card";
+    const card = document.createElement('div');
+    card.className = 'pokemon-card';
 
+    // User-added badge
     if (p.userAdded) {
       const badge = document.createElement("span");
       badge.className = "badge";
@@ -128,18 +163,27 @@ export function renderCollection() {
     card.append(image);
 
     const heading = document.createElement("h3");
-    heading.textContent = p.name;
+    heading.textContent = p.nickname || p.name;
+    card.append(heading);
 
-    const nickname = document.createElement("p");
-    nickname.textContent = p.nickname ? `(${p.nickname})` : "";
-    nickname.classList.add("nickname");
-
-    card.append(heading, nickname);
-
-        link.appendChild(card);
-        container.appendChild(link);
-      });
+    // Nickname (if present and not already shown)
+    if (p.nickname) {
+      const nickname = document.createElement("p");
+      nickname.textContent = `(${p.nickname})`;
+      nickname.classList.add("nickname");
+      card.append(nickname);
     }
+
+    // Type info
+    const typeInfo = document.createElement("p");
+    typeInfo.className = "pokemon-type";
+    typeInfo.textContent = `Type: ${p.type || "Unknown"}`;
+    card.append(typeInfo);
+
+    link.appendChild(card);
+    container.appendChild(link);
+  });
+}
 
 export async function addPokemonToCollection() {
   const nameInput = prompt("Enter Pokémon name:");
@@ -168,10 +212,13 @@ export async function addPokemonToCollection() {
     return;
   }
   const newPokemon = {
-    id:        pokeData.id,
-    name:      pokeData.name,
-    img:       pokeData.sprites.front_default || "",
-    nickname:  "",
+    id: pokeData.id,
+    name: pokeData.name,
+    img: pokeData.sprites.front_default || "",
+    nickname: "",
+    type: Array.isArray(pokeData.types) && pokeData.types.length > 0
+      ? pokeData.types[0].type.name
+      : "unknown",
     userAdded: true
   };
 
