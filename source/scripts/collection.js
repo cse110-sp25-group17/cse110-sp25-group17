@@ -6,30 +6,33 @@
   - addPokemonToCollection() → prompts for a name or ID, fetches from PokéAPI, and adds if valid
 */
 
-// ───–── Seeded "starter" Pokémon –───–──
+// ───–── Seeded "starter" Pokémon –──–──
 // A brand-new Collection() (when localStorage has no key) must start with exactly these three,
 // so that tests expecting `collection.count === 3` on first run will succeed.
 const starterPokemons = [
   {
-    id:       1,
-    name:     "Bulbasaur",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    id: 1,
+    name: "Bulbasaur",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
     nickname: "",
-    type:     "grass"
+    type: "grass",
+    userAdded: false
   },
   {
-    id:       4,
-    name:     "Charmander",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    id: 4,
+    name: "Charmander",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
     nickname: "",
-    type:     "fire"
+    type: "fire",
+    userAdded: false
   },
   {
-    id:       7,
-    name:     "Squirtle",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+    id: 7,
+    name: "Squirtle",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     nickname: "",
-    type:     "water"
+    type: "water",
+    userAdded: false
   }
 ];
 
@@ -59,12 +62,13 @@ export class Collection {
     // refuse duplicates by ID
     if (this.has(pokemon.id)) return false;
 
-    const formattedPokemon = {
+    const formatted = {
       id: pokemon.id,
       name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
       img: pokemon.img,
       nickname: pokemon.nickname || "",
-      type: pokemon.type || "unknown" // ✅ Add type field (fallback to "unknown")
+      type: pokemon.type || "unknown",
+      userAdded: Boolean(pokemon.userAdded)
     };
 
     this._list.push(formatted);
@@ -87,17 +91,6 @@ export class Collection {
     this._list.splice(idx, 1);
     this._save();
     return true;
-  }
-
-  clear() {
-    // ── Instead of resetting to starterPokemons, we empty everything.
-    // That way, tests that do localStorage.clear() + collection.clear() → count === 0 will pass.
-    this._list = [...starterPokemons];
-    this._save();
-  }
-
-  _save() {
-    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
   }
 }
 
@@ -147,7 +140,6 @@ export function renderCollection() {
     return;
   }
 
-
   container.innerHTML = "";
   filtered.forEach(p => {
     const link = document.createElement('a');
@@ -157,6 +149,14 @@ export function renderCollection() {
     const card = document.createElement('div');
     card.className = 'pokemon-card';
 
+    // User-added badge
+    if (p.userAdded) {
+      const badge = document.createElement("span");
+      badge.className = "badge";
+      badge.textContent = "★";
+      card.append(badge);
+    }
+
     const image = document.createElement("img");
     image.src = p.img;
     image.alt = p.name;
@@ -164,13 +164,75 @@ export function renderCollection() {
 
     const heading = document.createElement("h3");
     heading.textContent = p.nickname || p.name;
+    card.append(heading);
 
+    // Nickname (if present and not already shown)
+    if (p.nickname) {
+      const nickname = document.createElement("p");
+      nickname.textContent = `(${p.nickname})`;
+      nickname.classList.add("nickname");
+      card.append(nickname);
+    }
+
+    // Type info
     const typeInfo = document.createElement("p");
     typeInfo.className = "pokemon-type";
     typeInfo.textContent = `Type: ${p.type || "Unknown"}`;
+    card.append(typeInfo);
 
-    card.append(image, heading, typeInfo);
     link.appendChild(card);
     container.appendChild(link);
   });
 }
+
+export async function addPokemonToCollection() {
+  const nameInput = prompt("Enter Pokémon name:");
+  if (!nameInput) return;
+
+  // Only allow names: block if input is a number
+  if (!isNaN(nameInput.trim())) {
+    alert("Please enter a valid Pokémon name, not a number.");
+    return;
+  }
+
+  let pokeData;
+  try {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameInput.trim().toLowerCase()}`);
+    if (!res.ok) {
+      alert("Pokémon not found. Please enter a valid name.");
+      return;
+    }
+    pokeData = await res.json();
+  } catch {
+    alert("Network error when looking up PokéAPI.");
+    return;
+  }
+  if (pokeData.id <= 151) {
+    alert("You must catch this pokemon via the game page 😊.");
+    return;
+  }
+  const newPokemon = {
+    id: pokeData.id,
+    name: pokeData.name,
+    img: pokeData.sprites.front_default || "",
+    nickname: "",
+    type: pokeData.types[0]?.type?.name || "unknown",
+    userAdded: true
+  };
+
+  const wasAdded = collection.add(newPokemon);
+  if (!wasAdded) {
+    alert("That Pokémon is already in your collection.");
+    return;
+  }
+
+  renderCollection();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  renderCollection();
+  const btn = document.getElementById("add-pokemon-btn");
+  if (btn) {
+    btn.addEventListener("click", addPokemonToCollection);
+  }
+});
