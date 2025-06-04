@@ -127,21 +127,19 @@ export function renderCollection() {
     image.alt = p.name;
     card.append(image);
 
-    const nameElem = document.createElement("h3");
-    nameElem.textContent = p.name;
-    card.append(nameElem);
-    
+    const heading = document.createElement("h3");
+    heading.textContent = p.name;
 
-    const nicknameElement = document.createElement("p");
-    nicknameElement.style.color = "red";
-    nicknameElement.textContent = p.nickname ?  "Nickname: " + p.nickname: "No nickname";
-    card.append(nicknameElement);
+    const nickname = document.createElement("p");
+    nickname.textContent = p.nickname ? `(${p.nickname})` : "";
+    nickname.classList.add("nickname");
 
+    card.append(heading, nickname);
 
-    link.appendChild(card);
-    container.appendChild(link);
-  });
-}
+        link.appendChild(card);
+        container.appendChild(link);
+      });
+    }
 
 export async function addPokemonToCollection() {
   const nameInput = prompt("Enter Pokémon name:");
