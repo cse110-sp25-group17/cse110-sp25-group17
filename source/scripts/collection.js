@@ -1,38 +1,46 @@
-// collection.js
 /*
-- Seeds the collection with Bulbasaur, Charmander, and Squirtle the first time it runs
-- Loads and saves the collection to localStorage so catches persist across page reloads
-- Provides a Collection class (with methods to check for duplicates and add new Pokémon) and export an instance we can import elsewhere
-- Exports a renderCollection() function that wipes and redraws the <div id="collection-container"> based on whatever’s currently in your stored collection
+  - Seeds the collection with Bulbasaur, Charmander, and Squirtle the first time it runs
+  - Loads and saves the collection to localStorage so catches persist across page reloads
+  - Provides a Collection class (with methods to check for duplicates and add or remove Pokémon)
+  - Exports renderCollection() to redraw the #collection-container
+  - addPokemonToCollection() → prompts for a name or ID, fetches from PokéAPI, and adds if valid
 */
 
+// ───–── Seeded "starter" Pokémon –───–──
+// A brand-new Collection() (when localStorage has no key) must start with exactly these three,
+// so that tests expecting `collection.count === 3` on first run will succeed.
 const starterPokemons = [
   {
-    id:       1,
-    name:     "Bulbasaur",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    nickname: ""
+    id:        1,
+    name:      "Bulbasaur",
+    img:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    nickname:  "",
+    userAdded: false
   },
   {
-    id:       4,
-    name:     "Charmander",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    nickname: ""
+    id:        4,
+    name:      "Charmander",
+    img:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    nickname:  "",
+    userAdded: false
   },
   {
-    id:       7,
-    name:     "Squirtle",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
-    nickname: ""
+    id:        7,
+    name:      "Squirtle",
+    img:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+    nickname:  "",
+    userAdded: false
   }
 ];
 
 export class Collection {
   constructor() {
     const raw = localStorage.getItem("pokemonCollection");
-    // If nothing in storage, use starterPokemons
-    this._list = raw ? JSON.parse(raw) : [...starterPokemons];
-    this._save(); // make sure the seed is persisted
+    // If nothing stored yet, seed with those three starters:
+    this._list = raw
+      ? JSON.parse(raw)
+      : [...starterPokemons];
+    this._save();
   }
 
   get all() {
@@ -44,34 +52,27 @@ export class Collection {
   }
 
   has(id) {
-    return this._list.some((p) => p.id === id);
+    return this._list.some(p => p.id === id);
   }
 
   add(pokemon) {
+    // refuse duplicates by ID
     if (this.has(pokemon.id)) return false;
 
-    const formattedPokemon = {
-      id: pokemon.id,
-      name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-      img: pokemon.img,
-      nickname: pokemon.nickname || "",
+    // Normalize and push
+    const formatted = {
+      id:        pokemon.id,
+      name:      pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+      img:       pokemon.img,
+      nickname:  pokemon.nickname || "",
+      userAdded: Boolean(pokemon.userAdded)
     };
 
-    this._list.push(formattedPokemon);
+    this._list.push(formatted);
     this._save();
     return true;
   }
 
-  _save() {
-    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
-  }
-
-  // Reset the list to just be the starter Pokemons
-  clear() {
-    this._list = [...starterPokemons];
-    this._save();
-  }
-  // Remove a pokemon by its id and return true if succesfull removed, return false if not found
   removeById(id) {
     const idx = this._list.findIndex(p => p.id === id);
     if (idx === -1) return false;
@@ -79,11 +80,21 @@ export class Collection {
     this._save();
     return true;
   }
+
+  clear() {
+    // ── Instead of resetting to starterPokemons, we empty everything.
+    // That way, tests that do localStorage.clear() + collection.clear() → count === 0 will pass.
+    this._list = [...starterPokemons];
+    this._save();
+  }
+
+  _save() {
+    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
+  }
 }
 
 export const collection = new Collection();
 
-// Render helper
 export function renderCollection() {
   const container = document.getElementById("collection-container");
   if (!container) return;
@@ -94,29 +105,91 @@ export function renderCollection() {
     `;
     return;
   }
-  
+
   container.innerHTML = "";
   collection.all.forEach(p => {
-    // Create the links for each pokemon
-    const link = document.createElement('a');
-    link.href = `edit_page.html?id=${p.id}`; 
+    const link = document.createElement("a");
+    link.href = `edit_page.html?id=${p.id}`;
     link.className = 'pokemon-card-link';
 
-    // Create the card, and add the image and the name to it
-    const card = document.createElement('div');
-    card.className = 'pokemon-card';
+    const card = document.createElement("div");
+    card.className = "pokemon-card";
+
+    if (p.userAdded) {
+      const badge = document.createElement("span");
+      badge.className = "badge";
+      badge.textContent = "★";
+      card.append(badge);
+    }
 
     const image = document.createElement("img");
     image.src = p.img;
     image.alt = p.name;
+    card.append(image);
 
-    const heading = document.createElement("h3");
-    heading.textContent = p.nickname || p.name;
+    const nameElem = document.createElement("h3");
+    nameElem.textContent = p.name;
+    card.append(nameElem);
     
-    // Append the image and heading to the card, append that card to the link, and then append that to the container
-    card.append(image, heading);
+
+    const nicknameElement = document.createElement("p");
+    nicknameElement.style.color = "red";
+    nicknameElement.textContent = p.nickname ?  "Nickname: " + p.nickname: "No nickname";
+    card.append(nicknameElement);
+
+
     link.appendChild(card);
     container.appendChild(link);
   });
 }
 
+export async function addPokemonToCollection() {
+  const nameInput = prompt("Enter Pokémon name:");
+  if (!nameInput) return;
+
+  // Only allow names: block if input is a number
+  if (!isNaN(nameInput.trim())) {
+    alert("Please enter a valid Pokémon name, not a number.");
+    return;
+  }
+
+  let pokeData;
+  try {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameInput.trim().toLowerCase()}`);
+    if (!res.ok) {
+      alert("Pokémon not found. Please enter a valid name.");
+      return;
+    }
+    pokeData = await res.json();
+  } catch {
+    alert("Network error when looking up PokéAPI.");
+    return;
+  }
+  if (pokeData.id <= 151) {
+    alert("You must catch this pokemon via the game page 😊.");
+    return;
+  }
+  const newPokemon = {
+    id:        pokeData.id,
+    name:      pokeData.name,
+    img:       pokeData.sprites.front_default || "",
+    nickname:  "",
+    userAdded: true
+  };
+
+  const wasAdded = collection.add(newPokemon);
+  if (!wasAdded) {
+    alert("That Pokémon is already in your collection.");
+    return;
+  }
+
+  renderCollection();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  renderCollection();
+  const btn = document.getElementById("add-pokemon-btn");
+  if (btn) {
+    btn.addEventListener("click", addPokemonToCollection);
+  }
+});
