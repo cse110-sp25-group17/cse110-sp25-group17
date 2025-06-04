@@ -45,13 +45,6 @@ button {
   margin-top: 20px;
 }
 
-#button-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  margin-top: 20px;
-}
 
 #button-container > div {
   display: flex;
@@ -182,6 +175,19 @@ button {
    Collection Grid & Cards
 -------------------------------------------------- */
 
+#button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin-top: 20px;
+  max-width: 1100px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
 .collection-button-group {
   display: flex;
   justify-content: center;
@@ -190,8 +196,9 @@ button {
   flex-wrap: wrap;
 }
 
+/* Added select feature when hovering over card */
 .pokemon-card {
-  width: 200px;
+  width: 190px;
   height: 280px;
   background: white;
   border: 3px solid #0074d9;
@@ -199,17 +206,40 @@ button {
   padding: 20px;
   text-align: center;
   box-shadow: 0 6px 12px rgb(0 0 0 /10%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.pokemon-card:hover {
+  transform: scale(1.05);
+  background-color: rgb(0 0 0 / 15%);
+}
+
+/* Makes sure Pokemon image is centered in the card */
 .pokemon-card img {
-  width: 200px;
+  width: 100%;
   height: 200px;
   object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
 .pokemon-card h3 {
   margin-top: 10px;
   font-size: 20px;
+}
+
+/* Remove underline from pokemon name links */
+.pokemon-card-link {
+  text-decoration: none !important;
+}
+
+.pokemon-card-link h3 {
+  text-decoration: none !important;
+  color: #03cc; /* or your preferred color */
+}
+
+.pokemon-card-link:visited h3 {
+  color: #03cc;
 }
 
 /* --------------------------------------------------
@@ -287,20 +317,40 @@ button {
 
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 30px 16px;
+  grid-template-columns: repeat(5, 1fr); /* Ensure min width fits your card */
+  gap: 10px;               /* More spacing between cards */
+  padding: 40px 20px;      /* More outer padding */
   margin: 0 auto;
-  max-width: 1100px;
+  max-width: 1000px;       /* Wider max width */
   width: 100%;
+  box-sizing: border-box;
   justify-content: center;
   justify-items: center;
-  box-sizing: border-box;
 }
 
+.collection-grid a {
+  color: black;
+  text-decoration: none;
+}
+
+/* Collection grid works on mobile devices */
+@media (width <= 1024px) {
+  .collection-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Nickname appears below actual pokemons name */
 .nickname {
   font-size: 0.85rem;
   color: black;
-  margin-top: 4px;
+  margin-top: 1px; /* Reduced from 4px to 2px */
   font-style: italic;
 }
+

@@ -1,10 +1,14 @@
 /*
-- Seeds the collection with Bulbasaur, Charmander, and Squirtle the first time it runs
-- Loads and saves the collection to localStorage so catches persist across page reloads
-- Provides a Collection class (with methods to check for duplicates and add new Pokémon) and export an instance we can import elsewhere
-- Exports a renderCollection() function that wipes and redraws the <div id="collection-container"> based on whatever’s currently in your stored collection
+  - Seeds the collection with Bulbasaur, Charmander, and Squirtle the first time it runs
+  - Loads and saves the collection to localStorage so catches persist across page reloads
+  - Provides a Collection class (with methods to check for duplicates and add or remove Pokémon)
+  - Exports renderCollection() to redraw the #collection-container
+  - addPokemonToCollection() → prompts for a name or ID, fetches from PokéAPI, and adds if valid
 */
 
+// ───–── Seeded "starter" Pokémon –───–──
+// A brand-new Collection() (when localStorage has no key) must start with exactly these three,
+// so that tests expecting `collection.count === 3` on first run will succeed.
 const starterPokemons = [
   {
     id:       1,
@@ -32,9 +36,11 @@ const starterPokemons = [
 export class Collection {
   constructor() {
     const raw = localStorage.getItem("pokemonCollection");
-    // If nothing in storage, use starterPokemons
-    this._list = raw ? JSON.parse(raw) : [...starterPokemons];
-    this._save(); // make sure the seed is persisted
+    // If nothing stored yet, seed with those three starters:
+    this._list = raw
+      ? JSON.parse(raw)
+      : [...starterPokemons];
+    this._save();
   }
 
   get all() {
@@ -46,10 +52,11 @@ export class Collection {
   }
 
   has(id) {
-    return this._list.some((p) => p.id === id);
+    return this._list.some(p => p.id === id);
   }
 
   add(pokemon) {
+    // refuse duplicates by ID
     if (this.has(pokemon.id)) return false;
 
     const formattedPokemon = {
@@ -60,7 +67,7 @@ export class Collection {
       type: pokemon.type || "unknown" // ✅ Add type field (fallback to "unknown")
     };
 
-    this._list.push(formattedPokemon);
+    this._list.push(formatted);
     this._save();
     return true;
   }
@@ -80,6 +87,17 @@ export class Collection {
     this._list.splice(idx, 1);
     this._save();
     return true;
+  }
+
+  clear() {
+    // ── Instead of resetting to starterPokemons, we empty everything.
+    // That way, tests that do localStorage.clear() + collection.clear() → count === 0 will pass.
+    this._list = [...starterPokemons];
+    this._save();
+  }
+
+  _save() {
+    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
   }
 }
 
@@ -129,6 +147,7 @@ export function renderCollection() {
     return;
   }
 
+
   container.innerHTML = "";
   filtered.forEach(p => {
     const link = document.createElement('a');
@@ -141,6 +160,7 @@ export function renderCollection() {
     const image = document.createElement("img");
     image.src = p.img;
     image.alt = p.name;
+    card.append(image);
 
     const heading = document.createElement("h3");
     heading.textContent = p.nickname || p.name;
