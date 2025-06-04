@@ -11,27 +11,6 @@
 // so that tests expecting `collection.count === 3` on first run will succeed.
 const starterPokemons = [
   {
-<<<<<<< HEAD
-    id:       1,
-    name:     "Bulbasaur",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    nickname: "",
-    type:     "grass"
-  },
-  {
-    id:       4,
-    name:     "Charmander",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    nickname: "",
-    type:     "fire"
-  },
-  {
-    id:       7,
-    name:     "Squirtle",
-    img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
-    nickname: "",
-    type:     "water"
-=======
     id:        1,
     name:      "Bulbasaur",
     img:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
@@ -51,7 +30,6 @@ const starterPokemons = [
     img:       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     nickname:  "",
     userAdded: false
->>>>>>> origin/main
   }
 ];
 
@@ -81,14 +59,6 @@ export class Collection {
     // refuse duplicates by ID
     if (this.has(pokemon.id)) return false;
 
-<<<<<<< HEAD
-    const formattedPokemon = {
-      id: pokemon.id,
-      name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-      img: pokemon.img,
-      nickname: pokemon.nickname || "",
-      type: pokemon.type || "unknown" // ✅ Add type field (fallback to "unknown")
-=======
     // Normalize and push
     const formatted = {
       id:        pokemon.id,
@@ -96,7 +66,6 @@ export class Collection {
       img:       pokemon.img,
       nickname:  pokemon.nickname || "",
       userAdded: Boolean(pokemon.userAdded)
->>>>>>> origin/main
     };
 
     this._list.push(formatted);
@@ -104,18 +73,6 @@ export class Collection {
     return true;
   }
 
-<<<<<<< HEAD
-  _save() {
-    localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
-  }
-
-  clear() {
-    this._list = [...starterPokemons];
-    this._save();
-  }
-
-=======
->>>>>>> origin/main
   removeById(id) {
     const idx = this._list.findIndex(p => p.id === id);
     if (idx === -1) return false;
@@ -138,34 +95,6 @@ export class Collection {
 
 export const collection = new Collection();
 
-<<<<<<< HEAD
-// Helper: Get all unique types in the collection
-function getAllTypes() {
-  const typeSet = new Set();
-  collection.all.forEach(p => {
-    if (typeof p.type === "string") {
-      typeSet.add(p.type);
-    }
-  });
-  return Array.from(typeSet).sort();
-}
-
-// Render the type filter dropdown
-export function renderTypeFilter() {
-  const select = document.getElementById("type-filter");
-  if (!select) return;
-  select.querySelectorAll("option:not([value='all'])").forEach(opt => opt.remove());
-  getAllTypes().forEach(type => {
-    const opt = document.createElement("option");
-    opt.value = type;
-    opt.textContent = type.charAt(0).toUpperCase() + type.slice(1);
-    select.appendChild(opt);
-  });
-}
-
-// In renderCollection, filter by p.type
-=======
->>>>>>> origin/main
 export function renderCollection() {
   const container = document.getElementById("collection-container");
   if (!container) return;
@@ -186,15 +115,6 @@ export function renderCollection() {
   }
 
   container.innerHTML = "";
-<<<<<<< HEAD
-  filtered.forEach(p => {
-    const link = document.createElement('a');
-    link.href = `edit_page.html?id=${p.id}`; 
-    link.className = 'pokemon-card-link';
-
-    const card = document.createElement('div');
-    card.className = 'pokemon-card';
-=======
   collection.all.forEach(p => {
     const link = document.createElement("a");
     link.href = `edit_page.html?id=${p.id}`;
@@ -209,7 +129,6 @@ export function renderCollection() {
       badge.textContent = "★";
       card.append(badge);
     }
->>>>>>> origin/main
 
     const image = document.createElement("img");
     image.src = p.img;
@@ -217,19 +136,6 @@ export function renderCollection() {
     card.append(image);
 
     const heading = document.createElement("h3");
-<<<<<<< HEAD
-    heading.textContent = p.nickname || p.name;
-
-    const typeInfo = document.createElement("p");
-    typeInfo.className = "pokemon-type";
-    typeInfo.textContent = `Type: ${p.type || "Unknown"}`;
-
-    card.append(image, heading, typeInfo);
-    link.appendChild(card);
-    container.appendChild(link);
-  });
-}
-=======
     heading.textContent = p.name;
 
     const nickname = document.createElement("p");
@@ -293,4 +199,3 @@ window.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", addPokemonToCollection);
   }
 });
->>>>>>> origin/main

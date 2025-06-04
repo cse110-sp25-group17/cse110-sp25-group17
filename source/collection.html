@@ -22,35 +22,6 @@
     <div>
       <button onclick="location.href='home_page.html'">Back to Home Page</button>
     </div>
-<<<<<<< HEAD
-    <h1>My Pokémon Collection</h1>
-    <label for="type-filter">Filter by Type:</label>
-    <select id="type-filter">
-      <option value="all">All Types</option>
-      <!-- More options will be populated dynamically -->
-    </select>
-    <div id="collection-container" class="collection-grid">
-      <!-- Collection cards will be inserted here (this is done in the collection.js file) -->
-    </div>
-
-    <!-- buttons done -->
-    <div id="button-container">
-      <div>
-        <button onclick="location.href='home_page.html'">Back to Home Page</button>
-      </div>
-      <button id="add-pokemon-btn">➕ Add Pokémon</button> <!-- separated due to conflict with clicking button functionality-->
-    </div>
-
-    <script type="module">
-    import { renderCollection, renderTypeFilter } from "./scripts/collection.js";
-    document.addEventListener("DOMContentLoaded", () => {
-      renderTypeFilter();
-      renderCollection();
-      document.getElementById("type-filter").addEventListener("change", renderCollection);
-    });
-  </script>
-  </body>
-=======
     <button id="add-pokemon-btn">➕ Add Pokémon</button>
   </div>
   
@@ -59,5 +30,4 @@
     document.addEventListener('DOMContentLoaded', renderCollection);
   </script>
 </body>
->>>>>>> origin/main
 </html>
