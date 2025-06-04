@@ -216,7 +216,9 @@ export async function addPokemonToCollection() {
     name: pokeData.name,
     img: pokeData.sprites.front_default || "",
     nickname: "",
-    type: pokeData.types[0]?.type?.name || "unknown",
+    type: Array.isArray(pokeData.types) && pokeData.types.length > 0
+      ? pokeData.types[0].type.name
+      : "unknown",
     userAdded: true
   };
 
