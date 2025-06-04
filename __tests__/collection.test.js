@@ -54,9 +54,11 @@ describe('collection rendering', () => {
     const cards = document.querySelectorAll('.pokemon-card');
     expect(cards).toHaveLength(5);
 
-    const displayedNames = Array.from(cards).map(card =>
-      card.querySelector('h3').textContent
-    );
+    const displayedNames = Array.from(cards).map(card => {
+      const name = card.querySelector('h3')?.textContent;
+      const nickname = card.querySelector('.nickname')?.textContent.replace(/[()]/g, '');
+      return nickname || name;
+    });
     // Should include the un-nicknamed 'Pikachu' and the nickname 'Jiggly'
     expect(displayedNames).toEqual(
       expect.arrayContaining(['Pikachu', 'Jiggly'])
