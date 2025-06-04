@@ -60,7 +60,7 @@ self.addEventListener("fetch", (event) => {
             }
             return networkResponse;
           })
-          .catch((err) => {
+          .catch(() => {
             // Optionally handle fetch errors (e.g., offline fallback)
             return new Response("Network error occurred", { status: 408 });
           });
