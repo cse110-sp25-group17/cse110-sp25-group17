@@ -154,6 +154,9 @@ async function handleAnswer(choice) {
         type: currentPokemon.type,
       });
       if (caught) renderCollection();
+      else {
+        updateResultMessage("You already caught this Pokemon!", "error");
+      }
     } else {
       updateResultMessage("Oops, wrong name!", "error");
     }
