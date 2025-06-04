@@ -314,13 +314,13 @@ button {
 }
 
 /* Collection grid works on mobile devices */
-@media (max-width <= 1024px) {
+@media (width <= 1024px) {
   .collection-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width <= 640px) {
+@media (width <= 640px) {
   .collection-grid {
     grid-template-columns: repeat(2, 1fr);
   }
