@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <title>Pokémon Learning Hub</title>
     <link rel="stylesheet" href="styles/style.css" />
+    <!-- <link rel="manifest" href="../mainfest.json" /> -->
   </head>
   <body id="index-page">
     <div class="header">
@@ -42,7 +43,7 @@
       <!-- Game Section -->
       <div class="pokemon-card">
         <img
-          src="https://archives.bulbagarden.net/media/upload/2/22/Elemental_Types_Sleeves.jpg"
+          src="https://m.media-amazon.com/images/I/717kShcxzDL.jpg"
           alt="Quiz Preview"
         />
         <h3>Quiz Game</h3>
@@ -69,5 +70,15 @@
         </button>
       </div>
     </div>
+    <!-- <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("../service-worker.js")
+            .then((reg) => console.log("Service Worker registered:", reg))
+            .catch((err) => console.error("Service Worker registration failed:", err));
+        });
+      }
+    </script> -->
   </body>
 </html>
