@@ -1,4 +1,3 @@
-// collection.js
 /*
 - Seeds the collection with Bulbasaur, Charmander, and Squirtle the first time it runs
 - Loads and saves the collection to localStorage so catches persist across page reloads
@@ -11,19 +10,22 @@ const starterPokemons = [
     id:       1,
     name:     "Bulbasaur",
     img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    nickname: ""
+    nickname: "",
+    type:     "grass"
   },
   {
     id:       4,
     name:     "Charmander",
     img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    nickname: ""
+    nickname: "",
+    type:     "fire"
   },
   {
     id:       7,
     name:     "Squirtle",
     img:      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
-    nickname: ""
+    nickname: "",
+    type:     "water"
   }
 ];
 
@@ -55,6 +57,7 @@ export class Collection {
       name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
       img: pokemon.img,
       nickname: pokemon.nickname || "",
+      type: pokemon.type || "unknown" // ✅ Add type field (fallback to "unknown")
     };
 
     this._list.push(formattedPokemon);
@@ -66,12 +69,11 @@ export class Collection {
     localStorage.setItem("pokemonCollection", JSON.stringify(this._list));
   }
 
-  // Reset the list to just be the starter Pokemons
   clear() {
     this._list = [...starterPokemons];
     this._save();
   }
-  // Remove a pokemon by its id and return true if succesfull removed, return false if not found
+
   removeById(id) {
     const idx = this._list.findIndex(p => p.id === id);
     if (idx === -1) return false;
@@ -83,26 +85,56 @@ export class Collection {
 
 export const collection = new Collection();
 
-// Render helper
+// Helper: Get all unique types in the collection
+function getAllTypes() {
+  const typeSet = new Set();
+  collection.all.forEach(p => {
+    if (typeof p.type === "string") {
+      typeSet.add(p.type);
+    }
+  });
+  return Array.from(typeSet).sort();
+}
+
+// Render the type filter dropdown
+export function renderTypeFilter() {
+  const select = document.getElementById("type-filter");
+  if (!select) return;
+  select.querySelectorAll("option:not([value='all'])").forEach(opt => opt.remove());
+  getAllTypes().forEach(type => {
+    const opt = document.createElement("option");
+    opt.value = type;
+    opt.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+    select.appendChild(opt);
+  });
+}
+
+// In renderCollection, filter by p.type
 export function renderCollection() {
   const container = document.getElementById("collection-container");
   if (!container) return;
 
-  if (collection.all.length === 0) {
+  const select = document.getElementById("type-filter");
+  const selectedType = select?.value || "all";
+
+  let filtered = collection.all;
+  if (selectedType !== "all") {
+    filtered = filtered.filter(p => p.type === selectedType);
+  }
+
+  if (filtered.length === 0) {
     container.innerHTML = `
-      <p>You don't have any Pokémon yet. <a href="game_page.html">Play the game</a> to catch some!</p>
+      <p>You don't have any Pokémon of this type yet. <a href="game_page.html">Play the game</a> to catch some!</p>
     `;
     return;
   }
-  
+
   container.innerHTML = "";
-  collection.all.forEach(p => {
-    // Create the links for each pokemon
+  filtered.forEach(p => {
     const link = document.createElement('a');
     link.href = `edit_page.html?id=${p.id}`; 
     link.className = 'pokemon-card-link';
 
-    // Create the card, and add the image and the name to it
     const card = document.createElement('div');
     card.className = 'pokemon-card';
 
@@ -112,11 +144,13 @@ export function renderCollection() {
 
     const heading = document.createElement("h3");
     heading.textContent = p.nickname || p.name;
-    
-    // Append the image and heading to the card, append that card to the link, and then append that to the container
-    card.append(image, heading);
+
+    const typeInfo = document.createElement("p");
+    typeInfo.className = "pokemon-type";
+    typeInfo.textContent = `Type: ${p.type || "Unknown"}`;
+
+    card.append(image, heading, typeInfo);
     link.appendChild(card);
     container.appendChild(link);
   });
 }
-

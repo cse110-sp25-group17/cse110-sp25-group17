@@ -16,6 +16,11 @@
       />
     </div>
     <h1>My Pokémon Collection</h1>
+    <label for="type-filter">Filter by Type:</label>
+    <select id="type-filter">
+      <option value="all">All Types</option>
+      <!-- More options will be populated dynamically -->
+    </select>
     <div id="collection-container" class="collection-grid">
       <!-- Collection cards will be inserted here (this is done in the collection.js file) -->
     </div>
@@ -29,8 +34,12 @@
     </div>
 
     <script type="module">
-      import { renderCollection } from "./scripts/collection.js";
-      document.addEventListener("DOMContentLoaded", renderCollection);
-    </script>
+    import { renderCollection, renderTypeFilter } from "./scripts/collection.js";
+    document.addEventListener("DOMContentLoaded", () => {
+      renderTypeFilter();
+      renderCollection();
+      document.getElementById("type-filter").addEventListener("change", renderCollection);
+    });
+  </script>
   </body>
 </html>
