@@ -1,8 +1,7 @@
 {
   "name": "Pokémon Learning Hub",
   "short_name": "PokeHub",
-  "description": "An interactive guide to Pokémon flashcards, quiz games, and collections.",
-  "start_url": "specs/home_page.html",
+  "start_url": "source/home_page.html",
   "display": "standalone",
   "background_color": "#f8f8f8",
   "theme_color": "#ffcb05",
@@ -10,6 +9,16 @@
     {
       "src": "assets/images/icons/icon-192x192.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/icons/icon-384x384.png",
+      "sizes": "384x384",
       "type": "image/png"
     },
     {
