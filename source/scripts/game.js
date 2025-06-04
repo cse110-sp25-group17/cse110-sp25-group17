@@ -153,6 +153,9 @@ async function handleAnswer(choice) {
         nickname: currentPokemon.nickname || "",
       });
       if (caught) renderCollection();
+      else {
+        updateResultMessage("You already caught this Pokemon!", "error");
+      }
     } else {
       updateResultMessage("Oops, wrong name!", "error");
     }
