@@ -1,0 +1,61 @@
+<!--form-page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+
+    <div class="header"> 
+        <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pokémon_logo.svg" 
+            alt="Pokemon Logo" 
+            class="logo" 
+        />
+    </div>
+
+    <h1>We value your feedback!</h1>
+
+    <div class="feedback-container">
+    <form id="feedbackForm" class="feedback-form">
+        <label for="name">Name (optional):</label>
+        <input type="text" id="name" name="name" placeholder="Your name" />
+
+        <label for="email">Email (optional):</label>
+        <input type="email" id="email" name="email" placeholder="Your email" />
+
+        <label for="feedback">Your Feedback:</label>
+        <textarea 
+            id="feedback" 
+            name="feedback" 
+            rows="5" 
+            cols="40" 
+            placeholder="Type your feedback here..." 
+            required
+        ></textarea>
+
+        <label for="rating">How would you rate your experience?</label>
+        <select id="rating" name="rating">
+            <option value="excellent">Excellent</option>
+            <option value="good">Good</option>
+            <option value="average">Average</option>
+            <option value="poor">Poor</option>
+        </select>
+
+        <button type="submit">Submit Feedback</button>
+    </form>
+    </div>
+
+    <script>
+        // static form submission handler
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // prevent page reload
+            alert('Thank you for your feedback! (static page, no data saved)');
+        });
+    </script>
+    
+</body>
+</html>
