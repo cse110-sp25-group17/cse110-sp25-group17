@@ -59,10 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Wire up Edit Nickname button
   nicknameBtn.addEventListener('click', () => {
     const newNick = prompt('Enter new nickname:');
-    if (!newNick || newNick.trim() === '') {
-      alert('No nickname entered; edit canceled.');
+    const trimmedNewNick = newNick.trim();
+
+    if (trimmedNewNick.toLowerCase() == pok.name.toLowerCase()) {
       return;
     }
+    
+    if (!newNick || trimmedNewNick === '') {
+      pok.nickname = pok.name;
+    }
+
     pok.nickname = newNick.trim();
     collection._save();
     window.location.assign('collection.html');
