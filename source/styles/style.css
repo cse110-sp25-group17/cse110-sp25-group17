@@ -300,63 +300,6 @@ button {
 }
 
 /* --------------------------------------------------
-   Edit Page
--------------------------------------------------- */
-.edit-mode {
-  background: linear-gradient(to bottom, #e0ffe0, #fff);
-}
-
-.edit-mode .header {
-  background-color: #8c8;
-  border-bottom: 4px solid #393;
-}
-
-.edit-mode h1 {
-  color: #2d6b2d;
-}
-
-.edit-mode button {
-  background-color: #4caf50;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-.edit-mode button:hover { 
-  background-color: #45a049;
-}
-
-.description {
-  font-family: "Times New Roman", Times, serif;
-  font-size: large;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.edit-mode .pokemon-card {
-  width: 300px;
-  height: auto;
-  margin: 30px auto;
-  padding: 20px;
-  background: white;
-  border: 3px solid #6b6;
-  border-radius: 14px;
-  box-shadow: 0 6px 12px rgb(0 128 0 / 15%);
-  text-align: center;
-}
-
-.edit-mode .pokemon-card img {
-  width: 250px;
-  height: 250px;
-  object-fit: contain;
-}
-
-.edit-mode .pokemon-card h3 {
-  font-size: 24px;
-  margin-top: 10px;
-}
-
-/* --------------------------------------------------
    Displays a Max of 5 Cards Per Row
    Responsive Units
 -------------------------------------------------- */
@@ -479,4 +422,61 @@ button {
 .feedback-link-btn:hover {
   background-color: #005fa3;
   transform: scale(1.05);
+}
+
+/* --------------------------------------------------
+   Edit Page
+-------------------------------------------------- */
+.edit-mode {
+  background: linear-gradient(to bottom, #e0ffe0, #fff);
+}
+
+.edit-mode .header {
+  background-color: #8c8;
+  border-bottom: 4px solid #393;
+}
+
+.edit-mode h1 {
+  color: #2d6b2d;
+}
+
+.edit-mode button {
+  background-color: #4caf50;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.edit-mode button:hover { 
+  background-color: #45a049;
+}
+
+.description {
+  font-family: "Times New Roman", Times, serif;
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-mode .pokemon-card {
+  width: 300px;
+  height: auto;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border: 3px solid #6b6;
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgb(0 128 0 / 15%);
+  text-align: center;
+}
+
+.edit-mode .pokemon-card img {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+}
+
+.edit-mode .pokemon-card h3 {
+  font-size: 24px;
+  margin-top: 10px;
 }
