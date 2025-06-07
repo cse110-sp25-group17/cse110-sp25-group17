@@ -434,8 +434,7 @@ button {
 
 .feedback-form input,
 .feedback-form textarea,
-.feedback-form select,
-.feedback-form button {
+.feedback-form select {
   width: 100%;
   max-width: 350px; /* keeps input widths consistent */
   padding: 8px;
