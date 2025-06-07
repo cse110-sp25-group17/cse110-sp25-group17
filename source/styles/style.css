@@ -359,10 +359,12 @@ button {
   color: #2d6b2d;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .edit-mode button {
   background-color: #4caf50;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .edit-mode button:hover { 
   background-color: #45a049;
 }
@@ -388,6 +390,7 @@ button {
   text-align: center;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .edit-mode .pokemon-card:hover { /* Disables hover on edit page */
   transform: none;
   background-color: white; /* or whatever the default is */
@@ -434,7 +437,8 @@ button {
 
 .feedback-form input,
 .feedback-form textarea,
-.feedback-form select {
+.feedback-form select,
+.feedback-form button {
   width: 100%;
   max-width: 350px; /* keeps input widths consistent */
   padding: 8px;
