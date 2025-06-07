@@ -2,7 +2,7 @@
 /*
 - Loads a random Pokemon and sets its image in the UI (loadPokemon)
 - Shuffles and displays four type buttons, one correct and three wrongs (generateOptions + shuffleArray)
-- Handles the users answer, checks it against the current Pokémon’s  type, and shows a green “Correct!” or red “Oops” message.
+- Handles the users answer, checks it against the current Pokémon’s type, and shows a green “Correct!” or red “Oops” message.
 - On a correct guess, calls collection.add() to persist the catch and then renderCollection() to update the caught-Pokémon display.
 - After a short delay, clears the message and button state, then picks a new random Pokémon to continue the quiz.
 */
@@ -79,7 +79,7 @@ function shuffleArray(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-function createOptionButton(label, color, onClick, isNameStage = false) {
+function createOptionButton(label, color, onClick) {
   const btn = document.createElement("button");
   btn.className = "type-btn";
   btn.textContent = label.toUpperCase();
