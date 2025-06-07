@@ -395,8 +395,8 @@ button {
   font-style: italic;
 }
 
-/* Disables hover on edit page */
-.edit-mode .pokemon-card:hover {
+/* stylelint-disable-next-line no-descending-specificity */
+.edit-mode .pokemon-card:hover { /* Disables hover on edit page */
   transform: none;
   background-color: white; /* or whatever the default is */
 }
@@ -404,6 +404,7 @@ button {
 /* --------------------------------------------------
    Feedback Page
 -------------------------------------------------- */
+
 /* center the form on the page */
 .feedback-container {
   display: flex;
@@ -423,7 +424,7 @@ button {
   border: 3px solid #0074d9;
   border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 6px 12px rgba(0 0 0 / 10%);
+  box-shadow: 0 6px 12px rgb(0 0 0 / 10%);
   width: 100%;
   max-width: 400px; /* limits form width on big screens */
 }
