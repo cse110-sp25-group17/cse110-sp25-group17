@@ -191,3 +191,5 @@ async function handleAnswer(choice) {
 }
 
 document.addEventListener("DOMContentLoaded", loadPokemon);
+
+export { loadPokemon, handleAnswer, generateTypeOptions, generateNameOptions };
