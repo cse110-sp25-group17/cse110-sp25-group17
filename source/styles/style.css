@@ -45,7 +45,6 @@ button {
   margin-top: 20px;
 }
 
-
 #button-container > div {
   display: flex;
   gap: 10px;
@@ -69,16 +68,21 @@ button {
 
 /* Type Buttons (used in game) */
 .type-btn {
-  padding: 12px 20px;
+  padding: 14px 30px;
   font-size: 18px;
-  border: 3px solid transparent;
+  border: 5px solid transparent;
   border-radius: 12px;
   font-weight: bold;
   transition: 0.2s ease;
   cursor: pointer;
   color: white;
-  width: 150px;
+  width: 200px;
+  min-height: 50px;
   background-color: #d3d3d3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .type-btn:hover {
@@ -359,10 +363,10 @@ button {
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* Ensure min width fits your card */
-  gap: 10px;               /* More spacing between cards */
-  padding: 40px 20px;      /* More outer padding */
+  gap: 10px; /* More spacing between cards */
+  padding: 40px 20px; /* More outer padding */
   margin: 0 auto;
-  max-width: 1000px;       /* Wider max width */
+  max-width: 1000px; /* Wider max width */
   width: 100%;
   box-sizing: border-box;
   justify-content: center;
