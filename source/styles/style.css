@@ -343,11 +343,6 @@ button {
   font-style: italic;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.edit-mode .pokemon-card:hover { /* Disables hover on edit page */
-  transform: none;
-  background-color: white; /* or whatever the default is */
-}
 
 /* --------------------------------------------------
    Feedback Page
@@ -444,7 +439,6 @@ button {
   background-color: #4caf50;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .edit-mode button:hover { 
   background-color: #45a049;
 }
@@ -468,6 +462,11 @@ button {
   border-radius: 14px;
   box-shadow: 0 6px 12px rgb(0 128 0 / 15%);
   text-align: center;
+}
+
+.edit-mode .pokemon-card:hover { /* Disables hover on edit page */
+  transform: none;
+  background-color: white; /* or whatever the default is */
 }
 
 .edit-mode .pokemon-card img {
