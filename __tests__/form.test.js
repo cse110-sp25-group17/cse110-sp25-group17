@@ -8,7 +8,14 @@ describe("Basic user flow for Feedback Form", () => {
   let page;
 
   beforeAll(async () => {
-    browser = await puppeteer.launch({ headless: true });
+    // Launch Puppeteer in headless mode
+    // The `--no-sandbox` and `--disable-setuid-sandbox` flags are needed for CI environments
+    // like GitHub Actions, where Chrome's sandbox cannot run due to security restrictions.
+    // Disabling the sandbox is okay in this testing environment because it's isolated.
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     page = await browser.newPage();
     await page.goto("http://127.0.0.1:5501/source/form.html"); // your actual form page URL
   });
