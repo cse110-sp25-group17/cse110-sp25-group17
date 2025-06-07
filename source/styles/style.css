@@ -315,7 +315,8 @@ button {
   background-color: #4caf50;
 }
 
-.edit-mode button:hover {
+/* stylelint-disable-next-line no-descending-specificity */
+.edit-mode button:hover { 
   background-color: #45a049;
 }
 
