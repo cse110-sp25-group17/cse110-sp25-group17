@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(pokemonDataUrl);
       const pokemonData = await response.json();
       const type = pokemonData.types[0].type.name;
-      card.style.borderColor = typeColors[type] || '#A8A878'; // Default to normal type color
-      card.style.backgroundColor = `${typeColors[type]}60` || '#A8A87860'; // Default to normal type color with transparency
+      card.style.borderColor = typeColors[type];
+      card.style.backgroundColor = `${typeColors[type]}60`;
     }
     catch (error) {
       console.error('Error fetching Pokémon data:', error);
