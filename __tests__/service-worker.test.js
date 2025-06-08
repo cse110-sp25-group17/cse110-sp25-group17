@@ -10,22 +10,28 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 describe('Service Worker Registration', () => {
-  it('registers the service worker in home_page.html', () => {
+  let container;
+
+  beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
-    const htmlContent = fs.readFileSync(filePath, 'utf8');
+    const html = fs.readFileSync(filePath, 'utf8');
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlContent, 'text/html');
+    container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+  });
 
-    const scripts = Array.from(doc.querySelectorAll('script')).map(
-      (s) => s.textContent || ''
+  afterAll(() => {
+    document.body.innerHTML = '';
+  });
+
+  test('home_page.html registers the service worker', () => {
+    const scripts = Array.from(container.querySelectorAll('script'));
+    const hasRegistration = scripts.some(script =>
+      script.textContent?.includes('navigator.serviceWorker') &&
+      script.textContent.includes('register("../service-worker.js")')
     );
 
-    const hasSWRegistration = scripts.some((code) =>
-      code.includes('navigator.serviceWorker') &&
-      code.includes('register("../service-worker.js")')
-    );
-
-    expect(hasSWRegistration).toBe(true);
+    expect(hasRegistration).toBe(true);
   });
 });

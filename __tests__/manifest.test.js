@@ -10,28 +10,26 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 describe('Service Worker Registration', () => {
-  let doc;
+  let container;
 
   beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
+    const html = fs.readFileSync(filePath, 'utf8');
 
-    // Safely isolate HTML load
-    const htmlBuffer = fs.readFileSync(filePath);
-    const html = htmlBuffer.toString('utf8');
-
-    // Simulate DOM only in test context
-    const parser = new DOMParser();
-    doc = parser.parseFromString(html, 'text/html');
-
-    // Avoid direct DOM replacement unless necessary
-    document.body.innerHTML = doc.body.innerHTML;
+    container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
   });
 
-  it('registers the service worker in home_page.html', () => {
-    const scripts = Array.from(document.scripts).map(s => s.textContent || '');
-    const hasSWRegistration = scripts.some(code =>
-      code.includes('navigator.serviceWorker') &&
-      code.includes('register("../service-worker.js")')
+  afterAll(() => {
+    document.body.innerHTML = '';
+  });
+
+  test('registers the service worker in home_page.html', () => {
+    const scripts = Array.from(container.querySelectorAll('script'));
+    const hasSWRegistration = scripts.some(script =>
+      script.textContent?.includes('navigator.serviceWorker') &&
+      script.textContent.includes('register("../service-worker.js")')
     );
     expect(hasSWRegistration).toBe(true);
   });
