@@ -206,10 +206,16 @@ export function renderCollection() {
     // favorite icon
     const favIcon = document.createElement('span');
     favIcon.className = 'favorite-icon';
-    favIcon.innerHTML = isFavorite(p.id)
-      ? `<img src="../assets/images/icons/heart-red.png" alt="favorite" class="heart-img">`
-      : `<img src="../assets/images/icons/heart-white.png" alt="not favorite" class="heart-img">`;
-  
+
+    const img = document.createElement('img');
+    img.className = 'heart-img';
+    img.alt = isFavorite(p.id) ? 'favorite' : 'not favorite';
+    img.src = isFavorite(p.id)
+      ? '../assets/images/icons/heart-red.png'
+      : '../assets/images/icons/heart-white.png';
+    
+   favIcon.appendChild(img);
+
     favIcon.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
