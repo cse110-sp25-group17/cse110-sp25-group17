@@ -2,7 +2,7 @@
 /*
 - Loads a random Pokemon and sets its image in the UI (loadPokemon)
 - Shuffles and displays four type buttons, one correct and three wrongs (generateOptions + shuffleArray)
-- Handles the users answer, checks it against the current Pokémon’s type, and shows a green “Correct!” or red “Oops” message.
+- Handles the user's answer, checks it against the current Pokémon’s type, and shows a green “Correct!” or red “Oops” message.
 - On a correct guess, calls collection.add() to persist the catch and then renderCollection() to update the caught-Pokémon display.
 - After a short delay, clears the message and button state, then picks a new random Pokémon to continue the quiz.
 */
@@ -178,6 +178,8 @@ async function handleAnswer(choice) {
         name: currentPokemon.name,
         img: currentPokemon.image,
         nickname: currentPokemon.nickname || "",
+        type: currentPokemon.type || "unknown",
+
       });
       if (caught) renderCollection();
     } else {
@@ -190,6 +192,25 @@ async function handleAnswer(choice) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadPokemon);
+// 🎵 Sound setup: plays on load, mute/unmute toggle
+function setupAudioControls() {
+  const bgAudio = document.getElementById("bg-audio");
+  const muteBtn = document.getElementById("mute-btn");
+
+  muteBtn.addEventListener("click", () => {
+    bgAudio.muted = !bgAudio.muted;
+    muteBtn.textContent = bgAudio.muted ? "🔈 Unmute" : "🔊 Mute";
+  });
+
+  // Try to play immediately on load
+  bgAudio.play().catch((e) => {
+    console.warn("Autoplay blocked", e);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadPokemon();
+  setupAudioControls();
+});
 
 export { loadPokemon, handleAnswer, generateTypeOptions, generateNameOptions };

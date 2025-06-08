@@ -45,6 +45,11 @@ button {
   margin-top: 20px;
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 #button-container > div {
   display: flex;
   gap: 10px;
@@ -243,8 +248,8 @@ button {
 
 /* Added select feature when hovering over card */
 .pokemon-card {
-  width: 190px;
-  height: 280px;
+  width: 200px;
+  height: 300px;
   background: white;
   border: 3px solid #0074d9;
   border-radius: 14px;
@@ -342,6 +347,29 @@ button {
   margin-top: 1px; /* Reduced from 4px to 2px */
   font-style: italic;
 }
+
+/* Favorite-icon in collection page */
+.favorite-icon {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  filter: drop-shadow(0 0 2px black); /* shadow on favorite mark */
+}
+
+.favorite-icon img.heart-img {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.loading {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+  display: none; /* hidden by default */
 
 /* --------------------------------------------------
    Feedback Page

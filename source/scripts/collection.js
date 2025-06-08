@@ -15,7 +15,7 @@ const starterPokemons = [
     name: "Bulbasaur",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
     nickname: "",
-    type: "grass",
+    type: "Grass",
     userAdded: false
   },
   {
@@ -23,7 +23,7 @@ const starterPokemons = [
     name: "Charmander",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
     nickname: "",
-    type: "fire",
+    type: "Fire",
     userAdded: false
   },
   {
@@ -31,7 +31,7 @@ const starterPokemons = [
     name: "Squirtle",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     nickname: "",
-    type: "water",
+    type: "Water",
     userAdded: false
   }
 ];
@@ -68,7 +68,8 @@ export class Collection {
       img: pokemon.img,
       nickname: pokemon.nickname || "",
       type: pokemon.type || "unknown",
-      userAdded: Boolean(pokemon.userAdded)
+      userAdded: Boolean(pokemon.userAdded),
+      favorite: false
     };
 
     this._list.push(formatted);
@@ -111,13 +112,48 @@ function getAllTypes() {
 export function renderTypeFilter() {
   const select = document.getElementById("type-filter");
   if (!select) return;
+
+   // Clear everything except the "All Types" option
   select.querySelectorAll("option:not([value='all'])").forEach(opt => opt.remove());
+
+  // Add the favorites filter manually
+  const favOption = document.createElement("option");
+  favOption.value = "favorites";
+  favOption.textContent = "★ Favorites only";
+  select.appendChild(favOption);
+
   getAllTypes().forEach(type => {
     const opt = document.createElement("option");
     opt.value = type;
     opt.textContent = type.charAt(0).toUpperCase() + type.slice(1);
     select.appendChild(opt);
   });
+}
+
+//------------------------for favorite icon--------------------------
+export function getFavorites() {
+  return JSON.parse(localStorage.getItem('favoriteList') || '[]');
+}
+
+export function isFavorite(id) {
+  return getFavorites().includes(id);
+}
+
+export function toggleFavorite(id) {
+  const favs = getFavorites();
+  const index = favs.indexOf(id);
+  if (index === -1) {
+  favs.push(id);
+  } else {
+  favs.splice(index, 1);
+  }
+  localStorage.setItem('favoriteList', JSON.stringify(favs));
+}
+//------------------------for favorite icon--------------------------
+
+
+function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
 // In renderCollection, filter by p.type
@@ -129,10 +165,12 @@ export function renderCollection() {
   const selectedType = select?.value || "all";
 
   let filtered = collection.all;
-  if (selectedType !== "all") {
+  if (selectedType === "favorites") {
+    const favs = getFavorites();
+    filtered = filtered.filter(p => favs.includes(p.id));
+  } else if (selectedType !== "all") {
     filtered = filtered.filter(p => p.type === selectedType);
   }
-
   if (filtered.length === 0) {
     container.innerHTML = `
       <p>You don't have any Pokémon of this type yet. <a href="game_page.html">Play the game</a> to catch some!</p>
@@ -148,6 +186,7 @@ export function renderCollection() {
 
     const card = document.createElement('div');
     card.className = 'pokemon-card';
+    card.style.position = 'relative'; //for favorite icon
 
     // User-added badge
     if (p.userAdded) {
@@ -177,9 +216,29 @@ export function renderCollection() {
     // Type info
     const typeInfo = document.createElement("p");
     typeInfo.className = "pokemon-type";
-    typeInfo.textContent = `Type: ${p.type || "Unknown"}`;
+    typeInfo.textContent = `Type: ${capitalize(p.type || "Unknown")}`;
     card.append(typeInfo);
 
+    // favorite icon
+    const favIcon = document.createElement('span');
+    favIcon.className = 'favorite-icon';
+
+    const img = document.createElement('img');
+    img.className = 'heart-img';
+    img.alt = isFavorite(p.id) ? 'favorite' : 'not favorite';
+    img.src = isFavorite(p.id)
+      ? '../assets/images/icons/heart-red.png'
+      : '../assets/images/icons/heart-white.png';
+    favIcon.appendChild(img);
+
+    favIcon.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite(p.id);
+      renderCollection();
+    });
+    
+    card.appendChild(favIcon);
     link.appendChild(card);
     container.appendChild(link);
   });
