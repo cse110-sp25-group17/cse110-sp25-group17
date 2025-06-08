@@ -250,10 +250,7 @@ export async function addPokemonToCollection() {
     alert("Network error when looking up PokéAPI.");
     return;
   }
-  if (pokeData.id <= 151) {
-    alert("You must catch this pokemon via the game page 😊.");
-    return;
-  }
+
   const newPokemon = {
     id: pokeData.id,
     name: pokeData.name,
@@ -264,6 +261,18 @@ export async function addPokemonToCollection() {
       : "unknown",
     userAdded: true
   };
+
+  // Check for duplicates first!
+  if (collection.has(newPokemon.id)) {
+    alert("That Pokémon is already in your collection.");
+    return;
+  }
+
+  // Then check for Gen 1 restriction
+  if (pokeData.id <= 151) {
+    alert("You must catch this pokemon via the game page 😊.");
+    return;
+  }
 
   const wasAdded = collection.add(newPokemon);
   if (!wasAdded) {
