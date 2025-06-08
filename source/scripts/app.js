@@ -4,24 +4,50 @@ export let activeDeck = [];
 
 export async function loadAllPokemon() {
   const spinner = document.getElementById("loading"); // loading text
-  if (spinner) spinner.style.display = "block"; 
+  if (spinner) spinner.style.display = "block";
 
-  const limit = 151;
-  for (let id = 1; id <= limit; id++) {
+  const navButtons = document.getElementById("buttons");
+  if (navButtons) navButtons.style.display = "none"; // Navigation buttons are disabled when loading
+
+  const initialLoadCount = 10;
+  const totalCount = 151;
+
+  // loading first 10 cards
+  for (let id = 1; id <= initialLoadCount; id++) {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const data = await res.json();
 
     activeDeck.push({
       id: data.id,
-      name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
+      name: capitalize(data.name),
       img: data.sprites.front_default,
       types: data.types.map((t) => t.type.name)
     });
   }
 
   if (spinner) spinner.style.display = "none";
+  if (navButtons) navButtons.style.display = "block";
 
-  showCard(0); //show the first card
+  showCard(0);
+
+  // loading rest in the background
+  for (let id = initialLoadCount + 1; id <= totalCount; id++) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        activeDeck.push({
+          id: data.id,
+          name: capitalize(data.name),
+          img: data.sprites.front_default,
+          types: data.types.map((t) => t.type.name)
+        });
+      });
+  }
+}
+
+// Utility function
+function capitalize(name) {
+  return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
 export function showCard(index) {
