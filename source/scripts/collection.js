@@ -205,12 +205,20 @@ export function renderCollection() {
     heading.textContent = p.nickname || p.name;
     card.append(heading);
 
-    // Nickname (if present and not already shown)
+    // // Nickname (if present and not already shown)
+    // if (p.nickname) {
+    //   const nicknameLine = document.createElement("p");
+    //   nicknameLine.textContent = `Nickname: ${p.nickname}`;
+    //   nicknameLine.classList.add("nickname");
+    //   card.append(nicknameLine);
+    // }
+    
+    // Always show real name if nickname exists
     if (p.nickname) {
-      const nickname = document.createElement("p");
-      nickname.textContent = `(${p.nickname})`;
-      nickname.classList.add("nickname");
-      card.append(nickname);
+      const officialLine = document.createElement("p");
+      officialLine.textContent = `${p.name}`;
+      officialLine.classList.add("official-name");
+      card.append(officialLine);
     }
 
     // Type info

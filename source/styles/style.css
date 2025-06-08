@@ -396,12 +396,10 @@ button:disabled {
   }
 }
 
-/* Nickname appears below actual pokemons name */
-.nickname {
-  font-size: 0.85rem;
-  color: black;
-  margin-top: 1px; /* Reduced from 4px to 2px */
+.official-name {
   font-style: italic;
+  color: #666;
+  font-size: 0.9em;
 }
 
 /* Disables hover on edit page */
