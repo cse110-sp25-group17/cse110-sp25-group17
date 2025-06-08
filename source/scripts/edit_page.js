@@ -78,4 +78,39 @@ document.addEventListener('DOMContentLoaded', () => {
   backBtn.addEventListener('click', () => {
     window.location.assign('collection.html');
   });
+
+  // Change background color and border color of the card based on type
+  // API: https://pokeapi.co/api/v2/pokemon/{id}
+  // Example: https://pokeapi.co/api/v2/pokemon/4
+  const typeColors = {
+    fire: '#F08030',
+    water: '#6890F0',
+    grass: '#78C850',
+    electric: '#F8D030',
+    psychic: '#F85888',
+    ice: '#98D8D8',
+    dragon: '#7038F8',
+    dark: '#705848',
+    fairy: '#EE99AC',
+    normal: '#A8A878',
+    fighting: '#C03028',
+    flying: '#A890F0',
+    poison: '#A040A0',
+    ground: '#E0C068',
+    rock: '#B8A038',
+    bug: '#A8B820',
+  };
+  window.addEventListener('DOMContentLoaded', async () => {
+    const pokemonDataUrl = `https://pokeapi.co/api/v2/pokemon/` + id;
+    try {
+      const response = await fetch(pokemonDataUrl);
+      const pokemonData = await response.json();
+      const type = pokemonData.types[0].type.name;
+      card.style.borderColor = typeColors[type];
+      card.style.backgroundColor = `${typeColors[type]}60`;
+    }
+    catch (error) {
+      console.error('Error fetching Pokémon data:', error);
+    }
+  });
 });
