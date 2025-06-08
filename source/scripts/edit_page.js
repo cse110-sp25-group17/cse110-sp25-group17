@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       card.style.borderColor = typeColors[`${type}`];
-      card.style.backgroundColor = typeColors[`${type}60`];
+      card.style.backgroundColor = typeColors[`${type}`] + '50';
     }
     catch (error) {
       console.error('Error fetching Pokémon data:', error);
