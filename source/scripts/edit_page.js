@@ -111,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn(`Type "${type}" not found in typeColors mapping.`);
         return;
       }
-      card.style.borderColor = typeColors[type];
-      card.style.backgroundColor = `${typeColors[type]}60`;
+      card.style.borderColor = typeColors[`${type}`];
+      card.style.backgroundColor = typeColors[`${type}60`];
     }
     catch (error) {
       console.error('Error fetching Pokémon data:', error);
