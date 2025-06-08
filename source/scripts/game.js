@@ -178,6 +178,8 @@ async function handleAnswer(choice) {
         name: currentPokemon.name,
         img: currentPokemon.image,
         nickname: currentPokemon.nickname || "",
+        type: currentPokemon.type || "unknown",
+
       });
       if (caught) renderCollection();
     } else {
