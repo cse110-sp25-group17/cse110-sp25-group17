@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @jest-environment node
  */
 
 import fs from 'fs';
@@ -10,22 +10,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 describe('Home Page', () => {
+  let html = '';
   let scriptBlocks = [];
   let buttonOnClicks = [];
   let textContent = '';
 
   beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
-    const raw = fs.readFileSync(filePath); // buffer
-    const html = raw.toString();
+    html = fs.readFileSync(filePath, 'utf8');
 
-    // Extract <script> content blocks
     scriptBlocks = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
-
-    // Extract onclick values from buttons (FIXED regex to handle nested quotes)
     buttonOnClicks = [...html.matchAll(/<button[^>]+onclick=(["'])(.*?)\1/gi)].map(m => m[2]);
-
-    // Simple text extraction for visible keywords
     textContent = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
   });
 

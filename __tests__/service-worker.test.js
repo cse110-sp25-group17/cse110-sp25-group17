@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @jest-environment node
  */
 
 import fs from 'fs';
@@ -10,21 +10,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 describe('Service Worker Registration', () => {
-  let scriptContents = [];
-
-  beforeAll(() => {
+  test('registers the service worker in home_page.html', () => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
-    const raw = fs.readFileSync(filePath); // buffer
-    const html = raw.toString();
-
-    scriptContents = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
-  });
-
-  test('registers service worker in script', () => {
-    const hasSW = scriptContents.some(code =>
+    const html = fs.readFileSync(filePath, 'utf8');
+    const scriptContents = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
+    const hasSWRegistration = scriptContents.some(code =>
       code.includes('navigator.serviceWorker') &&
       code.includes('register("../service-worker.js")')
     );
-    expect(hasSW).toBe(true);
+    expect(hasSWRegistration).toBe(true);
   });
 });
