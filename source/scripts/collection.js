@@ -176,7 +176,7 @@ export function renderCollection() {
     if (p.userAdded) {
       const badge = document.createElement("span");
       badge.className = "badge";
-      badge.textContent = "★";
+      badge.textContent = "★ Added by you!";
       card.append(badge);
     }
 
