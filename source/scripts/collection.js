@@ -213,8 +213,7 @@ export function renderCollection() {
     img.src = isFavorite(p.id)
       ? '../assets/images/icons/heart-red.png'
       : '../assets/images/icons/heart-white.png';
-    
-   favIcon.appendChild(img);
+    favIcon.appendChild(img);
 
     favIcon.addEventListener('click', (e) => {
       e.preventDefault();
