@@ -15,7 +15,7 @@ const starterPokemons = [
     name: "Bulbasaur",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
     nickname: "",
-    type: "grass",
+    type: "Grass",
     userAdded: false
   },
   {
@@ -23,7 +23,7 @@ const starterPokemons = [
     name: "Charmander",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
     nickname: "",
-    type: "fire",
+    type: "Fire",
     userAdded: false
   },
   {
@@ -31,7 +31,7 @@ const starterPokemons = [
     name: "Squirtle",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     nickname: "",
-    type: "water",
+    type: "Water",
     userAdded: false
   }
 ];
@@ -142,6 +142,11 @@ export function toggleFavorite(id) {
 }
 //------------------------for favorite icon--------------------------
 
+
+function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
 // In renderCollection, filter by p.type
 export function renderCollection() {
   const container = document.getElementById("collection-container");
@@ -200,7 +205,7 @@ export function renderCollection() {
     // Type info
     const typeInfo = document.createElement("p");
     typeInfo.className = "pokemon-type";
-    typeInfo.textContent = `Type: ${p.type || "Unknown"}`;
+    typeInfo.textContent = `Type: ${capitalize(p.type || "Unknown")}`;
     card.append(typeInfo);
 
     // favorite icon
