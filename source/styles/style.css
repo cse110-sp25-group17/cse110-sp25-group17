@@ -420,3 +420,10 @@ button {
   height: 40px;
   display: block;
 }
+
+.loading {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+  display: none; /* hidden by default */
+}

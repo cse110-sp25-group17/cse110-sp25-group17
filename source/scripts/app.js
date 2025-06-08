@@ -1,9 +1,11 @@
 
 export let currentIndex = 0;
 export let activeDeck = [];
-showCard(0); // show the first card on load
 
 export async function loadAllPokemon() {
+  const spinner = document.getElementById("loading"); // loading text
+  if (spinner) spinner.style.display = "block"; 
+
   const limit = 151;
   for (let id = 1; id <= limit; id++) {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -16,6 +18,8 @@ export async function loadAllPokemon() {
       types: data.types.map((t) => t.type.name)
     });
   }
+
+  if (spinner) spinner.style.display = "none";
 
   showCard(0); //show the first card
 }
