@@ -11,21 +11,40 @@ const __dirname = path.dirname(__filename);
 
 describe('Home Page', () => {
   let html = '';
+  let scriptBlocks = [];
+  let buttonOnClicks = [];
+  let textContent = '';
 
   beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
-    html = fs.readFileSync(filePath, { encoding: 'utf8' });
+    html = fs.readFileSync(filePath, 'utf8');
+
+    scriptBlocks = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
+    buttonOnClicks = [...html.matchAll(/<button[^>]+onclick=(["'])(.*?)\1/gi)].map(m => m[2]);
+    textContent = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
   });
 
-  test('has navigation buttons with correct destinations', () => {
-    expect(html).toMatch(/onclick=["']location\.href='main_page\.html'["']/);
-    expect(html).toMatch(/onclick=["']location\.href='game_page\.html'["']/);
-    expect(html).toMatch(/onclick=["']location\.href='collection\.html'["']/);
+  test('contains service worker registration', () => {
+    const found = scriptBlocks.some(code =>
+      code.includes('navigator.serviceWorker') &&
+      code.includes('register("../service-worker.js")')
+    );
+    expect(found).toBe(true);
   });
 
-  test('has section headers', () => {
-    expect(html).toMatch(/Flashcards/i);
-    expect(html).toMatch(/Quiz Game/i);
-    expect(html).toMatch(/Collection/i);
+  test('contains navigation buttons with expected destinations', () => {
+    expect(buttonOnClicks).toEqual(
+      expect.arrayContaining([
+        "location.href='main_page.html'",
+        "location.href='game_page.html'",
+        "location.href='collection.html'",
+      ])
+    );
+  });
+
+  test('contains key section labels', () => {
+    expect(textContent).toMatch(/Flashcards/i);
+    expect(textContent).toMatch(/Quiz Game/i);
+    expect(textContent).toMatch(/Collection/i);
   });
 });

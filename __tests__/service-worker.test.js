@@ -9,13 +9,15 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-test('registers service worker in script', () => {
-  const filePath = path.resolve(__dirname, '../source/home_page.html');
-  const html = fs.readFileSync(filePath, { encoding: 'utf8' });
-  const matches = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)];
-  const found = matches.some(([_, script]) =>
-    script.includes('navigator.serviceWorker') &&
-    script.includes('register("../service-worker.js")')
-  );
-  expect(found).toBe(true);
+describe('Service Worker Registration', () => {
+  test('registers the service worker in home_page.html', () => {
+    const filePath = path.resolve(__dirname, '../source/home_page.html');
+    const html = fs.readFileSync(filePath, 'utf8');
+    const scriptContents = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
+    const hasSWRegistration = scriptContents.some(code =>
+      code.includes('navigator.serviceWorker') &&
+      code.includes('register("../service-worker.js")')
+    );
+    expect(hasSWRegistration).toBe(true);
+  });
 });
