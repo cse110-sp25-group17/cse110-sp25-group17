@@ -10,11 +10,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 describe('home_page.html', () => {
-  let html;
-
   beforeAll(() => {
-    html = fs.readFileSync(path.resolve(__dirname, '../source/home_page.html'), 'utf8');
-    document.documentElement.innerHTML = html;
+    const html = fs.readFileSync(path.resolve(__dirname, '../source/home_page.html'), 'utf8');
+
+    // Securely parse and inject HTML using DOMParser
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    document.documentElement.replaceWith(doc.documentElement);
   });
 
   it('includes a manifest link', () => {
