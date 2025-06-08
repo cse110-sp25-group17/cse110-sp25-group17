@@ -68,7 +68,8 @@ export class Collection {
       img: pokemon.img,
       nickname: pokemon.nickname || "",
       type: pokemon.type || "unknown",
-      userAdded: Boolean(pokemon.userAdded)
+      userAdded: Boolean(pokemon.userAdded),
+      favorite: false
     };
 
     this._list.push(formatted);
@@ -120,6 +121,27 @@ export function renderTypeFilter() {
   });
 }
 
+//------------------------for favorite icon--------------------------
+export function getFavorites() {
+  return JSON.parse(localStorage.getItem('favoriteList') || '[]');
+}
+
+export function isFavorite(id) {
+  return getFavorites().includes(id);
+}
+
+export function toggleFavorite(id) {
+  const favs = getFavorites();
+  const index = favs.indexOf(id);
+  if (index === -1) {
+  favs.push(id);
+  } else {
+  favs.splice(index, 1);
+  }
+  localStorage.setItem('favoriteList', JSON.stringify(favs));
+}
+//------------------------for favorite icon--------------------------
+
 // In renderCollection, filter by p.type
 export function renderCollection() {
   const container = document.getElementById("collection-container");
@@ -148,6 +170,7 @@ export function renderCollection() {
 
     const card = document.createElement('div');
     card.className = 'pokemon-card';
+    card.style.position = 'relative'; //for favorite icon
 
     // User-added badge
     if (p.userAdded) {
@@ -180,6 +203,26 @@ export function renderCollection() {
     typeInfo.textContent = `Type: ${p.type || "Unknown"}`;
     card.append(typeInfo);
 
+    // favorite icon
+    const favIcon = document.createElement('span');
+    favIcon.className = 'favorite-icon';
+
+    const img = document.createElement('img');
+    img.className = 'heart-img';
+    img.alt = isFavorite(p.id) ? 'favorite' : 'not favorite';
+    img.src = isFavorite(p.id)
+      ? '../assets/images/icons/heart-red.png'
+      : '../assets/images/icons/heart-white.png';
+    favIcon.appendChild(img);
+
+    favIcon.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite(p.id);
+      renderCollection();
+    });
+    
+    card.appendChild(favIcon);
     link.appendChild(card);
     container.appendChild(link);
   });
