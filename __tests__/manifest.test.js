@@ -10,26 +10,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 describe('Service Worker Registration', () => {
-  let container;
+  let scriptContents = [];
 
   beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
     const html = fs.readFileSync(filePath, 'utf8');
 
-    container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.appendChild(container);
-  });
-
-  afterAll(() => {
-    document.body.innerHTML = '';
+    // Extract inline script contents using regex instead of assigning to innerHTML
+    const scriptRegex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
+    scriptContents = [...html.matchAll(scriptRegex)].map(match => match[1]);
   });
 
   test('registers the service worker in home_page.html', () => {
-    const scripts = Array.from(container.querySelectorAll('script'));
-    const hasSWRegistration = scripts.some(script =>
-      script.textContent?.includes('navigator.serviceWorker') &&
-      script.textContent.includes('register("../service-worker.js")')
+    const hasSWRegistration = scriptContents.some(code =>
+      code.includes('navigator.serviceWorker') &&
+      code.includes('register("../service-worker.js")')
     );
     expect(hasSWRegistration).toBe(true);
   });
