@@ -11,20 +11,21 @@ const __dirname = path.dirname(__filename);
 
 describe('Service Worker Registration', () => {
   it('registers the service worker in home_page.html', () => {
-    // Read HTML file as Buffer and convert to string
     const filePath = path.resolve(__dirname, '../source/home_page.html');
-    const htmlContent = fs.readFileSync(filePath).toString('utf8');
+    const htmlContent = fs.readFileSync(filePath, 'utf8');
 
-    // Create a temporary container div instead of replacing the full document
-    const container = document.createElement('div');
-    container.innerHTML = htmlContent;
-    document.body.appendChild(container);
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
 
-    const scripts = Array.from(container.querySelectorAll('script')).map(s => s.textContent || '');
-    const hasSWRegistration = scripts.some(code =>
+    const scripts = Array.from(doc.querySelectorAll('script')).map(
+      (s) => s.textContent || ''
+    );
+
+    const hasSWRegistration = scripts.some((code) =>
       code.includes('navigator.serviceWorker') &&
       code.includes('register("../service-worker.js")')
     );
+
     expect(hasSWRegistration).toBe(true);
   });
 });
