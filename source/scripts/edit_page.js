@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
   backBtn.addEventListener('click', () => {
     window.location.assign('collection.html');
   });
-
   // Change background color and border color of the card based on type
   // API: https://pokeapi.co/api/v2/pokemon/{id}
   // Example: https://pokeapi.co/api/v2/pokemon/4
