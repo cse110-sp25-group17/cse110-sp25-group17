@@ -41,6 +41,7 @@ export async function loadAllPokemon() {
           img: data.sprites.front_default,
           types: data.types.map((t) => t.type.name)
         });
+        updateNavButtons();
       });
   }
 }
@@ -75,6 +76,7 @@ export function showCard(index) {
     card.appendChild(heading);
     container.appendChild(card);
   } 
+  updateNavButtons();
 }
 
 export function nextCard() {
@@ -130,6 +132,17 @@ export function removePokemon() {
 export function setCurrentIndex(index) {
   currentIndex = index;
 }
+
+function updateNavButtons() { // Navigation button on home will be blocked if First or last card
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+
+  if (!prevBtn || !nextBtn) return;
+
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex >= activeDeck.length - 1;
+}
+
 // Attach button event listeners
 document.getElementById("delete-btn")?.addEventListener("click", removePokemon);
 document.getElementById("next-btn")?.addEventListener("click", nextCard);
