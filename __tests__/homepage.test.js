@@ -11,12 +11,13 @@ const __dirname = path.dirname(__filename);
 
 describe('home_page.html', () => {
   beforeAll(() => {
-    const html = fs.readFileSync(path.resolve(__dirname, '../source/home_page.html'), 'utf8');
+    const filePath = path.resolve(__dirname, '../source/home_page.html');
+    const html = fs.readFileSync(filePath).toString('utf8'); // Safer than using 'utf8' in the second param
 
-    // Securely parse and inject HTML using DOMParser
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    document.documentElement.replaceWith(doc.documentElement);
+    // Inject safely into a temporary container (not whole document)
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
   });
 
   it('includes a manifest link', () => {
@@ -26,7 +27,7 @@ describe('home_page.html', () => {
   });
 
   it('registers the service worker', () => {
-    const scripts = Array.from(document.scripts).map(s => s.textContent);
+    const scripts = Array.from(document.scripts).map(s => s.textContent || '');
     const hasSWRegistration = scripts.some(code =>
       code.includes('navigator.serviceWorker') &&
       code.includes('register("../service-worker.js")')
