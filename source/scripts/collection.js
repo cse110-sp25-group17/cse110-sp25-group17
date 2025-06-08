@@ -15,7 +15,7 @@ const starterPokemons = [
     name: "Bulbasaur",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
     nickname: "",
-    type: "grass",
+    type: "Grass",
     userAdded: false
   },
   {
@@ -23,7 +23,7 @@ const starterPokemons = [
     name: "Charmander",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
     nickname: "",
-    type: "fire",
+    type: "Fire",
     userAdded: false
   },
   {
@@ -31,7 +31,7 @@ const starterPokemons = [
     name: "Squirtle",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     nickname: "",
-    type: "water",
+    type: "Water",
     userAdded: false
   }
 ];
@@ -112,7 +112,16 @@ function getAllTypes() {
 export function renderTypeFilter() {
   const select = document.getElementById("type-filter");
   if (!select) return;
+
+   // Clear everything except the "All Types" option
   select.querySelectorAll("option:not([value='all'])").forEach(opt => opt.remove());
+
+  // Add the favorites filter manually
+  const favOption = document.createElement("option");
+  favOption.value = "favorites";
+  favOption.textContent = "★ Favorites only";
+  select.appendChild(favOption);
+
   getAllTypes().forEach(type => {
     const opt = document.createElement("option");
     opt.value = type;
@@ -142,6 +151,11 @@ export function toggleFavorite(id) {
 }
 //------------------------for favorite icon--------------------------
 
+
+function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
 // In renderCollection, filter by p.type
 export function renderCollection() {
   const container = document.getElementById("collection-container");
@@ -151,10 +165,12 @@ export function renderCollection() {
   const selectedType = select?.value || "all";
 
   let filtered = collection.all;
-  if (selectedType !== "all") {
+  if (selectedType === "favorites") {
+    const favs = getFavorites();
+    filtered = filtered.filter(p => favs.includes(p.id));
+  } else if (selectedType !== "all") {
     filtered = filtered.filter(p => p.type === selectedType);
   }
-
   if (filtered.length === 0) {
     container.innerHTML = `
       <p>You don't have any Pokémon of this type yet. <a href="game_page.html">Play the game</a> to catch some!</p>
@@ -200,7 +216,7 @@ export function renderCollection() {
     // Type info
     const typeInfo = document.createElement("p");
     typeInfo.className = "pokemon-type";
-    typeInfo.textContent = `Type: ${p.type || "Unknown"}`;
+    typeInfo.textContent = `Type: ${capitalize(p.type || "Unknown")}`;
     card.append(typeInfo);
 
     // favorite icon

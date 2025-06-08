@@ -45,6 +45,11 @@ button {
   margin-top: 20px;
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 #button-container > div {
   display: flex;
   gap: 10px;
@@ -419,4 +424,11 @@ button {
   width: 40px;
   height: 40px;
   display: block;
+}
+
+.loading {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+  display: none; /* hidden by default */
 }
