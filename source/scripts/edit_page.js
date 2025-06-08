@@ -99,12 +99,18 @@ document.addEventListener('DOMContentLoaded', () => {
     rock: '#B8A038',
     bug: '#A8B820',
   };
+  const allowedTypes = Object.keys(typeColors);
   window.addEventListener('DOMContentLoaded', async () => {
     const pokemonDataUrl = `https://pokeapi.co/api/v2/pokemon/` + id;
     try {
       const response = await fetch(pokemonDataUrl);
       const pokemonData = await response.json();
       const type = pokemonData.types[0].type.name;
+
+      if (!allowedTypes.includes(type)) {
+        console.warn(`Type "${type}" not found in typeColors mapping.`);
+        return;
+      }
       card.style.borderColor = typeColors[type];
       card.style.backgroundColor = `${typeColors[type]}60`;
     }
