@@ -38,6 +38,7 @@ describe('Type Filter Dropdown', () => {
     expect(options).toContain('grass');
     expect(options).toContain('fire');
     expect(options).toContain('water');
-    expect(options.length).toBe(4); // all + 3 types
+    expect(options).toContain('favorites');
+    expect(options.length).toBe(5); // all + 3 types
   });
 });

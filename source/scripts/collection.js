@@ -112,7 +112,16 @@ function getAllTypes() {
 export function renderTypeFilter() {
   const select = document.getElementById("type-filter");
   if (!select) return;
+
+   // Clear everything except the "All Types" option
   select.querySelectorAll("option:not([value='all'])").forEach(opt => opt.remove());
+
+  // Add the favorites filter manually
+  const favOption = document.createElement("option");
+  favOption.value = "favorites";
+  favOption.textContent = "★ Favorites only";
+  select.appendChild(favOption);
+
   getAllTypes().forEach(type => {
     const opt = document.createElement("option");
     opt.value = type;
@@ -156,10 +165,12 @@ export function renderCollection() {
   const selectedType = select?.value || "all";
 
   let filtered = collection.all;
-  if (selectedType !== "all") {
+  if (selectedType === "favorites") {
+    const favs = getFavorites();
+    filtered = filtered.filter(p => favs.includes(p.id));
+  } else if (selectedType !== "all") {
     filtered = filtered.filter(p => p.type === selectedType);
   }
-
   if (filtered.length === 0) {
     container.innerHTML = `
       <p>You don't have any Pokémon of this type yet. <a href="game_page.html">Play the game</a> to catch some!</p>
