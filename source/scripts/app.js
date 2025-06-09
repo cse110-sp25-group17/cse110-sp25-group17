@@ -21,7 +21,7 @@ export async function loadAllPokemon() {
       id: data.id,
       name: capitalize(data.name),
       img: data.sprites.front_default,
-      types: data.types.map((t) => t.type.name)
+      types: [capitalize(data.types.find(t => t.slot === 1).type.name)]
     });
   }
 
@@ -39,7 +39,7 @@ export async function loadAllPokemon() {
           id: data.id,
           name: capitalize(data.name),
           img: data.sprites.front_default,
-          types: data.types.map((t) => t.type.name)
+          types: [capitalize(data.types.find(t => t.slot === 1).type.name)]
         });
         updateNavButtons();
       });
@@ -61,6 +61,7 @@ export function showCard(index) {
   if (index >= 0 && index < activeDeck.length) {
     const name = pokemon.name;
     const img = pokemon.img;
+    const types = pokemon.types;
 
     const card = document.createElement("div");
     card.className = "pokemon-card";
@@ -68,12 +69,16 @@ export function showCard(index) {
     const image = document.createElement("img");
     image.src = img;
     image.alt = name;
-   
+
     const heading = document.createElement("h2");
     heading.textContent = name;
 
+    const typeText = document.createElement("p");
+    typeText.textContent = "Type: " + types.join(", ");
+
     card.appendChild(image);
     card.appendChild(heading);
+    card.appendChild(typeText); // ✅ Append type info
     container.appendChild(card);
   } 
   updateNavButtons();
