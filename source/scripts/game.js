@@ -154,7 +154,7 @@ async function handleAnswer(choice) {
       setTimeout(async () => {
         currentStage = "name";
         document.querySelector("h2").textContent =
-          "What's the name of this Pokémon?";
+          "Who's that pokémon?";
         await generateNameOptions();
       }, 1500);
     } else {

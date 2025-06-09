@@ -99,7 +99,7 @@ test("after correct type, game asks for name", async () => {
   await new Promise((r) => setTimeout(r, 1600));
   const heading = document.querySelector("h2");
   expect(heading.textContent.toLowerCase()).toMatch(
-    /what's the name of this pokémon/i
+    /who's that pokémon/i
   );
 
   const nameButtons = document.querySelectorAll("#options button");
