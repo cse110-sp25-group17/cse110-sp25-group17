@@ -196,6 +196,9 @@ async function handleAnswer(choice) {
 function setupAudioControls() {
   const bgAudio = document.getElementById("bg-audio");
   const muteBtn = document.getElementById("mute-btn");
+  
+  // Set default volume to 50%
+  bgAudio.volume = 0.1;
 
   muteBtn.addEventListener("click", () => {
     bgAudio.muted = !bgAudio.muted;
