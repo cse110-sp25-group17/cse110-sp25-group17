@@ -249,7 +249,7 @@ button:disabled {
 /* Added select feature when hovering over card */
 .pokemon-card {
   width: 200px;
-  height: 300px;
+  height: 290px;
   background: white;
   border: 3px solid #0074d9;
   border-radius: 14px;
@@ -274,7 +274,8 @@ button:disabled {
 }
 
 .pokemon-card h3 {
-  margin-top: 10px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   font-size: 20px;
 }
 
@@ -396,12 +397,11 @@ button:disabled {
   }
 }
 
-/* Nickname appears below actual pokemons name */
 .nickname {
-  font-size: 0.85rem;
-  color: black;
-  margin-top: 1px; /* Reduced from 4px to 2px */
   font-style: italic;
+  color: #666;
+  font-size: 0.9em;
+   margin: 2px 0 4px;
 }
 
 /* Disables hover on edit page */
@@ -431,4 +431,40 @@ button:disabled {
   text-align: center;
   padding: 2rem;
   display: none; /* hidden by default */
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85em;
+  font-weight: bold;
+  margin: 4px 0;
+  line-height: 1.2;
+  text-transform: capitalize;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
+}
+
+.collection-message {
+  grid-column: 1 / -1; /* spans all columns in the grid */
+  text-align: center;
+  color: #c00;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 40px;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.collection-message a {
+  color: #0074d9;
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+.inline-heart {
+  width: 35px;
+  height: 35px;
+  vertical-align: bottom;
+  margin: 0;
 }
