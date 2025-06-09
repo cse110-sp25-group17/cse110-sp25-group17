@@ -172,9 +172,22 @@ export function renderCollection() {
     filtered = filtered.filter(p => p.type === selectedType);
   }
   if (filtered.length === 0) {
-    container.innerHTML = `
-      <p>You don't have any Pokémon of this type yet. <a href="game_page.html">Play the game</a> to catch some!</p>
-    `;
+    if (selectedType === "favorites") {
+      container.innerHTML = `
+        <div class="collection-message">
+          You haven’t favorited any Pokémon yet!<br>
+          Tap the <img src="../assets/images/icons/heart-white.png" alt="heart" class="inline-heart" />
+          icon to mark your favorites.
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="collection-message">
+          You don't have any Pokémon of this type yet. 
+          <a href="game_page.html">Play the game</a> to catch some!
+        </div>
+      `;
+    }
     return;
   }
 
@@ -202,30 +215,50 @@ export function renderCollection() {
     card.append(image);
 
     const heading = document.createElement("h3");
-    heading.textContent = p.nickname || p.name;
+    heading.textContent = p.name;
     card.append(heading);
 
-    // // Nickname (if present and not already shown)
-    // if (p.nickname) {
-    //   const nicknameLine = document.createElement("p");
-    //   nicknameLine.textContent = `Nickname: ${p.nickname}`;
-    //   nicknameLine.classList.add("nickname");
-    //   card.append(nicknameLine);
-    // }
-    
-    // Always show real name if nickname exists
+    // Nickname (if present and not already shown)
     if (p.nickname) {
-      const officialLine = document.createElement("p");
-      officialLine.textContent = `${p.name}`;
-      officialLine.classList.add("official-name");
-      card.append(officialLine);
+      const nicknameLine = document.createElement("p");
+      nicknameLine.textContent = `${p.nickname}`;
+      nicknameLine.classList.add("nickname");
+      card.append(nicknameLine);
     }
 
-    // Type info
-    const typeInfo = document.createElement("p");
-    typeInfo.className = "pokemon-type";
-    typeInfo.textContent = `Type: ${capitalize(p.type || "Unknown")}`;
-    card.append(typeInfo);
+
+    const typeBadge = document.createElement("span");
+    typeBadge.className = "type-badge";
+    typeBadge.textContent = capitalize(p.type || "Unknown");
+
+    // Set color based on type map
+    const typeColorMap = new Map([
+      ["fire", "#ff6633"],
+      ["water", "#3399ff"],
+      ["grass", "#33cc33"],
+      ["electric", "#f9cc00"],
+      ["poison", "#aa00ff"],
+      ["normal", "#999999"],
+      ["flying", "#77ccff"],
+      ["bug", "#99cc33"],
+      ["steel", "#888888"],
+      ["psychic", "#ff3399"],
+      ["ground", "#cc9966"],
+      ["rock", "#aa9966"],
+      ["ice", "#66ccff"],
+      ["dragon", "#9966cc"],
+      ["ghost", "#6666cc"],
+      ["dark", "#444444"],
+      ["fairy", "#ffccff"],
+      ["fighting", "#cc3333"],
+    ]);
+
+    const typeColor = typeColorMap.get((p.type || "").toLowerCase());
+
+    if (typeColor) {
+      typeBadge.style.backgroundColor = typeColor;
+    }
+    card.append(typeBadge);
 
     // favorite icon
     const favIcon = document.createElement('span');
