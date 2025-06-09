@@ -15,7 +15,11 @@ describe('home_page.html basic features', () => {
   beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html'); // adjust path as needed
     html = fs.readFileSync(filePath, 'utf8');
-    document.documentElement.innerHTML = html;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    // Replace only the <body> and <head> content to avoid full document overwrite
+    document.head.innerHTML = doc.head.innerHTML;
+    document.body.innerHTML = doc.body.innerHTML;
   });
 
   test('page has correct title', () => {
