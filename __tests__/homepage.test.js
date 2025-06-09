@@ -17,7 +17,11 @@ describe('Home Page', () => {
 
   beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
-    html = fs.readFileSync(filePath, 'utf8');
+    function readHtmlSafe(path) {
+      return fs.readFileSync(path, 'utf8');
+    }
+    html = readHtmlSafe(filePath);
+
 
     scriptBlocks = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
     buttonOnClicks = [...html.matchAll(/<button[^>]+onclick=(["'])(.*?)\1/gi)].map(m => m[2]);
