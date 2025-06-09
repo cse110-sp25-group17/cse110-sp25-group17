@@ -306,62 +306,6 @@ button:disabled {
 }
 
 /* --------------------------------------------------
-   Edit Page
--------------------------------------------------- */
-.edit-mode {
-  background: linear-gradient(to bottom, #e0ffe0, #fff);
-}
-
-.edit-mode .header {
-  background-color: #8c8;
-  border-bottom: 4px solid #393;
-}
-
-.edit-mode h1 {
-  color: #2d6b2d;
-}
-
-.edit-mode button {
-  background-color: #4caf50;
-}
-
-.edit-mode button:hover {
-  background-color: #45a049;
-}
-
-.description {
-  font-family: "Times New Roman", Times, serif;
-  font-size: large;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.edit-mode .pokemon-card {
-  width: 300px;
-  height: auto;
-  margin: 30px auto;
-  padding: 20px;
-  background: white;
-  border: 3px solid #6b6;
-  border-radius: 14px;
-  box-shadow: 0 6px 12px rgb(0 128 0 / 15%);
-  text-align: center;
-}
-
-.edit-mode .pokemon-card img {
-  width: 250px;
-  height: 250px;
-  object-fit: contain;
-}
-
-.edit-mode .pokemon-card h3 {
-  font-size: 24px;
-  margin-top: 10px;
-}
-
-/* --------------------------------------------------
    Displays a Max of 5 Cards Per Row
    Responsive Units
 -------------------------------------------------- */
@@ -404,12 +348,7 @@ button:disabled {
    margin: 2px 0 4px;
 }
 
-/* Disables hover on edit page */
-.edit-mode .pokemon-card:hover {
-  transform: none;
-  background-color: white; /* or whatever the default is */
-}
-
+/* Favorite-icon in collection page */
 .favorite-icon {
   position: absolute;
   bottom: 8px;
@@ -433,6 +372,147 @@ button:disabled {
   display: none; /* hidden by default */
 }
 
+
+/* --------------------------------------------------
+   Feedback Page
+-------------------------------------------------- */
+
+/* center the form on the page */
+.feedback-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh; /* makes it nicely centered vertically */
+  padding: 20px;
+}
+
+/* style the form itself as a column */
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* space between inputs */
+  background: white;
+  border: 3px solid #0074d9;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 10%);
+  width: 100%;
+  max-width: 400px; /* limits form width on big screens */
+}
+
+.feedback-form input,
+.feedback-form textarea,
+.feedback-form select,
+.feedback-form button {
+  width: 100%;
+  max-width: 350px; /* keeps input widths consistent */
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* style the button for better appearance */
+.feedback-form button {
+  background-color: #0074d9;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.feedback-form button:hover {
+  background-color: #005fa3;
+}
+
+/* container for the feedback link button at bottom of home page */
+.feedback-link-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* styling for the feedback link button itself */
+.feedback-link-btn {
+  background-color: #0074d9;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.feedback-link-btn:hover {
+  background-color: #005fa3;
+  transform: scale(1.05);
+}
+
+/* --------------------------------------------------
+   Edit Page
+-------------------------------------------------- */
+.edit-mode {
+  background: linear-gradient(to bottom, #e0ffe0, #fff);
+}
+
+.edit-mode .header {
+  background-color: #8c8;
+  border-bottom: 4px solid #393;
+}
+
+.edit-mode h1 {
+  color: #2d6b2d;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.edit-mode button {
+  background-color: #4caf50;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.edit-mode button:hover { 
+  background-color: #45a049;
+}
+
+.description {
+  font-family: "Times New Roman", Times, serif;
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-mode .pokemon-card {
+  width: 300px;
+  height: auto;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border: 3px solid #6b6;
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgb(0 128 0 / 15%);
+  text-align: center;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.edit-mode .pokemon-card:hover { /* Disables hover on edit page */
+  transform: none;
+  background-color: white; /* or whatever the default is */
+}
+
+.edit-mode .pokemon-card img {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+}
+
+.edit-mode .pokemon-card h3 {
+  font-size: 24px;
+  margin-top: 10px;
+}
+  
+ /* other features not familiar with */
 .type-badge {
   display: inline-block;
   padding: 4px 10px;
