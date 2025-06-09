@@ -15,7 +15,7 @@ const starterPokemons = [
     name: "Bulbasaur",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
     nickname: "",
-    type: "Grass",
+    type: "grass",
     userAdded: false
   },
   {
@@ -23,7 +23,7 @@ const starterPokemons = [
     name: "Charmander",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
     nickname: "",
-    type: "Fire",
+    type: "fire",
     userAdded: false
   },
   {
@@ -31,7 +31,7 @@ const starterPokemons = [
     name: "Squirtle",
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     nickname: "",
-    type: "Water",
+    type: "water",
     userAdded: false
   }
 ];
