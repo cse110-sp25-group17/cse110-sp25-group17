@@ -370,6 +370,7 @@ button:disabled {
   text-align: center;
   padding: 2rem;
   display: none; /* hidden by default */
+}
 
 /* --------------------------------------------------
    Favorite Icon in Collection
