@@ -26,11 +26,13 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
+    "escape-html": "^1.0.3",
     "eslint": "^9.26.0",
     "globals": "^16.1.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^26.1.0",
+    "regenerator-runtime": "^0.14.1",
     "stylelint": "^16.19.1",
     "stylelint-config-standard": "^38.0.0"
   }

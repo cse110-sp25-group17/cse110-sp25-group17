@@ -17,7 +17,6 @@ describe('Home Page', () => {
 
   beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
-    // eslint-disable-next-line security/detect-non-literal-fs-filename
     html = fs.readFileSync(filePath, 'utf8');
 
     scriptBlocks = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
