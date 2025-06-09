@@ -21,7 +21,7 @@ export async function loadAllPokemon() {
       id: data.id,
       name: capitalize(data.name),
       img: data.sprites.front_default,
-      types: [data.types.find(t => t.slot === 1).type.name]
+      types: [capitalize(data.types.find(t => t.slot === 1).type.name)]
     });
   }
 
@@ -39,7 +39,7 @@ export async function loadAllPokemon() {
           id: data.id,
           name: capitalize(data.name),
           img: data.sprites.front_default,
-          types: [data.types.find(t => t.slot === 1).type.name]
+          types: [capitalize(data.types.find(t => t.slot === 1).type.name)]
         });
         updateNavButtons();
       });
