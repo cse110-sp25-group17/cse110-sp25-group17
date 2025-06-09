@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @jest-environment jsdom
  */
 
 import fs from 'fs';
@@ -9,42 +9,44 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-describe('Home Page', () => {
-  let html = '';
-  let scriptBlocks = [];
-  let buttonOnClicks = [];
-  let textContent = '';
+describe('home_page.html basic features', () => {
+  let html;
 
-  // beforeAll(() => {
-    const filePath = path.resolve(__dirname, '../source/home_page.html');
+  beforeAll(() => {
+    const filePath = path.resolve(__dirname, '../source/home_page.html'); // adjust path as needed
     html = fs.readFileSync(filePath, 'utf8');
-
-    scriptBlocks = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
-    buttonOnClicks = [...html.matchAll(/<button[^>]+onclick=(["'])(.*?)\1/gi)].map(m => m[2]);
-    textContent = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-  // });
-
-  test('contains service worker registration', () => {
-    const found = scriptBlocks.some(code =>
-      code.includes('navigator.serviceWorker') &&
-      code.includes('register("../service-worker.js")')
-    );
-    expect(found).toBe(true);
+    document.documentElement.innerHTML = html;
   });
 
-  test('contains navigation buttons with expected destinations', () => {
-    expect(buttonOnClicks).toEqual(
-      expect.arrayContaining([
-        "location.href='main_page.html'",
-        "location.href='game_page.html'",
-        "location.href='collection.html'",
-      ])
-    );
+  test('page has correct title', () => {
+    expect(document.title).toBe('Pokémon Learning Hub');
   });
 
-  test('contains key section labels', () => {
-    expect(textContent).toMatch(/Flashcards/i);
-    expect(textContent).toMatch(/Quiz Game/i);
-    expect(textContent).toMatch(/Collection/i);
+  test('displays main heading', () => {
+    const heading = document.querySelector('h1');
+    expect(heading).not.toBeNull();
+    expect(heading.textContent).toMatch(/Pokémon Learning Hub/i);
+  });
+
+  test('contains all 3 section buttons with correct text', () => {
+    const buttons = [...document.querySelectorAll('button')].map(btn => btn.textContent.trim());
+    expect(buttons).toContain('Go to Flashcards');
+    expect(buttons).toContain('Go to Game');
+    expect(buttons).toContain('Go to Collection');
+  });
+
+  test('contains correct number of images with expected alt texts', () => {
+    const images = document.querySelectorAll('img');
+    const alts = Array.from(images).map(img => img.alt);
+    expect(alts).toContain('Pokemon Logo');
+    expect(alts).toContain('Flashcards Preview');
+    expect(alts).toContain('Quiz Preview');
+    expect(alts).toContain('Collection Preview');
+  });
+
+  test('has valid manifest link', () => {
+    const manifestLink = document.querySelector('link[rel="manifest"]');
+    expect(manifestLink).not.toBeNull();
+    expect(manifestLink.getAttribute('href')).toBe('../manifest.json');
   });
 });

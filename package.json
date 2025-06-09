@@ -35,5 +35,8 @@
     "regenerator-runtime": "^0.14.1",
     "stylelint": "^16.19.1",
     "stylelint-config-standard": "^38.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
   }
 }
