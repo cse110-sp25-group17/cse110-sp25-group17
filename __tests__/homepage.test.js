@@ -15,18 +15,14 @@ describe('Home Page', () => {
   let buttonOnClicks = [];
   let textContent = '';
 
-  beforeAll(() => {
+  // beforeAll(() => {
     const filePath = path.resolve(__dirname, '../source/home_page.html');
-    function readHtmlSafe(path) {
-      return fs.readFileSync(path, 'utf8');
-    }
-    html = readHtmlSafe(filePath);
-
+    html = fs.readFileSync(filePath, 'utf8');
 
     scriptBlocks = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
     buttonOnClicks = [...html.matchAll(/<button[^>]+onclick=(["'])(.*?)\1/gi)].map(m => m[2]);
     textContent = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-  });
+  // });
 
   test('contains service worker registration', () => {
     const found = scriptBlocks.some(code =>
