@@ -442,17 +442,16 @@ button:disabled {
   margin: 4px 0;
   line-height: 1.2;
   text-transform: capitalize;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
 }
 
 .collection-message {
   grid-column: 1 / -1; /* spans all columns in the grid */
   text-align: center;
-  color: #cc0000; /* Pokémon red */
+  color: #c00;
   font-size: 1.5rem;
   font-weight: bold;
   margin-top: 40px;
-  font-family: 'Verdana', 'Segoe UI', sans-serif;
   padding: 20px;
   line-height: 1.6;
 }
@@ -466,6 +465,6 @@ button:disabled {
 .inline-heart {
   width: 35px;
   height: 35px;
-  vertical-align: middle;
+  vertical-align: bottom;
   margin: 0;
 }
